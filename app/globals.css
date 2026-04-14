@@ -29,9 +29,7 @@
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 
   body {
     background-color: var(--color-bg);
@@ -39,24 +37,12 @@
     font-family: var(--font-sans);
   }
 
-  * {
-    border-color: var(--color-border);
-  }
+  * { border-color: var(--color-border); }
 
-  /* Scrollbar personalizada */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--color-surface);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-purple-muted);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-purple);
-  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--color-surface); }
+  ::-webkit-scrollbar-thumb { background: var(--color-purple-muted); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-purple); }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -67,41 +53,33 @@
 }
 
 @layer utilities {
-  /* Scanline overlay para Hero */
+  /* Scanline overlay — Hero */
   .scanline {
     background-image: repeating-linear-gradient(
       0deg,
       transparent,
       transparent 2px,
-      rgba(255, 255, 255, 0.5) 2px,
-      rgba(255, 255, 255, 0.5) 4px
+      rgba(255,255,255,0.5) 2px,
+      rgba(255,255,255,0.5) 4px
     );
-    opacity: 0.03;
+    opacity: 0.04;
     pointer-events: none;
   }
 
-  /* Dot grid de fondo */
+  /* Dot grid */
   .dot-grid {
     background-image: radial-gradient(circle, #7C3AED 1px, transparent 1px);
     background-size: 28px 28px;
-    opacity: 0.06;
+    opacity: 0.08;
     pointer-events: none;
   }
 
-  /* Glow helpers */
-  .glow-purple {
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
-  }
+  /* Glows */
+  .glow-purple  { box-shadow: 0 0 20px rgba(124,58,237,0.45); }
+  .glow-green   { box-shadow: 0 0 16px rgba(34,197,94,0.40); }
+  .glow-purple-lg { box-shadow: 0 0 50px rgba(124,58,237,0.35), 0 0 100px rgba(124,58,237,0.15); }
 
-  .glow-green {
-    box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
-  }
-
-  .glow-purple-lg {
-    box-shadow: 0 0 40px rgba(124, 58, 237, 0.3), 0 0 80px rgba(124, 58, 237, 0.15);
-  }
-
-  /* Gradient text helper */
+  /* Gradient text */
   .gradient-text {
     background: linear-gradient(135deg, #A78BFA, #4ADE80);
     -webkit-background-clip: text;
@@ -109,7 +87,7 @@
     background-clip: text;
   }
 
-  /* Borde gradiente en cards */
+  /* Gradient border on cards */
   .border-gradient {
     position: relative;
   }
@@ -126,8 +104,42 @@
     pointer-events: none;
   }
 
-  /* Font helpers */
-  .font-display {
-    font-family: var(--font-display);
+  .font-display { font-family: var(--font-display); }
+
+  /* Marquee */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
   }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Infinite glow pulse on border */
+  @keyframes border-glow {
+    0%, 100% { box-shadow: 0 0 6px rgba(124,58,237,0.3); }
+    50%       { box-shadow: 0 0 22px rgba(124,58,237,0.7), 0 0 40px rgba(124,58,237,0.2); }
+  }
+  .animate-border-glow { animation: border-glow 2.5s ease-in-out infinite; }
+
+  /* Float animation for Hero cards */
+  @keyframes float-a {
+    0%, 100% { transform: translateY(0px) rotate(-2deg); }
+    50%       { transform: translateY(-12px) rotate(-2deg); }
+  }
+  @keyframes float-b {
+    0%, 100% { transform: translateY(0px) rotate(3deg); }
+    50%       { transform: translateY(-16px) rotate(3deg); }
+  }
+  @keyframes float-c {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50%       { transform: translateY(-8px) rotate(-1deg); }
+  }
+  .animate-float-a { animation: float-a 4s ease-in-out infinite; }
+  .animate-float-b { animation: float-b 5s ease-in-out infinite; }
+  .animate-float-c { animation: float-c 3.5s ease-in-out infinite; }
 }
