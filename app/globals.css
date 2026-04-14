@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fondos */
+  --color-bg:           #0A0812;
+  --color-surface:      #130F24;
+  --color-surface-2:    #1C1735;
+  --color-border:       #2A2050;
+
+  /* Morados */
+  --color-purple:       #7C3AED;
+  --color-purple-light: #A78BFA;
+  --color-purple-glow:  #9F67FF;
+  --color-purple-muted: #4C1D95;
+
+  /* Verdes */
+  --color-green:        #22C55E;
+  --color-green-light:  #4ADE80;
+  --color-green-dark:   #15803D;
+
+  /* Textos */
+  --color-text:         #F0EAFF;
+  --color-muted:        #8B7DAB;
+  --color-subtle:       #4A4068;
+
+  /* Tipografías */
+  --font-display:       'Rajdhani', sans-serif;
+  --font-sans:          'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-purple-muted);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-purple);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Scanline overlay para Hero */
+  .scanline {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.5) 2px,
+      rgba(255, 255, 255, 0.5) 4px
+    );
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  /* Dot grid de fondo */
+  .dot-grid {
+    background-image: radial-gradient(circle, #7C3AED 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  /* Glow helpers */
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
+  }
+
+  .glow-purple-lg {
+    box-shadow: 0 0 40px rgba(124, 58, 237, 0.3), 0 0 80px rgba(124, 58, 237, 0.15);
+  }
+
+  /* Gradient text helper */
+  .gradient-text {
+    background: linear-gradient(135deg, #A78BFA, #4ADE80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Borde gradiente en cards */
+  .border-gradient {
+    position: relative;
+  }
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #7C3AED, #22C55E);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Font helpers */
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
