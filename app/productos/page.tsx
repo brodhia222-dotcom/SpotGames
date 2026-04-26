@@ -15,7 +15,7 @@ function ProductosContent() {
 
   useEffect(() => {
     const cat = searchParams.get("categoria");
-    const plat = searchParams.get("plataforma");
+    const plat = searchParams.get("platform") ?? searchParams.get("plataforma");
     if (cat) setActiveCategory(cat);
     if (plat) setActivePlatform(plat);
   }, [searchParams]);

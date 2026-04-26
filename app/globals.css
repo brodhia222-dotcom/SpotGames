@@ -1,56 +1,358 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
 @theme inline {
+  /* Base */
   --color-void: #05030A;
   --color-surface: #0D0818;
   --color-surface-2: #18102E;
+  --color-surface-3: #221538;
+
+  /* Brand */
   --color-grape: #A855F7;
   --color-grape-d: #7C3AED;
   --color-grape-glow: #C084FC;
   --color-ctrl: #4ADE80;
   --color-ctrl-glow: #86EFAC;
-  --color-white: #EDE9FE;
-  --color-muted: #6B7280;
-  --color-border: #2D1F4E;
-  --color-danger: #F43F5E;
 
+  /* Plataformas */
+  --color-ps: #006FCD;
+  --color-xbox: #107C10;
+  --color-switch: #E60012;
+  --color-pc: #A855F7;
+  --color-retro: #F59E0B;
+
+  /* Acentos */
+  --color-cyan: #22D3EE;
+  --color-pink: #EC4899;
+  --color-danger: #EF4444;
+
+  /* Texto */
+  --color-white: #EDE9FE;
+  --color-muted: #9CA3AF;
+  --color-dim: #6B7280;
+  --color-border: #2D1F4E;
+  --color-border-bright: #4C2D8C;
+
+  /* Fonts */
   --font-display: var(--font-rajdhani);
   --font-body: var(--font-outfit);
   --font-tech: var(--font-orbitron);
+  --font-pixel: 'Press Start 2P', monospace;
 }
 
-/* CRT scanlines overlay */
-body::after {
-  content: "";
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  background: var(--color-void);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  position: relative;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><circle cx='10' cy='10' r='1.5' fill='%234ADE80'/><circle cx='10' cy='10' r='6' fill='none' stroke='%23A855F7' stroke-width='1' opacity='0.6'/></svg>") 10 10, auto;
+}
+
+/* === Layer 1: Animated purple grid === */
+body::before {
+  content: '';
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
   pointer-events: none;
+  z-index: 1;
+  animation: grid-drift 60s linear infinite;
+}
+
+/* === Layer 2: CRT Scanlines (visible, con tinte púrpura) === */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
   background: repeating-linear-gradient(
     0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(168, 85, 247, 0.03) 3px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+}
+
+/* === Aurora orbs === */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  animation: orb-float 20s ease-in-out infinite;
+}
+
+.aurora-orb.orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #A855F7 0%, transparent 70%);
+  top: -10%;
+  left: -10%;
+  animation-delay: 0s;
+}
+
+.aurora-orb.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #4ADE80 0%, transparent 70%);
+  bottom: -15%;
+  right: -10%;
+  animation-delay: -7s;
+}
+
+.aurora-orb.orb-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #22D3EE 0%, transparent 70%);
+  top: 40%;
+  left: 50%;
+  animation-delay: -14s;
+}
+
+/* === Noise/grain layer === */
+.noise-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* === CRT Vignette === */
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.45) 100%
   );
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-void);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-grape-d);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-grape);
+/* === Glitch (reescrito — limpio, sin texto fantasma) === */
+.glitch {
+  position: relative;
+  display: inline-block;
 }
 
-/* Keyframes */
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch::before {
+  color: var(--color-grape);
+  z-index: -1;
+  animation: glitch-r 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch::after {
+  color: var(--color-ctrl);
+  z-index: -2;
+  animation: glitch-l 2.5s infinite linear alternate-reverse;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+/* === Neon utilities (nuevas) === */
+.neon-text-grape {
+  color: var(--color-grape-glow);
+  text-shadow:
+    0 0 5px var(--color-grape),
+    0 0 10px var(--color-grape),
+    0 0 20px var(--color-grape-d),
+    0 0 40px var(--color-grape-d);
+}
+
+.neon-text-ctrl {
+  color: var(--color-ctrl-glow);
+  text-shadow:
+    0 0 5px var(--color-ctrl),
+    0 0 10px var(--color-ctrl),
+    0 0 20px var(--color-ctrl);
+}
+
+.neon-border-grape {
+  border: 1px solid var(--color-grape);
+  box-shadow:
+    0 0 10px rgba(168, 85, 247, 0.5),
+    inset 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.neon-border-ctrl {
+  border: 1px solid var(--color-ctrl);
+  box-shadow:
+    0 0 10px rgba(74, 222, 128, 0.5),
+    inset 0 0 10px rgba(74, 222, 128, 0.2);
+}
+
+.glow-grape {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.4), 0 0 60px rgba(168, 85, 247, 0.2);
+}
+
+.glow-ctrl {
+  box-shadow: 0 0 30px rgba(74, 222, 128, 0.4), 0 0 60px rgba(74, 222, 128, 0.2);
+}
+
+/* Aliases para compatibilidad con componentes existentes */
+.neon-text {
+  animation: neon-pulse 2.5s ease-in-out infinite;
+}
+
+.neon-border {
+  animation: neon-border-pulse 2.5s ease-in-out infinite;
+}
+
+.ctrl-border {
+  animation: ctrl-pulse 2.5s ease-in-out infinite;
+}
+
+.float-anim {
+  animation: float 3s ease-in-out infinite;
+}
+
+.text-glow-grape {
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.8), 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+.text-glow-ctrl {
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.8), 0 0 20px rgba(74, 222, 128, 0.4);
+}
+
+/* === HUD corners === */
+.hud-corners {
+  position: relative;
+}
+
+.hud-corners::before,
+.hud-corners::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-grape);
+}
+
+.hud-corners::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.hud-corners::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.hud-corners-ctrl::before,
+.hud-corners-ctrl::after {
+  border-color: var(--color-ctrl);
+}
+
+/* === Clip paths gaming === */
+.clip-cyber {
+  clip-path: polygon(
+    0 8px, 8px 0,
+    calc(100% - 24px) 0, 100% 24px,
+    100% calc(100% - 8px), calc(100% - 8px) 100%,
+    24px 100%, 0 calc(100% - 24px)
+  );
+}
+
+.clip-corner-tr {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+}
+
+/* === Health bar decorativa === */
+.health-bar {
+  position: relative;
+  height: 4px;
+  background: rgba(168, 85, 247, 0.15);
+  overflow: hidden;
+}
+
+.health-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--color-ctrl) 0%, var(--color-grape) 100%);
+  transform-origin: left;
+  animation: health-fill 2s ease-out forwards;
+}
+
+/* === Font pixel helper === */
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* === Animation utility classes === */
+.animate-neon-pulse { animation: neon-pulse 2s ease-in-out infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-blink { animation: blink 1s step-start infinite; }
+.animate-marquee { animation: marquee 30s linear infinite; }
+
+/* === Keyframes === */
+@keyframes grid-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -60px) scale(1.1); }
+  66% { transform: translate(-60px, 80px) scale(0.9); }
+}
+
+@keyframes glitch-r {
+  0%, 90%, 100% { transform: translate(0); }
+  92% { transform: translate(2px, -1px); }
+  94% { transform: translate(-2px, 1px); }
+  96% { transform: translate(1px, 2px); }
+  98% { transform: translate(-1px, -2px); }
+}
+
+@keyframes glitch-l {
+  0%, 90%, 100% { transform: translate(0); }
+  91% { transform: translate(-2px, 1px); }
+  93% { transform: translate(2px, -1px); }
+  95% { transform: translate(-1px, -2px); }
+  97% { transform: translate(1px, 2px); }
+}
+
 @keyframes glitch-1 {
   0%   { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 0); }
   20%  { clip-path: inset(92% 0 1% 0);  transform: translate(2px, 0); }
@@ -117,73 +419,41 @@ body::after {
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes marquee-reverse {
   from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
+  to { transform: translateX(0); }
 }
 
-/* Utility classes */
-.neon-text {
-  animation: neon-pulse 2.5s ease-in-out infinite;
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
-.neon-border {
-  animation: neon-border-pulse 2.5s ease-in-out infinite;
+@keyframes health-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
-.ctrl-border {
-  animation: ctrl-pulse 2.5s ease-in-out infinite;
+/* === Custom scrollbar === */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-void); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-grape-d), var(--color-grape));
+  border-radius: 0;
+  border: 2px solid var(--color-void);
 }
+::-webkit-scrollbar-thumb:hover { background: var(--color-grape-glow); }
 
-.float-anim {
-  animation: float 3s ease-in-out infinite;
-}
-
-.glow-grape {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(168, 85, 247, 0.2);
-}
-
-.glow-ctrl {
-  box-shadow: 0 0 20px rgba(74, 222, 128, 0.4), 0 0 40px rgba(74, 222, 128, 0.2);
-}
-
-.text-glow-grape {
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.8), 0 0 20px rgba(168, 85, 247, 0.4);
-}
-
-.text-glow-ctrl {
-  text-shadow: 0 0 10px rgba(74, 222, 128, 0.8), 0 0 20px rgba(74, 222, 128, 0.4);
-}
-
-/* Glitch text effect */
-.glitch {
-  position: relative;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.glitch::before {
-  color: var(--color-ctrl-glow);
-  animation: glitch-1 3.5s infinite linear;
-  opacity: 0.7;
-}
-
-.glitch::after {
-  color: var(--color-grape-glow);
-  animation: glitch-2 3.5s infinite linear;
-  opacity: 0.7;
+/* === Text selection === */
+::selection {
+  background: var(--color-grape);
+  color: var(--color-void);
 }

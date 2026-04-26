@@ -1,213 +1,203 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-const PLATFORMS = [
+const platforms = [
   {
-    id: "PS5",
-    label: "PlayStation 5",
-    color: "#003791",
-    glowColor: "rgba(0, 55, 145, 0.5)",
-    description: "Los exclusivos más ambiciosos de la generación. God of War, Spider-Man, Horizon y más.",
-    count: "12 productos",
-    icon: (
-      <svg viewBox="0 0 100 40" fill="currentColor" className="w-full h-auto max-w-[120px]">
-        <text x="0" y="32" fontFamily="Arial" fontWeight="900" fontSize="38" fill="currentColor">PS5</text>
-      </svg>
-    ),
+    slug: "PS5",
+    name: "PLAYSTATION 5",
+    short: "PS5",
+    count: 12,
+    desc: "Los exclusivos más ambiciosos de la generación.",
+    color: "#006FCD",
+    img: "https://images.unsplash.com/photo-1709587797209-7f3015fc8d35?w=900&q=80&auto=format&fit=crop",
+    span: "col-span-1 lg:col-span-2 lg:row-span-2",
   },
   {
-    id: "Xbox",
-    label: "Xbox Series",
+    slug: "Xbox",
+    name: "XBOX SERIES X|S",
+    short: "XBOX",
+    count: 8,
+    desc: "Game Pass + la mayor biblioteca retro-compatible.",
     color: "#107C10",
-    glowColor: "rgba(16, 124, 16, 0.5)",
-    description: "Game Pass, exclusivos y la mayor biblioteca de juegos retro-compatible. Series X y S.",
-    count: "8 productos",
-    icon: (
-      <svg viewBox="0 0 100 40" fill="currentColor" className="w-full h-auto max-w-[140px]">
-        <text x="0" y="32" fontFamily="Arial" fontWeight="900" fontSize="30" fill="currentColor">XBOX</text>
-      </svg>
-    ),
+    img: "https://images.unsplash.com/photo-1591109864300-46c417fa0475?w=800&q=80&auto=format&fit=crop",
+    span: "col-span-1 lg:col-span-2",
   },
   {
-    id: "Switch",
-    label: "Nintendo Switch",
+    slug: "Switch",
+    name: "NINTENDO SWITCH",
+    short: "SWITCH",
+    count: 10,
+    desc: "Mario, Zelda, Pokémon — donde quieras.",
     color: "#E60012",
-    glowColor: "rgba(230, 0, 18, 0.5)",
-    description: "La única consola que podés llevar a cualquier lado. Mario, Zelda, Pokémon y más.",
-    count: "10 productos",
-    icon: (
-      <svg viewBox="0 0 100 40" fill="currentColor" className="w-full h-auto max-w-[160px]">
-        <text x="0" y="32" fontFamily="Arial" fontWeight="900" fontSize="24" fill="currentColor">SWITCH</text>
-      </svg>
-    ),
+    img: "https://images.unsplash.com/photo-1550921464-1bbe1d247da5?w=800&q=80&auto=format&fit=crop",
+    span: "col-span-1 lg:col-span-2",
   },
   {
-    id: "PC",
-    label: "PC Gaming",
+    slug: "PC",
+    name: "PC GAMING",
+    short: "PC",
+    count: 9,
+    desc: "Periféricos y juegos para la plataforma más poderosa.",
     color: "#A855F7",
-    glowColor: "rgba(168, 85, 247, 0.5)",
-    description: "Periféricos, monitores y juegos para la plataforma más poderosa del mundo.",
-    count: "9 productos",
-    icon: (
-      <svg viewBox="0 0 100 40" fill="currentColor" className="w-full h-auto max-w-[80px]">
-        <text x="0" y="32" fontFamily="Arial" fontWeight="900" fontSize="38" fill="currentColor">PC</text>
-      </svg>
-    ),
+    img: "https://images.unsplash.com/photo-1591109864300-46c417fa0475?w=800&q=80&auto=format&fit=crop",
+    span: "col-span-1 lg:col-span-2",
   },
   {
-    id: "Retro",
-    label: "Retro",
+    slug: "Retro",
+    name: "RETRO",
+    short: "RETRO",
+    count: 6,
+    desc: "SNES · Mega Drive · N64 · PS1. Las joyas del pasado.",
     color: "#F59E0B",
-    glowColor: "rgba(245, 158, 11, 0.5)",
-    description: "SNES, Mega Drive, N64, PS1, PS2 y más. Stock curado con garantía. Las joyas del pasado.",
-    count: "6 productos",
-    icon: (
-      <svg viewBox="0 0 100 40" fill="currentColor" className="w-full h-auto max-w-[130px]">
-        <text x="0" y="32" fontFamily="Arial" fontWeight="900" fontSize="28" fill="currentColor">RETRO</text>
-      </svg>
-    ),
+    img: "https://images.unsplash.com/photo-1636070759654-5c93bbca2862?w=900&q=80&auto=format&fit=crop",
+    span: "col-span-1 lg:col-span-2",
   },
 ];
 
+void ScrollTrigger;
+
 export default function PlatformsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !trackRef.current) return;
-
-    const cards = trackRef.current.querySelectorAll<HTMLElement>(".platform-card");
-    if (!cards.length) return;
-
-    const totalWidth = trackRef.current.scrollWidth;
-    const viewportWidth = sectionRef.current.clientWidth;
-    const distanceToScroll = totalWidth - viewportWidth;
-
-    if (distanceToScroll <= 0) return;
-
     const ctx = gsap.context(() => {
-      gsap.to(trackRef.current, {
-        x: -distanceToScroll,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          pin: true,
-          scrub: 1.2,
-          end: () => `+=${distanceToScroll}`,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      // Heading parallax while pinned
-      gsap.from(".plat-heading", {
+      gsap.from(".platform-card", {
         opacity: 0,
-        y: 30,
-        duration: 0.8,
+        y: 60,
+        scale: 0.95,
+        duration: 0.7,
+        stagger: 0.1,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: ".platforms-grid",
           start: "top 80%",
         },
       });
-    }, sectionRef.current);
-
+    }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-surface py-32 overflow-hidden"
-    >
-      {/* Heading */}
-      <div className="plat-heading max-w-7xl mx-auto px-6 mb-16">
-        <p className="font-display font-semibold text-xs uppercase tracking-widest text-grape mb-3">
-          Plataformas
-        </p>
-        <h2
-          className="font-display font-bold text-white uppercase leading-none"
-          style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
-        >
-          Todas las plataformas,
-          <br />
-          <span className="text-grape">un solo lugar.</span>
-        </h2>
-      </div>
-
-      {/* Horizontal scroll track */}
-      <div className="px-6">
-        <div ref={trackRef} className="flex gap-6 w-max">
-          {PLATFORMS.map((platform) => (
-            <Link
-              key={platform.id}
-              href={`/productos?plataforma=${platform.id}`}
-              className="platform-card group relative w-[340px] h-[440px] bg-void border border-border flex flex-col p-8 shrink-0 overflow-hidden transition-all duration-500 hover:border-transparent cursor-pointer"
-              style={{
-                boxShadow: "none",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = `0 0 40px ${platform.glowColor}, 0 0 80px ${platform.glowColor.replace("0.5", "0.2")}`;
-                (e.currentTarget as HTMLElement).style.borderColor = platform.color;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                (e.currentTarget as HTMLElement).style.borderColor = "";
-              }}
+    <section ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden">
+      <div className="container mx-auto px-8">
+        {/* Header asimétrico */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <div className="font-tech text-xs text-grape uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
+              <span className="block w-8 h-px bg-grape" />
+              [ 02 ] PLATAFORMAS
+            </div>
+            <h2
+              className="font-display font-bold tracking-tight"
+              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
             >
-              {/* BG glow */}
+              <span className="text-white">TODAS LAS PLATAFORMAS,</span>
+              <br />
+              <span className="neon-text-grape">UN SOLO LUGAR.</span>
+            </h2>
+          </div>
+          <div className="font-pixel text-[10px] text-muted hidden md:block">
+            &gt; SELECT_PLATFORM_
+            <span className="animate-blink">_</span>
+          </div>
+        </div>
+
+        {/* Bento grid */}
+        <div className="platforms-grid grid grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4 auto-rows-[180px] md:auto-rows-[220px]">
+          {platforms.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/productos?platform=${encodeURIComponent(p.slug)}`}
+              className={`platform-card group relative overflow-hidden border border-border hover:border-transparent transition-all duration-500 ${p.span}`}
+            >
+              {/* Imagen de fondo */}
+              <Image
+                src={p.img}
+                alt={p.name}
+                fill
+                className="object-cover opacity-40 group-hover:opacity-70 group-hover:scale-110 transition-all duration-700"
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+
+              {/* Overlay color plataforma */}
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                className="absolute inset-0 opacity-80 group-hover:opacity-50 transition-opacity duration-500"
                 style={{
-                  background: `radial-gradient(ellipse at center, ${platform.glowColor} 0%, transparent 70%)`,
+                  background: `linear-gradient(135deg, ${p.color}40 0%, #05030A 100%)`,
+                  mixBlendMode: "multiply",
                 }}
               />
 
-              {/* Platform icon / wordmark */}
+              {/* Glow border en hover */}
               <div
-                className="relative z-10 mb-auto"
-                style={{ color: platform.color }}
-              >
-                {platform.icon}
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 mt-auto">
-                <p className="font-display font-bold text-xs uppercase tracking-widest mb-2"
-                  style={{ color: platform.color }}>
-                  {platform.count}
-                </p>
-                <h3 className="font-display font-bold text-2xl text-white uppercase mb-3">
-                  {platform.label}
-                </h3>
-                <p className="font-body text-sm text-muted leading-relaxed">
-                  {platform.description}
-                </p>
-                <div className="mt-5 flex items-center gap-2 font-display font-semibold text-xs uppercase tracking-widest"
-                  style={{ color: platform.color }}>
-                  Ver productos
-                  <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1">
-                    <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Top accent line */}
-              <div
-                className="absolute top-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ backgroundColor: platform.color }}
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  boxShadow: `inset 0 0 0 2px ${p.color}, 0 0 30px ${p.color}66`,
+                }}
               />
+
+              {/* HUD corners */}
+              <div
+                className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 transition-colors duration-500"
+                style={{ borderColor: p.color }}
+              />
+              <div
+                className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 transition-colors duration-500"
+                style={{ borderColor: p.color }}
+              />
+              <div
+                className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 transition-colors duration-500"
+                style={{ borderColor: p.color }}
+              />
+              <div
+                className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 transition-colors duration-500"
+                style={{ borderColor: p.color }}
+              />
+
+              {/* Counter HUD */}
+              <div
+                className="absolute top-3 right-3 font-tech text-[10px] font-bold px-2 py-1 bg-void/80 backdrop-blur"
+                style={{ color: p.color, border: `1px solid ${p.color}` }}
+              >
+                {String(p.count).padStart(2, "0")} ITEMS
+              </div>
+
+              {/* Contenido */}
+              <div className="absolute inset-0 p-5 md:p-6 flex flex-col justify-end">
+                <div
+                  className="font-tech text-[10px] uppercase tracking-[0.2em] mb-2 opacity-70"
+                  style={{ color: p.color }}
+                >
+                  &gt; {p.short}
+                </div>
+                <h3 className="font-display font-bold text-xl md:text-2xl text-white mb-1 leading-tight">
+                  {p.name}
+                </h3>
+                <p className="font-body text-xs md:text-sm text-muted line-clamp-1 mb-3">
+                  {p.desc}
+                </p>
+                <div
+                  className="flex items-center gap-2 font-tech text-[11px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ color: p.color }}
+                >
+                  ENTRAR <span className="text-base">→</span>
+                </div>
+                <div className="health-bar mt-3 opacity-60" />
+              </div>
             </Link>
           ))}
         </div>
-      </div>
 
-      {/* Scroll hint */}
-      <p className="text-center mt-8 font-display text-xs uppercase tracking-widest text-muted/50">
-        Scrolleá para explorar →
-      </p>
+        {/* Footer line */}
+        <div className="mt-6 flex items-center justify-between font-pixel text-[8px] text-muted">
+          <span>&gt; 5 PLATFORMS LOADED</span>
+          <span className="text-ctrl animate-blink">● READY</span>
+        </div>
+      </div>
     </section>
   );
 }

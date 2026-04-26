@@ -17,7 +17,8 @@ export default function Marquee() {
   return (
     <div className="py-5 bg-surface border-y border-border overflow-hidden">
       {/* Row 1 — left to right */}
-      <div className="flex" style={{ animation: "marquee 28s linear infinite" }}>
+      <div className="flex animate-marquee"
+        style={{ animationDuration: "28s" }}>
         {repeated.map((item, i) => (
           <span
             key={i}

@@ -51,7 +51,7 @@ export default function CtaSection() {
         >
           ¿No encontrás
           <br />
-          <span className="text-grape neon-text">lo que buscás?</span>
+          <span className="neon-text-grape">lo que buscás?</span>
         </h2>
         <p className="font-body text-muted text-base md:text-lg max-w-lg mx-auto mb-10 leading-relaxed">
           Escribinos por WhatsApp. Te ayudamos a encontrar lo que necesitás, o lo conseguimos para vos.

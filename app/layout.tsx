@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/layout/CartDrawer";
 import StoreHydration from "@/components/StoreHydration";
+import KonamiCode from "@/components/ui/KonamiCode";
 
 const rajdhani = Rajdhani({
   variable: "--font-rajdhani",
@@ -39,10 +40,18 @@ export default function RootLayout({
       <body
         className={`${rajdhani.variable} ${orbitron.variable} ${outfit.variable} bg-void text-white font-body antialiased`}
       >
+        <div className="aurora-bg">
+          <div className="aurora-orb orb-1" />
+          <div className="aurora-orb orb-2" />
+          <div className="aurora-orb orb-3" />
+        </div>
+        <div className="noise-bg" />
+        <div className="crt-vignette" />
+        <KonamiCode />
         <StoreHydration />
         <Navbar />
         <CartDrawer />
-        <main className="overflow-x-hidden w-full max-w-full">{children}</main>
+        <main className="relative z-10 overflow-x-hidden w-full max-w-full">{children}</main>
         <Footer />
       </body>
     </html>
