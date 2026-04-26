@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/layout/CartDrawer";
+import StoreHydration from "@/components/StoreHydration";
 
 const rajdhani = Rajdhani({
   variable: "--font-rajdhani",
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body
         className={`${rajdhani.variable} ${orbitron.variable} ${outfit.variable} bg-void text-white font-body antialiased`}
       >
+        <StoreHydration />
         <Navbar />
         <CartDrawer />
         <main className="overflow-x-hidden w-full max-w-full">{children}</main>

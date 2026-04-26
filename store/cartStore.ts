@@ -1,5 +1,3 @@
-"use client";
-
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { CartItem, Product } from "@/types";
@@ -98,6 +96,7 @@ export const useCartStore = create<CartStore>()(
     {
       name: "spot-games-cart",
       partialize: (state) => ({ items: state.items }),
+      skipHydration: true,
     }
   )
 );

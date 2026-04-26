@@ -19,22 +19,20 @@ export default function NosotrosPage() {
       STATS.forEach((stat, i) => {
         const el = statsRef.current?.querySelectorAll(".stat-number")[i] as HTMLElement;
         if (!el) return;
-        gsap.from(
-          { val: 0 },
-          {
-            val: stat.value,
-            duration: 2,
-            ease: "power2.out",
-            onUpdate: function () {
-              el.textContent = Math.round(this.targets()[0].val) + stat.suffix;
-            },
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              once: true,
-            },
-          }
-        );
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: stat.value,
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val) + stat.suffix;
+          },
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            once: true,
+          },
+        });
       });
     }, statsRef.current);
     return () => ctx.revert();
