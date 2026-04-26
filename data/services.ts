@@ -1,54 +1,60 @@
 import type { Service } from "@/types";
 
-export const services: Service[] = [
+export const SERVICES: Service[] = [
   {
-    id: "reparacion",
+    id: "1",
+    slug: "reparacion",
     title: "Reparación de Consolas",
-    description:
-      "Reparamos PS4, PS5, Xbox One, Xbox Series, Nintendo Switch y consolas retro. Diagnóstico sin cargo, presupuesto sin compromiso. Técnicos especializados con años de experiencia.",
-    iconName: "wrench",
+    description: "Diagnóstico profesional y reparación garantizada.",
+    longDescription:
+      "Reparamos PS5, PS4, Xbox Series, Xbox One, Nintendo Switch y consolas retro. Diagnóstico gratuito en el momento. Presupuesto sin cargo. Reparaciones con repuestos originales y garantía de 90 días en el trabajo realizado.",
     price: "Desde $8.000",
+    icon: "wrench",
     whatsappText:
-      "Hola! Quiero consultar sobre reparación de consola. ¿Pueden ayudarme?",
+      "Hola Spot Games! Necesito reparar una consola. ¿Pueden ayudarme?",
   },
   {
-    id: "trade-in",
-    title: "Trade-In y Cambios",
-    description:
-      "Traé tu consola o juego usado y llevate otro. Tasamos tu equipo de forma justa y lo aplicamos como descuento directo en tu próxima compra. Sin vueltas.",
-    iconName: "arrows",
-    price: "Consultar tasación",
+    id: "2",
+    slug: "trade-in",
+    title: "Trade-In",
+    description: "Cambiá lo que ya no usás por lo que querés.",
+    longDescription:
+      "Traé tus juegos, consolas o accesorios usados y los valuamos en el momento. El crédito se aplica directo a tu próxima compra. Aceptamos cualquier plataforma y cualquier estado. Mejor precio de la zona garantizado.",
+    icon: "arrows",
     whatsappText:
-      "Hola! Me interesa hacer un trade-in. ¿Cómo funciona el proceso?",
+      "Hola Spot Games! Me interesa el trade-in. ¿Cómo funciona?",
   },
   {
-    id: "usados",
+    id: "3",
+    slug: "usados-retro",
     title: "Usados & Retro",
-    description:
-      "Todos nuestros usados pasan por revisión técnica y vienen con garantía de 30 días. Amplia selección de títulos clásicos y consolas retro en perfectas condiciones.",
-    iconName: "gamepad",
-    price: "Garantía incluida",
+    description: "Stock de joyas retro con garantía de 30 días.",
+    longDescription:
+      "Tenemos el mejor stock de consolas y juegos retro de la zona. NES, SNES, Mega Drive, N64, PS1, PS2 y mucho más. Todo revisado, limpiado y con garantía de 30 días. Si buscás algo específico que no tenemos, te lo conseguimos.",
+    icon: "gamepad",
     whatsappText:
-      "Hola! Quiero ver qué juegos usados o retro tienen disponibles.",
+      "Hola Spot Games! Busco algo retro. ¿Tienen stock disponible?",
   },
   {
-    id: "envios",
+    id: "4",
+    slug: "envios",
     title: "Envíos a Todo el País",
-    description:
-      "Enviamos a cualquier punto de Argentina por Correo Argentino o correos privados. Empaque seguro especial para consolas y electrónica. Seguimiento en tiempo real.",
-    iconName: "truck",
-    price: "Coordinar costo",
-    whatsappText:
-      "Hola! Quiero consultar sobre envío a [ciudad]. ¿Cuánto sale y cuánto tarda?",
+    description: "Embalaje seguro y envío rápido a cualquier punto.",
+    longDescription:
+      "Enviamos a todo el país a través de Andreani y OCA. Embalaje reforzado especial para consolas y electrónica. Seguro de envío incluido. Seguimiento en tiempo real. Retiro gratis en nuestro local de Palermo.",
+    price: "Desde $3.500",
+    icon: "truck",
+    whatsappText: "Hola Spot Games! Me interesa comprar y necesito envío.",
   },
   {
-    id: "asesoramiento",
-    title: "Asesoramiento Personalizado",
-    description:
-      "No sabés qué consola comprar o qué juegos son los mejores para vos? Te ayudamos a elegir según tu presupuesto y gustos. Somos gamers, no vendedores.",
-    iconName: "chat",
-    price: "Sin costo",
+    id: "5",
+    slug: "asesoramiento",
+    title: "Asesoramiento Gratuito",
+    description: "Te ayudamos a elegir la mejor opción para tu presupuesto.",
+    longDescription:
+      "¿No sabés qué consola o juego comprar? Nuestro equipo de gamers con más de 10 años de experiencia te asesora sin compromiso. Comparamos opciones, te explicamos diferencias y te ayudamos a maximizar tu presupuesto.",
+    icon: "chat",
     whatsappText:
-      "Hola! Necesito asesoramiento para elegir una consola/juego. ¿Me pueden ayudar?",
+      "Hola Spot Games! Necesito asesoramiento para comprar un videojuego/consola.",
   },
 ];

@@ -2,20 +2,26 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-bg flex flex-col items-center justify-center px-4 text-center pt-16">
-      <p className="font-display font-bold text-8xl text-purple/20 mb-4 select-none">404</p>
-      <h1 className="font-display font-bold text-3xl text-text mb-3">
-        Página no encontrada
-      </h1>
-      <p className="text-muted text-base mb-8 max-w-sm">
-        Esta página no existe o fue movida. Volvé al inicio para seguir explorando.
+    <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-6 text-center">
+      <p
+        className="font-tech font-bold text-grape"
+        style={{ fontSize: "clamp(6rem, 15vw, 12rem)", lineHeight: 1, opacity: 0.15 }}
+      >
+        404
       </p>
+      <div className="-mt-12">
+        <h1 className="font-display font-bold text-3xl text-white uppercase tracking-widest mb-4">
+          Página no encontrada
+        </h1>
+        <p className="font-body text-muted max-w-sm">
+          La página que buscás no existe o fue movida. Volvé al inicio.
+        </p>
+      </div>
       <Link
         href="/"
-        className="px-6 py-3 rounded-xl bg-purple text-white font-display font-bold text-sm hover:bg-purple-glow transition-colors duration-200"
-        style={{ boxShadow: "0 0 16px rgba(124,58,237,0.35)" }}
+        className="inline-flex items-center gap-2 px-8 py-4 bg-grape text-white font-display font-bold text-sm uppercase tracking-widest hover:bg-grape-d transition-all duration-300 neon-border"
       >
-        Ir al inicio
+        Volver al inicio
       </Link>
     </div>
   );

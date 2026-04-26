@@ -1,38 +1,30 @@
-const items = [
-  { icon: "🎮", text: "PlayStation 5" },
-  { icon: "⚡", text: "Xbox Series" },
-  { icon: "🍄", text: "Nintendo Switch" },
-  { icon: "👾", text: "Retro & Clásicos" },
-  { icon: "🔧", text: "Reparaciones" },
-  { icon: "🔄", text: "Trade-In" },
-  { icon: "✅", text: "Garantía Incluida" },
-  { icon: "📦", text: "Envíos a todo el país" },
-  { icon: "🎮", text: "PlayStation 4" },
-  { icon: "🖥️", text: "Gaming PC" },
-  { icon: "⭐", text: "Usados Premium" },
-  { icon: "🏆", text: "5 años en el mercado" },
+const ITEMS = [
+  "PS5",
+  "Xbox Series X",
+  "Nintendo Switch",
+  "PC Gaming",
+  "Retro",
+  "PS4",
+  "Accesorios",
+  "Trade-In",
+  "Reparación",
+  "Nuevos & Usados",
 ];
 
-const doubled = [...items, ...items];
-
 export default function Marquee() {
-  return (
-    <div className="relative overflow-hidden border-y border-border bg-surface py-3.5">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to right, #130F24, transparent)" }} />
-      <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to left, #130F24, transparent)" }} />
+  const repeated = [...ITEMS, ...ITEMS];
 
-      <div className="marquee-track">
-        {doubled.map((item, i) => (
+  return (
+    <div className="py-5 bg-surface border-y border-border overflow-hidden">
+      {/* Row 1 — left to right */}
+      <div className="flex" style={{ animation: "marquee 28s linear infinite" }}>
+        {repeated.map((item, i) => (
           <span
             key={i}
-            className="flex items-center gap-2 px-6 font-display font-semibold text-sm text-muted whitespace-nowrap shrink-0"
+            className="flex items-center gap-6 shrink-0 px-6 font-display font-bold text-sm uppercase tracking-[0.2em] text-muted whitespace-nowrap"
           >
-            <span className="text-base">{item.icon}</span>
-            {item.text}
-            <span className="ml-4 w-1 h-1 rounded-full bg-purple-muted inline-block" />
+            <span className="text-grape text-lg">·</span>
+            {item}
           </span>
         ))}
       </div>

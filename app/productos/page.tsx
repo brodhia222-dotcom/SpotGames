@@ -1,77 +1,69 @@
-import { Suspense } from "react";
-import FilterBar from "@/components/FilterBar";
-import ProductGrid from "@/components/ProductGrid";
-import { products } from "@/data/products";
-import type { Category, Platform, ProductState } from "@/types";
+"use client";
 
-interface ProductosPageProps {
-  searchParams: Promise<{
-    categoria?: string;
-    plataforma?: string;
-    estado?: string;
-    orden?: string;
-  }>;
-}
+import { Suspense, useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { PRODUCTS } from "@/data/products";
+import ProductGrid from "@/components/products/ProductGrid";
+import FilterBar from "@/components/products/FilterBar";
 
-export const metadata = {
-  title: "Productos | Spot Games",
-  description:
-    "Catálogo completo de consolas, juegos, accesorios y retro. Nuevos y usados con garantía.",
-};
+function ProductosContent() {
+  const searchParams = useSearchParams();
 
-export default async function ProductosPage({ searchParams }: ProductosPageProps) {
-  const params = await searchParams;
+  const [activeCategory, setActiveCategory] = useState("Todos");
+  const [activePlatform, setActivePlatform] = useState("Todos");
+  const [activeState, setActiveState] = useState("Todos");
 
-  let filtered = [...products];
+  useEffect(() => {
+    const cat = searchParams.get("categoria");
+    const plat = searchParams.get("plataforma");
+    if (cat) setActiveCategory(cat);
+    if (plat) setActivePlatform(plat);
+  }, [searchParams]);
 
-  if (params.categoria) {
-    filtered = filtered.filter((p) => p.category === (params.categoria as Category));
-  }
-  if (params.plataforma) {
-    filtered = filtered.filter((p) => p.platform === (params.plataforma as Platform));
-  }
-  if (params.estado) {
-    filtered = filtered.filter((p) => p.state === (params.estado as ProductState));
-  }
-
-  if (params.orden === "precio-asc") {
-    filtered.sort((a, b) => a.price - b.price);
-  } else if (params.orden === "precio-desc") {
-    filtered.sort((a, b) => b.price - a.price);
-  } else if (params.orden === "nuevo") {
-    filtered.sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
-  }
+  const filtered = useMemo(() => {
+    return PRODUCTS.filter((p) => {
+      if (activeCategory !== "Todos" && p.category !== activeCategory) return false;
+      if (activePlatform !== "Todos" && p.platform !== activePlatform) return false;
+      if (activeState !== "Todos" && p.state !== activeState) return false;
+      return true;
+    });
+  }, [activeCategory, activePlatform, activeState]);
 
   return (
-    <div className="min-h-screen bg-bg pt-16">
-      {/* Page header */}
-      <div className="bg-surface border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-          <p className="font-display font-semibold text-sm uppercase tracking-widest text-purple-light mb-1">
+    <>
+      <FilterBar
+        activeCategory={activeCategory}
+        activePlatform={activePlatform}
+        activeState={activeState}
+        onCategory={setActiveCategory}
+        onPlatform={setActivePlatform}
+        onState={setActiveState}
+        total={filtered.length}
+      />
+      <ProductGrid products={filtered} />
+    </>
+  );
+}
+
+export default function ProductosPage() {
+  return (
+    <div className="min-h-screen pt-24 pb-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12 border-b border-border pb-10">
+          <p className="font-display font-semibold text-xs uppercase tracking-widest text-grape mb-3">
             Catálogo
           </p>
-          <h1 className="font-display font-bold text-3xl sm:text-4xl text-text">
+          <h1
+            className="font-display font-bold text-white uppercase leading-none"
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+          >
             Todos los productos
           </h1>
-          <p className="text-muted text-sm mt-2">
-            {filtered.length} producto{filtered.length !== 1 ? "s" : ""}
-            {params.categoria || params.plataforma || params.estado
-              ? " con los filtros aplicados"
-              : " disponibles"}
-          </p>
         </div>
-      </div>
 
-      {/* FilterBar needs useSearchParams — wrapped in Suspense */}
-      <Suspense fallback={<div className="h-16 bg-surface border-b border-border" />}>
-        <FilterBar />
-      </Suspense>
-
-      {/* Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <ProductGrid products={filtered} />
+        <Suspense fallback={<div className="text-muted font-body py-12 text-center">Cargando...</div>}>
+          <ProductosContent />
+        </Suspense>
       </div>
     </div>
   );

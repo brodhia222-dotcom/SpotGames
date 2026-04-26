@@ -7,15 +7,16 @@ export type Platform =
   | "Retro"
   | "Multiplatforma";
 
-export type ProductState = "Nuevo" | "Usado" | "Oferta";
-
 export type Category = "Juegos" | "Consolas" | "Accesorios" | "Retro";
+
+export type ProductState = "Nuevo" | "Usado" | "Oferta";
 
 export interface Product {
   id: string;
   slug: string;
   name: string;
   price: number;
+  originalPrice?: number;
   platform: Platform;
   category: Category;
   state: ProductState;
@@ -23,15 +24,16 @@ export interface Product {
   image: string;
   featured: boolean;
   stock: number;
-  createdAt: string;
 }
 
 export interface Service {
   id: string;
+  slug: string;
   title: string;
   description: string;
-  iconName: string;
+  longDescription: string;
   price?: string;
+  icon: string;
   whatsappText: string;
 }
 
@@ -39,10 +41,3 @@ export interface CartItem {
   product: Product;
   quantity: number;
 }
-
-export type FilterState = {
-  categoria: string;
-  plataforma: string;
-  estado: string;
-  orden: string;
-};

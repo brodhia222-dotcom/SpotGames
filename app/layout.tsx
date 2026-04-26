@@ -1,50 +1,47 @@
 import type { Metadata } from "next";
-import { Rajdhani, Inter } from "next/font/google";
+import { Rajdhani, Orbitron, Outfit } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import CartDrawer from "@/components/CartDrawer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import CartDrawer from "@/components/layout/CartDrawer";
 
 const rajdhani = Rajdhani({
-  variable: "--font-display",
+  variable: "--font-rajdhani",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-sans",
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Spot Games | Videojuegos en Argentina",
+  title: "Spot Games — Tu local de videojuegos",
   description:
-    "Consolas, juegos, accesorios y retro en Argentina. Compra, venta y reparación de videojuegos. Envíos a todo el país. Seguinos en @spotgames.ar",
-  openGraph: {
-    title: "Spot Games | Videojuegos en Argentina",
-    description:
-      "Tu tienda gamer de confianza. Nuevos, usados, retro y accesorios.",
-    siteName: "Spot Games",
-    locale: "es_AR",
-    type: "website",
-  },
+    "Juegos nuevos y usados, consolas, accesorios y retro. Comprá, vendé y jugá en Spot Games.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="es" className={`${rajdhani.variable} ${inter.variable}`}>
-      <body className="antialiased bg-bg text-text min-h-screen flex flex-col">
+    <html lang="es">
+      <body
+        className={`${rajdhani.variable} ${orbitron.variable} ${outfit.variable} bg-void text-white font-body antialiased`}
+      >
         <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
         <CartDrawer />
+        <main className="overflow-x-hidden w-full max-w-full">{children}</main>
+        <Footer />
       </body>
     </html>
   );
