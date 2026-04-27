@@ -85,11 +85,10 @@ export default function ServiciosPage() {
               }}
             >
               <div
-                className="w-12 h-12 flex items-center justify-center rounded-[8px] flex-shrink-0"
+                className="w-12 h-12 flex items-center justify-center rounded-[8px] flex-shrink-0 transition-colors duration-200"
                 style={{
-                  color: cat.color,
-                  background: cat.color + "18",
-                  border: `1px solid ${cat.color}30`,
+                  border: "1px solid var(--color-border)",
+                  color: "var(--color-text-dim)",
                 }}
               >
                 {ICONS[cat.iconKey]}
@@ -206,13 +205,15 @@ export default function ServiciosPage() {
                         >
                           {s.description}
                         </td>
-                        <td
-                          className="px-4 py-3 text-right font-bold whitespace-nowrap"
-                          style={{ fontFamily: "var(--font-mono)", fontSize: "0.84rem", color: cat.color }}
-                        >
-                          {s.priceFrom
-                            ? `Desde ARS ${s.priceFrom.toLocaleString("es-AR")}`
-                            : "Consultar"}
+                        <td className="px-4 py-3 text-right whitespace-nowrap" style={{ fontFamily: "var(--font-mono)" }}>
+                          {s.priceFrom ? (
+                            <>
+                              <span style={{ fontSize: "0.72rem", color: "var(--color-text-muted)" }}>Desde </span>
+                              <span style={{ fontSize: "0.84rem", fontWeight: 600, color: "var(--color-text)" }}>ARS {s.priceFrom.toLocaleString("es-AR")}</span>
+                            </>
+                          ) : (
+                            <span style={{ fontSize: "0.72rem", color: "var(--color-text-dim)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Consultar</span>
+                          )}
                         </td>
                       </tr>
                     ))}

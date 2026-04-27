@@ -44,7 +44,6 @@ body {
   color: var(--color-text);
   font-family: var(--font-body, sans-serif);
   line-height: 1.65;
-  cursor: none;
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.08) transparent;
@@ -52,7 +51,7 @@ body {
 
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-button { font-family: inherit; cursor: none; border: none; background: none; }
+button { font-family: inherit; cursor: inherit; border: none; background: none; }
 input, select, textarea { font-family: inherit; }
 
 ::selection {
@@ -60,40 +59,6 @@ input, select, textarea { font-family: inherit; }
   color: var(--color-text);
 }
 
-/* ── CUSTOM CURSOR ──────────────────────────────── */
-#cursor-dot {
-  position: fixed;
-  width: 5px; height: 5px;
-  background: var(--color-text);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: background 0.2s;
-  mix-blend-mode: difference;
-}
-#cursor-ring {
-  position: fixed;
-  width: 28px; height: 28px;
-  border: 1.5px solid rgba(240,237,232,0.3);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition:
-    width 0.22s ease,
-    height 0.22s ease,
-    border-color 0.22s ease,
-    background 0.22s ease;
-}
-.cursor-on-interactive #cursor-ring {
-  width: 48px; height: 48px;
-  border-color: var(--color-purple);
-  background: rgba(168,85,247,0.06);
-}
-.cursor-on-interactive #cursor-dot {
-  background: var(--color-purple);
-}
 
 /* ── TAGS ───────────────────────────────────────── */
 .tag {
@@ -188,13 +153,16 @@ input, select, textarea { font-family: inherit; }
 }
 @keyframes orb-drift-1 {
   0%,100% { transform: translate(0,0) scale(1); }
-  33%     { transform: translate(30px,-20px) scale(1.05); }
-  66%     { transform: translate(-20px,15px) scale(0.97); }
+  33%     { transform: translate(80px,-60px) scale(1.1); }
+  66%     { transform: translate(-60px,80px) scale(0.9); }
 }
 @keyframes orb-drift-2 {
   0%,100% { transform: translate(0,0) scale(1); }
-  40%     { transform: translate(-25px,20px) scale(1.04); }
-  70%     { transform: translate(20px,-15px) scale(0.98); }
+  50%     { transform: translate(-100px,60px) scale(1.15); }
+}
+@keyframes orb-drift-3 {
+  0%,100% { transform: translate(-50%,-50%) scale(1); }
+  50%     { transform: translate(-50%,-55%) scale(1.1); }
 }
 
 /* ── REDUCED MOTION ─────────────────────────────── */

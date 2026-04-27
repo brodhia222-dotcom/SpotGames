@@ -73,22 +73,12 @@ export default function ProductCard({ product }: Props) {
             onError={() => setImgError(true)}
           />
         ) : (
-          /* Striped placeholder */
-          <div
-            className="w-full h-full flex flex-col items-center justify-center gap-2 p-4 text-center"
-            style={{
-              background: `repeating-linear-gradient(-45deg, #17171E 0px, #17171E 10px, #121218 10px, #121218 20px)`,
-            }}
-          >
-            <svg width="28" height="28" viewBox="0 0 36 36" fill="none" style={{ opacity: 0.25 }}>
-              <rect x="4" y="10" width="28" height="18" rx="3" stroke={color} strokeWidth="1.2"/>
-              <circle cx="18" cy="19" r="5" stroke={color} strokeWidth="1.2"/>
-              <circle cx="18" cy="19" r="2" fill={color} fillOpacity="0.5"/>
-            </svg>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.55rem", color: "#3A3848", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-              {product.platform}
-            </span>
-          </div>
+          /* Clean placeholder */
+          <img
+            src={`https://placehold.co/640x440/111115/${(PLATFORM_COLORS[product.platform] ?? "#A855F7").replace("#", "")}/png?text=${encodeURIComponent(product.platform)}&font=raleway`}
+            alt={product.platform}
+            className="w-full h-full object-cover"
+          />
         )}
       </div>
 

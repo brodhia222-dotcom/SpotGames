@@ -31,6 +31,7 @@ export default function Hero() {
   const layerRef = useRef<HTMLDivElement>(null);
   const orb1Ref = useRef<HTMLDivElement>(null);
   const orb2Ref = useRef<HTMLDivElement>(null);
+  const orb3Ref = useRef<HTMLDivElement>(null);
   const line1Ref = useRef<HTMLDivElement>(null);
   const line2Ref = useRef<HTMLDivElement>(null);
   const line3Ref = useRef<HTMLDivElement>(null);
@@ -109,10 +110,13 @@ export default function Hero() {
 
       // Orb float animation
       if (orb1Ref.current) {
-        gsap.to(orb1Ref.current, { y: -30, x: 20, duration: 8, ease: "sine.inOut", repeat: -1, yoyo: true });
+        gsap.to(orb1Ref.current, { y: -40, x: 30, duration: 9, ease: "sine.inOut", repeat: -1, yoyo: true });
       }
       if (orb2Ref.current) {
-        gsap.to(orb2Ref.current, { y: 25, x: -15, duration: 10, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2 });
+        gsap.to(orb2Ref.current, { y: 35, x: -25, duration: 11, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2 });
+      }
+      if (orb3Ref.current) {
+        gsap.to(orb3Ref.current, { y: -20, x: 15, duration: 13, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 4 });
       }
     }, sectionRef);
 
@@ -140,6 +144,9 @@ export default function Hero() {
       if (line3Ref.current) {
         gsap.to(line3Ref.current, { x: dx * 25, y: dy * -12, duration: 0.6, ease: "power2.out", overwrite: "auto" });
       }
+      if (orb3Ref.current) {
+        gsap.to(orb3Ref.current, { x: dx * -20, y: dy * 15, duration: 0.9, ease: "power2.out", overwrite: "auto" });
+      }
       if (layerRef.current) {
         gsap.to(layerRef.current, { rotateX: dy * 2, rotateY: dx * -3, duration: 0.6, ease: "power2.out", overwrite: "auto" });
       }
@@ -165,13 +172,13 @@ export default function Hero() {
         ref={orb1Ref}
         className="absolute pointer-events-none"
         style={{
-          top: "15%",
-          left: "10%",
-          width: 600,
-          height: 600,
-          background: "radial-gradient(circle, rgba(168,85,247,0.09) 0%, transparent 70%)",
+          top: "-8%",
+          left: "-8%",
+          width: 700,
+          height: 700,
+          background: "radial-gradient(circle, rgba(168,85,247,0.18) 0%, transparent 70%)",
           borderRadius: "50%",
-          filter: "blur(40px)",
+          filter: "blur(80px)",
           zIndex: 0,
         }}
       />
@@ -181,13 +188,40 @@ export default function Hero() {
         ref={orb2Ref}
         className="absolute pointer-events-none"
         style={{
-          bottom: "5%",
-          right: "8%",
+          bottom: "-12%",
+          right: "-6%",
+          width: 650,
+          height: 650,
+          background: "radial-gradient(circle, rgba(74,222,128,0.12) 0%, transparent 70%)",
+          borderRadius: "50%",
+          filter: "blur(100px)",
+          zIndex: 0,
+        }}
+      />
+
+      {/* Aurora orb 3 — centro */}
+      <div
+        ref={orb3Ref}
+        className="absolute pointer-events-none"
+        style={{
+          top: "45%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
           width: 500,
           height: 500,
-          background: "radial-gradient(circle, rgba(74,222,128,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%)",
           borderRadius: "50%",
-          filter: "blur(60px)",
+          filter: "blur(90px)",
+          zIndex: 0,
+        }}
+      />
+
+      {/* Subtle grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(rgba(168,85,247,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.05) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
           zIndex: 0,
         }}
       />
@@ -201,7 +235,7 @@ export default function Hero() {
           left: "5%",
           width: "40vw",
           height: 1,
-          background: "linear-gradient(to right, transparent, rgba(168,85,247,0.2), transparent)",
+          background: "linear-gradient(to right, transparent, rgba(168,85,247,0.3), transparent)",
           transform: "rotate(-18deg)",
           zIndex: 1,
         }}
@@ -216,7 +250,7 @@ export default function Hero() {
           right: "3%",
           width: "35vw",
           height: 1,
-          background: "linear-gradient(to right, transparent, rgba(168,85,247,0.15), transparent)",
+          background: "linear-gradient(to right, transparent, rgba(168,85,247,0.25), transparent)",
           transform: "rotate(12deg)",
           zIndex: 1,
         }}
@@ -231,7 +265,7 @@ export default function Hero() {
           left: "2%",
           width: "25vw",
           height: 1,
-          background: "linear-gradient(to right, rgba(74,222,128,0.08), transparent)",
+          background: "linear-gradient(to right, rgba(74,222,128,0.15), transparent)",
           transform: "rotate(-8deg)",
           zIndex: 1,
         }}
@@ -392,27 +426,20 @@ export default function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="hero-stats flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-0">
+        <div className="hero-stats flex flex-wrap items-start justify-center gap-x-12 gap-y-6">
           {STATS.map((stat, i) => (
-            <div key={i} className="flex items-center">
-              {i > 0 && (
-                <div className="hidden sm:block w-px h-8 mx-8" style={{ background: "var(--color-border)" }} />
-              )}
-              <div className="flex flex-col items-center gap-1">
-                <span
-                  className="font-semibold"
-                  ref={(el) => { statRefs.current[i] = el; }}
-                  style={{ fontFamily: "var(--font-mono)", fontSize: "1.25rem", color: "var(--color-text)" }}
-                >
-                  {stat.prefix}{stat.value.toLocaleString("es-AR")}{stat.suffix}
-                </span>
-                <span
-                  className="text-[0.65rem] font-bold uppercase tracking-[0.1em]"
-                  style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-body)" }}
-                >
-                  {stat.label}
-                </span>
-              </div>
+            <div key={i} className="text-center">
+              <span
+                ref={(el) => { statRefs.current[i] = el; }}
+                style={{ display: "block", fontFamily: "var(--font-mono)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 600, color: "var(--color-text)", lineHeight: 1 }}
+              >
+                {stat.prefix}{stat.value.toLocaleString("es-AR")}{stat.suffix}
+              </span>
+              <span
+                style={{ display: "block", fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--color-text-muted)", textTransform: "uppercase", letterSpacing: "0.15em", maxWidth: 140, margin: "8px auto 0", lineHeight: 1.4 }}
+              >
+                {stat.label}
+              </span>
             </div>
           ))}
         </div>

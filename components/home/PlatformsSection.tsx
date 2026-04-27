@@ -35,7 +35,7 @@ export default function PlatformsSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 px-6 md:px-8" style={{ borderBottom: "1px solid var(--color-border)" }}>
+    <section ref={sectionRef} className="py-20 md:py-28 px-6 md:px-8" style={{ borderBottom: "1px solid var(--color-border)" }}>
       <div className="max-w-[1400px] mx-auto">
         <div className="platforms-header mb-7">
           <p className="text-[0.625rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-body)" }}>

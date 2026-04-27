@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { FEATURED_PRODUCTS } from "@/data/products";
@@ -11,6 +11,7 @@ void ScrollTrigger;
 export default function FeaturedProducts() {
   const sectionRef = useRef<HTMLElement>(null);
   const mainImgRef = useRef<HTMLDivElement>(null);
+  const [mainImgError, setMainImgError] = useState(false);
   const featured = FEATURED_PRODUCTS.slice(0, 5);
   const [main, ...rest] = featured;
 
@@ -114,18 +115,22 @@ export default function FeaturedProducts() {
               className="relative overflow-hidden flex items-center justify-center"
               style={{ minHeight: 220, background: "var(--color-surface-2)" }}
             >
-              {main.image ? (
+              {main.image && !mainImgError ? (
                 <img
                   src={main.image}
                   alt={main.name}
                   loading="lazy"
                   className="w-full object-cover"
                   style={{ minHeight: 220 }}
+                  onError={() => setMainImgError(true)}
                 />
               ) : (
-                <div className="flex flex-col items-center gap-2 p-6" style={{ background: `repeating-linear-gradient(-45deg, #17171E 0px, #17171E 12px, #121218 12px, #121218 24px)`, position: "absolute", inset: 0 }}>
-                  <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 80%, rgba(168,85,247,0.12) 0%, transparent 60%)" }} />
-                </div>
+                <img
+                  src={`https://placehold.co/800x480/111115/A855F7/png?text=${encodeURIComponent(main.platform)}&font=raleway`}
+                  alt={main.platform}
+                  className="w-full object-cover"
+                  style={{ minHeight: 220 }}
+                />
               )}
               <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 80%, rgba(168,85,247,0.12) 0%, transparent 60%)", pointerEvents: "none" }} />
             </div>

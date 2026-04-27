@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/ui/CustomCursor";
 import LenisProvider from "@/components/LenisProvider";
 import StoreHydration from "@/components/StoreHydration";
 import Navbar from "@/components/layout/Navbar";
@@ -40,7 +39,6 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} ${inter.variable} bg-bg text-text font-body antialiased`}
       >
-        <CustomCursor />
         <StoreHydration />
         <LenisProvider>
           <Navbar />
