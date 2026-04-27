@@ -1,113 +1,172 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
-import Image from "next/image";
 
 export default function CartDrawer() {
-  const { items, isOpen, closeDrawer, removeItem, updateQuantity, getTotalPrice, buildWhatsAppMessage } =
-    useCartStore();
+  const items = useCartStore((s) => s.items);
+  const isOpen = useCartStore((s) => s.isOpen);
+  const closeDrawer = useCartStore((s) => s.closeDrawer);
+  const removeItem = useCartStore((s) => s.removeItem);
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
+  const getTotalPrice = useCartStore((s) => s.getTotalPrice);
+  const buildWhatsAppMessage = useCartStore((s) => s.buildWhatsAppMessage);
 
   const total = getTotalPrice();
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+          className="fixed inset-0 z-40"
+          style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
           onClick={closeDrawer}
         />
       )}
 
       {/* Drawer */}
       <aside
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-surface border-l border-border z-50 flex flex-col transition-transform duration-500 ease-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className="fixed top-0 right-0 h-full w-full max-w-[400px] z-50 flex flex-col transition-transform duration-300"
+        style={{
+          background: "var(--color-surface)",
+          borderLeft: "1px solid var(--color-border)",
+          transform: isOpen ? "translateX(0)" : "translateX(100%)",
+        }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-border">
-          <h2 className="font-display font-bold text-lg uppercase tracking-widest text-white">
-            Tu Carrito
-          </h2>
+        <div
+          className="flex items-center justify-between px-5 py-4 flex-shrink-0"
+          style={{ borderBottom: "1px solid var(--color-border)" }}
+        >
+          <div className="flex items-center gap-3">
+            <h2 className="font-semibold text-[0.95rem]" style={{ color: "var(--color-text)", fontFamily: "var(--font-display)" }}>
+              Carrito
+            </h2>
+            {items.length > 0 && (
+              <span
+                className="px-2 py-0.5 rounded text-white text-[0.65rem] font-bold"
+                style={{ background: "var(--color-purple)", fontFamily: "var(--font-mono)" }}
+              >
+                {items.length}
+              </span>
+            )}
+          </div>
           <button
             onClick={closeDrawer}
-            className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-colors cursor-pointer"
+            className="flex items-center justify-center w-8 h-8 rounded transition-colors"
+            style={{ color: "var(--color-text-muted)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
+            aria-label="Cerrar carrito"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </button>
         </div>
 
         {/* Items */}
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto">
           {items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1} className="w-16 h-16 text-border">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+            <div className="flex flex-col items-center justify-center h-full gap-4 px-6">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style={{ opacity: 0.2 }}>
+                <path d="M6 6h6l7 22h18l5-16H14" stroke="var(--color-text)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="20" cy="38" r="3" fill="var(--color-text)"/>
+                <circle cx="34" cy="38" r="3" fill="var(--color-text)"/>
               </svg>
-              <p className="text-muted font-body text-sm">Tu carrito está vacío</p>
+              <p className="text-[0.875rem]" style={{ color: "var(--color-text-muted)" }}>
+                Tu carrito está vacío
+              </p>
             </div>
           ) : (
-            items.map((item) => (
-              <div key={item.product.id} className="flex gap-4 p-4 bg-surface-2 border border-border">
-                <div className="relative w-16 h-16 shrink-0 overflow-hidden bg-void">
-                  <Image
-                    src={item.product.image}
-                    alt={item.product.name}
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-display font-semibold text-sm text-white truncate">
-                    {item.product.name}
-                  </p>
-                  <p className="text-xs text-muted font-body mt-0.5">
-                    {item.product.platform} · {item.product.state}
-                  </p>
-                  <p className="font-tech text-grape text-sm mt-1">
-                    ${item.product.price.toLocaleString("es-AR")}
-                  </p>
-
-                  {/* Quantity controls */}
-                  <div className="flex items-center gap-3 mt-2">
-                    <button
-                      onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                      className="w-6 h-6 flex items-center justify-center border border-border text-muted hover:border-grape hover:text-grape transition-colors text-sm cursor-pointer"
-                    >
-                      −
-                    </button>
-                    <span className="font-tech text-sm w-4 text-center">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                      className="w-6 h-6 flex items-center justify-center border border-border text-muted hover:border-grape hover:text-grape transition-colors text-sm cursor-pointer"
-                    >
-                      +
-                    </button>
-                    <button
-                      onClick={() => removeItem(item.product.id)}
-                      className="ml-auto text-muted hover:text-danger transition-colors cursor-pointer"
-                    >
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            <div className="divide-y" style={{ borderColor: "var(--color-border)" }}>
+              {items.map(({ product, quantity }) => (
+                <div key={product.id} className="flex gap-4 px-5 py-4">
+                  {/* Image placeholder */}
+                  <div
+                    className="w-16 h-16 rounded flex-shrink-0 flex items-center justify-center overflow-hidden"
+                    style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)" }}
+                  >
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
+                      />
+                    ) : (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ opacity: 0.3 }}>
+                        <rect x="3" y="7" width="18" height="13" rx="2" stroke="var(--color-text)" strokeWidth="1.5"/>
+                        <circle cx="12" cy="13" r="3" stroke="var(--color-text)" strokeWidth="1.5"/>
                       </svg>
-                    </button>
+                    )}
                   </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[0.84rem] font-medium leading-tight mb-0.5 truncate" style={{ color: "var(--color-text)", fontFamily: "var(--font-display)" }}>
+                      {product.name}
+                    </p>
+                    <p className="text-[0.72rem] mb-2" style={{ color: "var(--color-text-muted)" }}>
+                      {product.platform}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      {/* Qty controls */}
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => updateQuantity(product.id, quantity - 1)}
+                          className="w-6 h-6 rounded flex items-center justify-center text-[0.75rem] font-bold transition-colors"
+                          style={{ background: "var(--color-surface-2)", color: "var(--color-text-dim)", border: "1px solid var(--color-border)" }}
+                          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--color-border-hover)")}
+                          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--color-border)")}
+                        >
+                          −
+                        </button>
+                        <span className="w-6 text-center text-[0.8rem] font-semibold" style={{ color: "var(--color-text)", fontFamily: "var(--font-mono)" }}>
+                          {quantity}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(product.id, quantity + 1)}
+                          className="w-6 h-6 rounded flex items-center justify-center text-[0.75rem] font-bold transition-colors"
+                          style={{ background: "var(--color-surface-2)", color: "var(--color-text-dim)", border: "1px solid var(--color-border)" }}
+                          onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--color-border-hover)")}
+                          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--color-border)")}
+                        >
+                          +
+                        </button>
+                      </div>
+                      {/* Price */}
+                      <p className="text-[0.84rem] font-semibold" style={{ color: "var(--color-text)", fontFamily: "var(--font-mono)" }}>
+                        ${(product.price * quantity).toLocaleString("es-AR")}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Remove */}
+                  <button
+                    onClick={() => removeItem(product.id)}
+                    className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded transition-colors self-start mt-0.5"
+                    style={{ color: "var(--color-text-muted)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
+                    aria-label="Eliminar"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M1.5 1.5l9 9M10.5 1.5l-9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                  </button>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="px-6 py-5 border-t border-border space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="font-body text-muted text-sm">Total</span>
-              <span className="font-tech font-bold text-xl text-grape">
+          <div className="flex-shrink-0 px-5 py-4" style={{ borderTop: "1px solid var(--color-border)" }}>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[0.84rem]" style={{ color: "var(--color-text-dim)" }}>Subtotal</span>
+              <span className="text-[1.1rem] font-semibold" style={{ color: "var(--color-text)", fontFamily: "var(--font-mono)" }}>
                 ${total.toLocaleString("es-AR")}
               </span>
             </div>
@@ -115,13 +174,18 @@ export default function CartDrawer() {
               href={`https://wa.me/541157649264?text=${buildWhatsAppMessage()}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-4 bg-ctrl/10 border border-ctrl text-ctrl font-display font-bold text-sm uppercase tracking-widest hover:bg-ctrl/20 transition-all duration-300 ctrl-border"
+              className="btn btn-primary w-full justify-center mb-2"
+              style={{ borderRadius: "6px" }}
+              onClick={closeDrawer}
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" style={{ width: 16, height: 16 }}>
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
               </svg>
-              Confirmar por WhatsApp
+              Consultar por WhatsApp
             </a>
+            <p className="text-center text-[0.65rem]" style={{ color: "var(--color-text-muted)" }}>
+              Los precios son de referencia. Confirmamos disponibilidad por WhatsApp.
+            </p>
           </div>
         )}
       </aside>

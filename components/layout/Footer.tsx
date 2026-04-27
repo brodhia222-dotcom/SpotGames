@@ -1,166 +1,141 @@
+"use client";
+
 import Link from "next/link";
+
+const NAV_LINKS = [
+  { label: "Inicio", href: "/" },
+  { label: "Catálogo", href: "/catalogo" },
+  { label: "Servicios", href: "/servicios" },
+  { label: "Nosotros", href: "/nosotros" },
+  { label: "Contacto", href: "/contacto" },
+];
+
+const PLATFORM_LINKS = [
+  { label: "PlayStation 5", href: "/catalogo?platform=PS5" },
+  { label: "PlayStation 4", href: "/catalogo?platform=PS4" },
+  { label: "Xbox Series",   href: "/catalogo?platform=Xbox" },
+  { label: "Nintendo Switch", href: "/catalogo?platform=Switch" },
+  { label: "Retro",         href: "/catalogo?platform=Retro" },
+  { label: "PC & Periféricos", href: "/catalogo?platform=PC" },
+];
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-border mt-24 bg-void/80 backdrop-blur">
-      {/* Top accent gradient */}
-      <div className="h-px bg-gradient-to-r from-transparent via-grape to-transparent" />
+    <footer style={{ background: "var(--color-surface)", borderTop: "1px solid var(--color-border)" }}>
+      {/* Purple top accent */}
+      <div style={{ height: "1px", background: "linear-gradient(to right, transparent, rgba(168,85,247,0.3), transparent)" }} />
 
-      <div className="container mx-auto px-8 py-12">
-        {/* Terminal vibes */}
-        <div className="font-pixel text-[8px] text-muted mb-8 flex items-center gap-3">
-          <span className="text-ctrl">●</span>
-          &gt; SPOTGAMES.SYS — UPTIME: 5Y · STATUS: ONLINE · v2.0
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <div className="max-w-[1400px] mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12">
           {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <svg viewBox="0 0 32 32" className="w-8 h-8" fill="none">
-                <circle cx="16" cy="20" r="6" fill="#A855F7" />
-                <circle cx="10" cy="16" r="5" fill="#A855F7" />
-                <circle cx="22" cy="16" r="5" fill="#A855F7" />
-                <circle cx="13" cy="10" r="4" fill="#7C3AED" />
-                <circle cx="19" cy="10" r="4" fill="#7C3AED" />
-                <rect x="4" y="2" width="12" height="8" rx="2" fill="#4ADE80" />
-                <circle cx="7" cy="6" r="1.5" fill="white" />
-                <circle cx="13" cy="6" r="1.5" fill="white" />
-                <circle cx="10" cy="4" r="1.5" fill="white" />
-                <circle cx="10" cy="8" r="1.5" fill="white" />
+          <div>
+            <Link href="/" className="flex items-center gap-2.5 mb-5">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <rect width="28" height="28" rx="6" fill="#A855F7" fillOpacity="0.15"/>
+                <rect x="0.5" y="0.5" width="27" height="27" rx="5.5" stroke="#A855F7" strokeOpacity="0.3"/>
+                <path d="M8 14c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#A855F7" strokeWidth="1.5" strokeLinecap="round"/>
+                <circle cx="14" cy="14" r="2" fill="#A855F7"/>
+                <path d="M10 17h1.5M16.5 17H18" stroke="#4ADE80" strokeWidth="1.5" strokeLinecap="round"/>
+                <circle cx="11" cy="11" r="0.75" fill="#F0EDE8" fillOpacity="0.5"/>
+                <circle cx="17" cy="11" r="0.75" fill="#F0EDE8" fillOpacity="0.5"/>
               </svg>
-              <span className="font-display font-bold text-xl">
-                <span className="text-white">SPOT</span>
-                <span className="text-grape">GAMES</span>
+              <span className="font-semibold text-[0.95rem] tracking-[-0.02em]" style={{ fontFamily: "var(--font-geist, sans-serif)", color: "var(--color-text)" }}>
+                Spot<span style={{ color: "#A855F7" }}>Games</span>
               </span>
-            </div>
-            <p className="font-body text-sm text-muted leading-relaxed max-w-md mb-4">
-              Tu local de confianza para juegos nuevos, usados, consolas,
-              accesorios y toda la cultura gamer. Buenos Aires, Argentina.
+            </Link>
+            <p className="text-[0.84rem] leading-relaxed max-w-[280px] mb-6" style={{ color: "var(--color-text-dim)" }}>
+              Tu local de videojuegos en Buenos Aires. Juegos nuevos y usados, consolas, accesorios y servicios de reparación.
             </p>
-            <p className="font-tech text-xs text-grape uppercase tracking-widest mb-6">
-              📍 Buenos Aires, Argentina
-            </p>
-
-            <div className="flex gap-3">
+            {/* Social links */}
+            <div className="flex items-center gap-3">
               <a
                 href="https://www.instagram.com/spotgames.ar/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 border border-border hover:border-grape hover:text-grape transition-colors flex items-center justify-center text-muted"
+                className="flex items-center justify-center w-9 h-9 rounded transition-colors"
+                style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text-dim)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(168,85,247,0.4)"; e.currentTarget.style.color = "var(--color-text)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--color-border)"; e.currentTarget.style.color = "var(--color-text-dim)"; }}
                 aria-label="Instagram"
               >
-                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
                 </svg>
               </a>
               <a
                 href="https://wa.me/541157649264"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 border border-border hover:border-ctrl hover:text-ctrl transition-colors flex items-center justify-center text-muted"
+                className="flex items-center justify-center w-9 h-9 rounded transition-colors"
+                style={{ background: "var(--color-surface-2)", border: "1px solid var(--color-border)", color: "var(--color-text-dim)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(74,222,128,0.4)"; e.currentTarget.style.color = "var(--color-green)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--color-border)"; e.currentTarget.style.color = "var(--color-text-dim)"; }}
                 aria-label="WhatsApp"
               >
-                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
-                  <path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.69 5.522l-.999 3.648 3.798-.869z" />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
               </a>
             </div>
           </div>
 
-          {/* Navegación */}
+          {/* Nav */}
           <div>
-            <div className="font-tech text-xs text-grape uppercase tracking-[0.2em] mb-4">
-              / NAVEGACIÓN
-            </div>
-            <ul className="space-y-2 font-body text-sm">
-              <li>
-                <Link href="/productos" className="text-muted hover:text-white transition-colors">
-                  → Productos
-                </Link>
-              </li>
-              <li>
-                <Link href="/servicios" className="text-muted hover:text-white transition-colors">
-                  → Servicios
-                </Link>
-              </li>
-              <li>
-                <Link href="/nosotros" className="text-muted hover:text-white transition-colors">
-                  → Nosotros
-                </Link>
-              </li>
-              <li>
-                <Link href="/contacto" className="text-muted hover:text-white transition-colors">
-                  → Contacto
-                </Link>
-              </li>
+            <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-5" style={{ color: "var(--color-text-muted)" }}>
+              Navegación
+            </p>
+            <ul className="space-y-2">
+              {NAV_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-[0.84rem] transition-colors"
+                    style={{ color: "var(--color-text-dim)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-dim)")}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Categorías */}
+          {/* Plataformas */}
           <div>
-            <div className="font-tech text-xs text-grape uppercase tracking-[0.2em] mb-4">
-              / CATEGORÍAS
-            </div>
-            <ul className="space-y-2 font-body text-sm">
-              <li>
-                <Link
-                  href="/productos?categoria=Juegos"
-                  className="text-muted hover:text-white transition-colors"
-                >
-                  → Juegos
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/productos?categoria=Consolas"
-                  className="text-muted hover:text-white transition-colors"
-                >
-                  → Consolas
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/productos?categoria=Accesorios"
-                  className="text-muted hover:text-white transition-colors"
-                >
-                  → Accesorios
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/productos?platform=Retro"
-                  className="text-muted hover:text-white transition-colors"
-                >
-                  → Retro
-                </Link>
-              </li>
+            <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-5" style={{ color: "var(--color-text-muted)" }}>
+              Plataformas
+            </p>
+            <ul className="space-y-2">
+              {PLATFORM_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-[0.84rem] transition-colors"
+                    style={{ color: "var(--color-text-dim)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-dim)")}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-border pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="font-pixel text-[8px] text-muted">
-            © {new Date().getFullYear()} SPOT GAMES · ALL RIGHTS RESERVED
-          </div>
-          <div
-            className="font-pixel text-[8px] text-grape/40 hover:text-grape transition-colors cursor-help"
-            title="↑ ↑ ↓ ↓ ← → ← → B A"
-          >
-            ↑ ↑ ↓ ↓ ← → ← → B A
-          </div>
-          <div className="font-pixel text-[8px] text-muted">
-            BUILT BY{" "}
-            <a
-              href="https://github.com/brodhia222-dotcom"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-grape hover:text-grape-glow transition-colors"
-            >
-              BRODHIA
-            </a>
-          </div>
+      {/* Bottom bar */}
+      <div style={{ borderTop: "1px solid var(--color-border)" }}>
+        <div className="max-w-[1400px] mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[0.72rem]" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-mono)" }}>
+            © 2025 SpotGames
+          </p>
+          <p className="text-[0.72rem]" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-mono)" }}>
+            Buenos Aires · Argentina
+          </p>
         </div>
       </div>
     </footer>

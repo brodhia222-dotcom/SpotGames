@@ -1,197 +1,308 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
+import { CATEGORIES } from "@/data/services";
 
-const NAV_LINKS = [
-  { href: "/productos", label: "Productos" },
-  { href: "/servicios", label: "Servicios" },
-  { href: "/nosotros", label: "Nosotros" },
-  { href: "/contacto", label: "Contacto" },
+const PLATFORMS = [
+  { slug: "PS5",    label: "PlayStation 5",    color: "#006FCD", count: 47 },
+  { slug: "PS4",    label: "PlayStation 4",    color: "#0050A0", count: 35 },
+  { slug: "Xbox",   label: "Xbox Series",      color: "#107C10", count: 31 },
+  { slug: "Switch", label: "Nintendo Switch",  color: "#E60012", count: 58 },
+  { slug: "Retro",  label: "Retro",             color: "#C49A6C", count: 83 },
+  { slug: "PC",     label: "PC & Periféricos", color: "#4ADE80", count: 22 },
 ];
 
+const PRODUCT_CATEGORIES = [
+  { label: "Juegos",     param: "Juegos" },
+  { label: "Consolas",   param: "Consolas" },
+  { label: "Accesorios", param: "Accesorios" },
+  { label: "Retro",      param: "Retro" },
+];
+
+function SpotGamesLogo() {
+  return (
+    <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect width="28" height="28" rx="6" fill="#A855F7" fillOpacity="0.15"/>
+        <rect x="0.5" y="0.5" width="27" height="27" rx="5.5" stroke="#A855F7" strokeOpacity="0.3"/>
+        <path d="M8 14c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#A855F7" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="14" cy="14" r="2" fill="#A855F7"/>
+        <path d="M10 17h1.5M16.5 17H18" stroke="#4ADE80" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="11" cy="11" r="0.75" fill="#F0EDE8" fillOpacity="0.5"/>
+        <circle cx="17" cy="11" r="0.75" fill="#F0EDE8" fillOpacity="0.5"/>
+      </svg>
+      <span className="font-semibold text-[0.95rem] tracking-[-0.02em]" style={{ fontFamily: "var(--font-geist, sans-serif)", color: "var(--color-text)" }}>
+        Spot<span style={{ color: "#A855F7" }}>Games</span>
+      </span>
+    </Link>
+  );
+}
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeMegaMenu, setActiveMegaMenu] = useState<null | "catalogo" | "servicios">(null);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [mobileAccordion, setMobileAccordion] = useState<null | "catalogo" | "servicios">(null);
+  const [previewPlatform, setPreviewPlatform] = useState<string | null>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const totalItems = useCartStore((s) => s.getTotalItems());
   const openDrawer = useCartStore((s) => s.openDrawer);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const isHome = pathname === "/";
-  const transparent = isHome && !scrolled;
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMobileOpen]);
+
+  const openMenu = (menu: "catalogo" | "servicios") => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    setActiveMegaMenu(menu);
+    setPreviewPlatform(null);
+  };
+  const scheduleClose = () => { closeTimerRef.current = setTimeout(() => setActiveMegaMenu(null), 120); };
+  const cancelClose = () => { if (closeTimerRef.current) clearTimeout(closeTimerRef.current); };
+
+  const previewData = PLATFORMS.find((p) => p.slug === previewPlatform);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        transparent
-          ? "bg-transparent"
-          : "bg-void/90 backdrop-blur-md border-b border-border"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative">
-            <svg
-              width="36"
-              height="36"
-              viewBox="0 0 36 36"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="transition-transform duration-300 group-hover:scale-110"
-            >
-              {/* Grape cluster */}
-              <circle cx="18" cy="22" r="5" fill="#A855F7" />
-              <circle cx="12" cy="18" r="4.5" fill="#A855F7" />
-              <circle cx="24" cy="18" r="4.5" fill="#A855F7" />
-              <circle cx="15" cy="11" r="4" fill="#7C3AED" />
-              <circle cx="21" cy="11" r="4" fill="#7C3AED" />
-              <circle cx="18" cy="5" r="3.5" fill="#6D28D9" />
-              {/* Stem */}
-              <path d="M18 2 Q22 4 20 8" stroke="#92400E" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              {/* Controller leaf */}
-              <rect x="7" y="1" width="10" height="6" rx="2" fill="#4ADE80" />
-              <circle cx="9" cy="4" r="0.8" fill="white" />
-              <circle cx="15" cy="4" r="0.8" fill="white" />
-              <circle cx="12" cy="2.5" r="0.8" fill="white" />
-              <circle cx="12" cy="5.5" r="0.8" fill="white" />
-            </svg>
-            <div
-              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{
-                boxShadow: "0 0 16px rgba(168, 85, 247, 0.6)",
-              }}
-            />
+    <>
+      <header
+        className="fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300"
+        style={{
+          background: isScrolled ? "rgba(10,10,11,0.94)" : "transparent",
+          backdropFilter: isScrolled ? "blur(20px)" : "none",
+          WebkitBackdropFilter: isScrolled ? "blur(20px)" : "none",
+          borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
+        }}
+      >
+        <div className="max-w-[1400px] mx-auto h-full px-6 flex items-center justify-between gap-8">
+          <SpotGamesLogo />
+
+          <nav className="hidden md:flex items-center gap-1">
+            {(["catalogo", "servicios"] as const).map((menu) => (
+              <div key={menu} onMouseEnter={() => openMenu(menu)} onMouseLeave={scheduleClose}>
+                <button
+                  className="flex items-center gap-1 px-3 py-2 rounded text-[0.84rem] font-medium transition-colors"
+                  style={{
+                    color: activeMegaMenu === menu ? "var(--color-text)" : "var(--color-text-dim)",
+                    background: activeMegaMenu === menu ? "var(--color-surface-2)" : "transparent",
+                  }}
+                >
+                  {menu === "catalogo" ? "Catálogo" : "Servicios"}
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ opacity: 0.5, transform: activeMegaMenu === menu ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                    <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            ))}
+            <Link href="/nosotros" className="px-3 py-2 rounded text-[0.84rem] font-medium transition-colors" style={{ color: "var(--color-text-dim)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-dim)")}>
+              Nosotros
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-1">
+            <Link href="/catalogo" className="hidden md:flex items-center justify-center w-9 h-9 rounded transition-colors" style={{ color: "var(--color-text-muted)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")} aria-label="Catálogo">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.5"/><path d="M10 10l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </Link>
+            <button onClick={openDrawer} className="relative flex items-center justify-center w-9 h-9 rounded transition-colors" style={{ color: "var(--color-text-muted)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")} aria-label={`Carrito ${totalItems}`}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1h2l1.5 8h8l1.5-6H4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="6.5" cy="12.5" r="1" fill="currentColor"/><circle cx="11.5" cy="12.5" r="1" fill="currentColor"/></svg>
+              {totalItems > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white" style={{ background: "var(--color-purple)", fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
+                  {totalItems > 9 ? "9+" : totalItems}
+                </span>
+              )}
+            </button>
+            <button className="md:hidden flex items-center justify-center w-9 h-9 rounded ml-1" style={{ color: "var(--color-text-dim)" }} onClick={() => setIsMobileOpen(true)} aria-label="Abrir menú">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </button>
           </div>
-          <span className="font-display font-bold text-xl text-white tracking-wide">
-            SPOT<span className="text-grape"> GAMES</span>
-          </span>
-        </Link>
+        </div>
+      </header>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => {
-            const active = pathname.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`font-display font-semibold text-sm uppercase tracking-widest transition-colors duration-200 relative group ${
-                  active ? "text-grape" : "text-muted hover:text-white"
-                }`}
-              >
-                {link.label}
-                <span
-                  className={`absolute -bottom-1 left-0 h-px bg-grape transition-all duration-300 ${
-                    active ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-                />
-              </Link>
-            );
-          })}
-        </nav>
+      {/* Mega-menu panel */}
+      <div
+        className="fixed top-16 left-0 right-0 z-40 transition-all duration-200"
+        style={{ opacity: activeMegaMenu ? 1 : 0, pointerEvents: activeMegaMenu ? "auto" : "none", transform: activeMegaMenu ? "translateY(0)" : "translateY(-8px)" }}
+        onMouseEnter={cancelClose}
+        onMouseLeave={scheduleClose}
+      >
+        {/* Catálogo */}
+        <div style={{ background: "rgba(10,10,11,0.97)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.07)", display: activeMegaMenu === "catalogo" ? "block" : "none" }}>
+          <div className="max-w-[1400px] mx-auto px-6 py-8 grid gap-8" style={{ gridTemplateColumns: "200px 180px 160px 1fr" }}>
+            <div>
+              <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "var(--color-text-muted)" }}>Plataformas</p>
+              <div className="space-y-0.5">
+                {PLATFORMS.map((p) => (
+                  <Link key={p.slug} href={`/catalogo?platform=${p.slug}`}
+                    className="flex items-center justify-between gap-3 px-2 py-1.5 rounded transition-colors"
+                    style={{ background: previewPlatform === p.slug ? "var(--color-surface-2)" : "transparent" }}
+                    onMouseEnter={() => setPreviewPlatform(p.slug)}
+                    onMouseLeave={() => setPreviewPlatform(null)}
+                    onClick={() => setActiveMegaMenu(null)}>
+                    <span className="flex items-center gap-2.5">
+                      <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: p.color, boxShadow: `0 0 6px ${p.color}88` }} />
+                      <span className="text-[0.84rem]" style={{ color: "var(--color-text-dim)" }}>{p.label}</span>
+                    </span>
+                    <span className="text-[0.65rem]" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-mono)" }}>{p.count}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "var(--color-text-muted)" }}>Categorías</p>
+              <div className="space-y-0.5">
+                {PRODUCT_CATEGORIES.map((c) => (
+                  <Link key={c.param} href={`/catalogo?categoria=${c.param}`} className="block px-2 py-1.5 rounded text-[0.84rem] transition-colors" style={{ color: "var(--color-text-dim)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-dim)")}
+                    onClick={() => setActiveMegaMenu(null)}>
+                    {c.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "var(--color-text-muted)" }}>Estado</p>
+              <div className="space-y-0.5">
+                {[{ label: "Nuevos", param: "Nuevo", color: "var(--color-green)" }, { label: "Usados", param: "Usado", color: "var(--color-text-muted)" }, { label: "Ofertas", param: "Oferta", color: "var(--color-purple)" }].map((s) => (
+                  <Link key={s.param} href={`/catalogo?state=${s.param}`} className="flex items-center gap-2 px-2 py-1.5 rounded text-[0.84rem] transition-colors" style={{ color: "var(--color-text-dim)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-dim)")}
+                    onClick={() => setActiveMegaMenu(null)}>
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />{s.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-start justify-end">
+              {previewData ? (
+                <div className="w-full max-w-[220px] rounded-lg overflow-hidden border transition-all duration-200" style={{ borderColor: `${previewData.color}33`, background: "var(--color-surface)" }}>
+                  <div className="h-24 flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${previewData.color}18, ${previewData.color}08)` }}>
+                    <span className="w-4 h-4 rounded-full" style={{ background: previewData.color, boxShadow: `0 0 24px ${previewData.color}` }} />
+                  </div>
+                  <div className="p-3">
+                    <p className="font-semibold text-[0.8rem] mb-0.5" style={{ color: "var(--color-text)", fontFamily: "var(--font-display)" }}>{previewData.label}</p>
+                    <p className="text-[0.65rem]" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-mono)" }}>{previewData.count} productos disponibles</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full max-w-[220px]">
+                  <p className="text-[0.78rem] leading-relaxed" style={{ color: "var(--color-text-muted)" }}>Explorá nuestro catálogo de más de 2.000 títulos, consolas y accesorios.</p>
+                  <Link href="/catalogo" className="inline-flex items-center gap-1.5 mt-4 text-[0.75rem] font-semibold" style={{ color: "var(--color-purple)" }} onClick={() => setActiveMegaMenu(null)}>
+                    Ver todo el catálogo <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
-        {/* Right actions */}
-        <div className="flex items-center gap-4">
-          {/* Cart */}
-          <button
-            onClick={openDrawer}
-            className="relative flex items-center justify-center w-10 h-10 rounded-none border border-border hover:border-grape transition-colors duration-200 cursor-pointer"
-            aria-label="Abrir carrito"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-              />
-            </svg>
-            {totalItems > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-grape text-white text-xs font-tech font-bold flex items-center justify-center leading-none">
-                {totalItems}
-              </span>
-            )}
-          </button>
-
-          {/* WhatsApp CTA — desktop */}
-          <a
-            href="https://wa.me/541157649264"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 px-4 py-2 bg-ctrl/10 border border-ctrl text-ctrl font-display font-semibold text-xs uppercase tracking-widest hover:bg-ctrl/20 transition-all duration-300 ctrl-border"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Consultar
-          </a>
-
-          {/* Hamburger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center cursor-pointer"
-            aria-label="Menú"
-          >
-            <span
-              className={`w-5 h-px bg-white transition-all duration-300 ${
-                menuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            />
-            <span
-              className={`w-5 h-px bg-white transition-all duration-300 ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`w-5 h-px bg-white transition-all duration-300 ${
-                menuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            />
-          </button>
+        {/* Servicios */}
+        <div style={{ background: "rgba(10,10,11,0.97)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.07)", display: activeMegaMenu === "servicios" ? "block" : "none" }}>
+          <div className="max-w-[1400px] mx-auto px-6 py-8 grid grid-cols-[280px_1fr] gap-12">
+            <div>
+              <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "var(--color-text-muted)" }}>Nuestros servicios</p>
+              <div className="space-y-1">
+                {CATEGORIES.map((cat) => (
+                  <Link key={cat.id} href={`/servicios#${cat.id.toLowerCase()}`}
+                    className="flex items-start gap-3 px-2 py-2 rounded transition-colors"
+                    onClick={() => setActiveMegaMenu(null)}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-surface-2)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
+                    <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: cat.color }} />
+                    <div>
+                      <p className="text-[0.84rem] font-medium" style={{ color: "var(--color-text)" }}>{cat.title}</p>
+                      <p className="text-[0.72rem]" style={{ color: "var(--color-text-muted)" }}>{cat.tagline}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col justify-between">
+              <div>
+                <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-3" style={{ color: "var(--color-text-muted)" }}>¿Tenés algo para reparar?</p>
+                <p className="text-[0.84rem] leading-relaxed max-w-xs" style={{ color: "var(--color-text-dim)" }}>Diagnóstico sin cargo. Presupuesto en el momento. Garantía en cada trabajo.</p>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <a href="https://wa.me/541157649264?text=Hola%20Spot%20Games!%20Quiero%20consultar%20sobre%20servicios." target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm" onClick={() => setActiveMegaMenu(null)}>Consultar por WhatsApp</a>
+                <Link href="/servicios" className="btn btn-outline btn-sm" onClick={() => setActiveMegaMenu(null)}>Ver todos →</Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
-          menuOpen ? "max-h-96 border-b border-border" : "max-h-0"
-        } bg-void/95 backdrop-blur-md`}
-      >
-        <nav className="px-6 py-4 flex flex-col gap-4">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="font-display font-semibold text-sm uppercase tracking-widest text-muted hover:text-grape transition-colors duration-200"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <a
-            href="https://wa.me/541157649264"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-ctrl font-display font-semibold text-sm uppercase tracking-widest"
-          >
-            Consultar por WhatsApp
-          </a>
-        </nav>
-      </div>
-    </header>
+      {activeMegaMenu && <div className="fixed inset-0 z-30" onClick={() => setActiveMegaMenu(null)} />}
+
+      {/* Mobile drawer */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 flex">
+          <div className="flex-1" style={{ background: "rgba(0,0,0,0.5)" }} onClick={() => setIsMobileOpen(false)} />
+          <div className="w-full max-w-[320px] h-full flex flex-col overflow-y-auto" style={{ background: "var(--color-surface)", borderLeft: "1px solid var(--color-border)" }}>
+            <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: "var(--color-border)" }}>
+              <SpotGamesLogo />
+              <button onClick={() => setIsMobileOpen(false)} className="flex items-center justify-center w-8 h-8 rounded" style={{ color: "var(--color-text-muted)" }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              </button>
+            </div>
+            <div className="flex-1 p-4 space-y-1">
+              <button className="w-full flex items-center justify-between px-3 py-2.5 rounded text-left text-[0.9rem] font-medium"
+                style={{ color: "var(--color-text)", background: mobileAccordion === "catalogo" ? "var(--color-surface-2)" : "transparent" }}
+                onClick={() => setMobileAccordion(mobileAccordion === "catalogo" ? null : "catalogo")}>
+                Catálogo
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ opacity: 0.5, transform: mobileAccordion === "catalogo" ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                  <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              {mobileAccordion === "catalogo" && (
+                <div className="pl-4 space-y-0.5 pb-2">
+                  {PLATFORMS.map((p) => (
+                    <Link key={p.slug} href={`/catalogo?platform=${p.slug}`} className="flex items-center gap-2.5 px-3 py-2 rounded text-[0.84rem]" style={{ color: "var(--color-text-dim)" }} onClick={() => setIsMobileOpen(false)}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: p.color }} />{p.label}
+                    </Link>
+                  ))}
+                  <Link href="/catalogo" className="flex items-center gap-2 px-3 py-2 text-[0.84rem] font-semibold" style={{ color: "var(--color-purple)" }} onClick={() => setIsMobileOpen(false)}>Ver todo →</Link>
+                </div>
+              )}
+              <button className="w-full flex items-center justify-between px-3 py-2.5 rounded text-left text-[0.9rem] font-medium"
+                style={{ color: "var(--color-text)", background: mobileAccordion === "servicios" ? "var(--color-surface-2)" : "transparent" }}
+                onClick={() => setMobileAccordion(mobileAccordion === "servicios" ? null : "servicios")}>
+                Servicios
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ opacity: 0.5, transform: mobileAccordion === "servicios" ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                  <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              {mobileAccordion === "servicios" && (
+                <div className="pl-4 space-y-0.5 pb-2">
+                  {CATEGORIES.map((cat) => (
+                    <Link key={cat.id} href={`/servicios#${cat.id.toLowerCase()}`} className="flex items-center gap-2.5 px-3 py-2 rounded text-[0.84rem]" style={{ color: "var(--color-text-dim)" }} onClick={() => setIsMobileOpen(false)}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: cat.color }} />{cat.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              <Link href="/nosotros" className="block px-3 py-2.5 rounded text-[0.9rem] font-medium" style={{ color: "var(--color-text)" }} onClick={() => setIsMobileOpen(false)}>Nosotros</Link>
+            </div>
+            <div className="p-4 border-t" style={{ borderColor: "var(--color-border)" }}>
+              <a href="https://wa.me/541157649264" target="_blank" rel="noopener noreferrer" className="btn btn-primary w-full justify-center" onClick={() => setIsMobileOpen(false)}>WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

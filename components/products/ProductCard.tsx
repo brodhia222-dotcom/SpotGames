@@ -1,148 +1,119 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { useCartStore } from "@/store/cartStore";
-import type { Product } from "@/types";
+import Link from "next/link";
+import type { Product, Platform, ProductState } from "@/types";
 
-const platformColors: Record<string, string> = {
-  PS5: "#006FCD",
-  PS4: "#003791",
-  Xbox: "#107C10",
-  "Xbox Series X": "#107C10",
-  Switch: "#E60012",
-  PC: "#A855F7",
-  Retro: "#F59E0B",
-  Multiplatform: "#A855F7",
+const PLATFORM_COLORS: Record<Platform, string> = {
+  PS5:            "#006FCD",
+  PS4:            "#0050A0",
+  Xbox:           "#107C10",
+  Switch:         "#E60012",
+  PC:             "#4ADE80",
+  Retro:          "#C49A6C",
+  Multiplatforma: "#A855F7",
 };
 
-const stateColors: Record<string, string> = {
-  Nuevo: "#4ADE80",
-  Usado: "#F59E0B",
-  Oferta: "#EC4899",
+const PLATFORM_TAG_CLASS: Record<Platform, string> = {
+  PS5:            "tag-ps5",
+  PS4:            "tag-ps4",
+  Xbox:           "tag-xbox",
+  Switch:         "tag-switch",
+  PC:             "tag-pc",
+  Retro:          "tag-retro",
+  Multiplatforma: "tag-multi",
 };
 
-export default function ProductCard({ product }: { product: Product }) {
+const STATE_TAG_CLASS: Record<ProductState, string> = {
+  Nuevo:  "tag-new",
+  Usado:  "tag-used",
+  Oferta: "tag-oferta",
+};
+
+interface Props {
+  product: Product;
+}
+
+export default function ProductCard({ product }: Props) {
   const [imgError, setImgError] = useState(false);
-  const addItem = useCartStore((s) => s.addItem);
-
-  const platformColor = platformColors[product.platform] ?? "#A855F7";
-  const stateColor = stateColors[product.state] ?? "#A855F7";
-  const bgHex = "0D0818";
-  const fgHex = platformColor.replace("#", "");
-  const fallbackSrc = `https://placehold.co/800x800/${bgHex}/${fgHex}?text=${encodeURIComponent(product.platform)}`;
+  const color = PLATFORM_COLORS[product.platform] ?? "#A855F7";
 
   return (
     <Link
-      href={`/productos/${product.slug}`}
-      className="group relative block bg-surface border border-border hover:border-transparent transition-all duration-500 overflow-hidden"
+      href={`/catalogo/${product.slug}`}
+      className="block group rounded-[10px] overflow-hidden transition-all duration-250"
+      style={{
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+        willChange: "transform, box-shadow",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--color-border-hover)";
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow = `0 16px 48px rgba(168,85,247,0.1), 0 4px 16px rgba(0,0,0,0.5)`;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--color-border)";
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "none";
+      }}
     >
-      {/* Imagen */}
-      <div className="relative aspect-square overflow-hidden bg-void">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgError ? fallbackSrc : product.image}
-          alt={product.name}
-          onError={() => setImgError(true)}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent opacity-80 pointer-events-none" />
-
-        {/* Scanlines en imagen */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-30 mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 3px)",
-          }}
-        />
-
-        {/* Badge estado */}
-        <div
-          className="absolute top-3 left-3 font-tech text-[10px] font-bold px-2 py-1 bg-void/90 backdrop-blur uppercase tracking-widest"
-          style={{ color: stateColor, border: `1px solid ${stateColor}` }}
-        >
-          {product.state}
-        </div>
-
-        {/* Badge plataforma */}
-        <div
-          className="absolute top-3 right-3 font-tech text-[10px] font-bold px-2 py-1 bg-void/90 backdrop-blur uppercase tracking-widest"
-          style={{ color: platformColor, border: `1px solid ${platformColor}` }}
-        >
-          {product.platform}
-        </div>
-
-        {/* HUD corners en hover */}
-        <div className="absolute inset-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-          <div
-            className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2"
-            style={{ borderColor: platformColor }}
-          />
-          <div
-            className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2"
-            style={{ borderColor: platformColor }}
-          />
-          <div
-            className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2"
-            style={{ borderColor: platformColor }}
-          />
-          <div
-            className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2"
-            style={{ borderColor: platformColor }}
-          />
-        </div>
-      </div>
-
-      {/* Glow border en hover */}
+      {/* Image */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          boxShadow: `0 0 30px ${platformColor}66, inset 0 0 0 1px ${platformColor}`,
-        }}
-      />
-
-      {/* Info */}
-      <div className="relative p-4">
-        <h3 className="font-display font-bold text-base text-white group-hover:text-grape-glow transition-colors line-clamp-1 mb-2">
-          {product.name}
-        </h3>
-
-        {product.description && (
-          <p className="font-body text-xs text-muted line-clamp-2 mb-3 min-h-[2rem]">
-            {product.description}
-          </p>
-        )}
-
-        <div className="flex items-end justify-between pt-3 border-t border-border">
-          <div>
-            {product.originalPrice && (
-              <div className="font-tech text-xs text-muted line-through">
-                ${product.originalPrice.toLocaleString("es-AR")}
-              </div>
-            )}
-            <div
-              className="font-tech text-xl font-bold"
-              style={{ color: stateColor }}
-            >
-              ${product.price.toLocaleString("es-AR")}
-            </div>
-          </div>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              addItem(product);
-            }}
-            className="font-tech text-[10px] uppercase tracking-widest px-3 py-2 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105"
+        className="relative overflow-hidden"
+        style={{ aspectRatio: "16/11", background: "var(--color-surface-2)" }}
+      >
+        {!imgError && product.image ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-700"
+            style={{ display: "block" }}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          /* Striped placeholder */
+          <div
+            className="w-full h-full flex flex-col items-center justify-center gap-2 p-4 text-center"
             style={{
-              color: platformColor,
-              border: `1px solid ${platformColor}`,
+              background: `repeating-linear-gradient(-45deg, #17171E 0px, #17171E 10px, #121218 10px, #121218 20px)`,
             }}
           >
-            + CART
-          </button>
+            <svg width="28" height="28" viewBox="0 0 36 36" fill="none" style={{ opacity: 0.25 }}>
+              <rect x="4" y="10" width="28" height="18" rx="3" stroke={color} strokeWidth="1.2"/>
+              <circle cx="18" cy="19" r="5" stroke={color} strokeWidth="1.2"/>
+              <circle cx="18" cy="19" r="2" fill={color} fillOpacity="0.5"/>
+            </svg>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.55rem", color: "#3A3848", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+              {product.platform}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Body */}
+      <div style={{ padding: "12px 14px 14px" }}>
+        <div className="flex flex-wrap gap-1.5 mb-2">
+          <span className={`tag ${PLATFORM_TAG_CLASS[product.platform]}`}>{product.platform}</span>
+          <span className={`tag ${STATE_TAG_CLASS[product.state]}`}>{product.state}</span>
+        </div>
+        <p
+          className="font-semibold leading-snug mb-3"
+          style={{ fontFamily: "var(--font-display)", fontSize: "0.875rem", color: "var(--color-text)", lineHeight: 1.35 }}
+        >
+          {product.name}
+        </p>
+        <div className="flex items-baseline gap-2">
+          {product.originalPrice && (
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--color-text-muted)", textDecoration: "line-through" }}>
+              ${product.originalPrice.toLocaleString("es-AR")}
+            </span>
+          )}
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "1rem", fontWeight: 500, color: "var(--color-text)" }}>
+            <span style={{ fontSize: "0.7rem", color: "var(--color-text-muted)", marginRight: 2 }}>ARS </span>
+            {product.price.toLocaleString("es-AR")}
+          </span>
         </div>
       </div>
     </Link>

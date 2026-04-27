@@ -6,7 +6,7 @@ import { PRODUCTS } from "@/data/products";
 import ProductGrid from "@/components/products/ProductGrid";
 import FilterBar from "@/components/products/FilterBar";
 
-function ProductosContent() {
+function CatalogoContent() {
   const searchParams = useSearchParams();
 
   const [activeCategory, setActiveCategory] = useState("Todos");
@@ -45,24 +45,45 @@ function ProductosContent() {
   );
 }
 
-export default function ProductosPage() {
+export default function CatalogoPage() {
   return (
-    <div className="min-h-screen pt-24 pb-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12 border-b border-border pb-10">
-          <p className="font-display font-semibold text-xs uppercase tracking-widest text-grape mb-3">
+    <div className="min-h-screen pb-20 px-6" style={{ paddingTop: "7rem" }}>
+      <div className="max-w-[1400px] mx-auto">
+        <div className="mb-12 pb-10" style={{ borderBottom: "1px solid var(--color-border)" }}>
+          <p
+            className="font-bold uppercase tracking-[0.2em] mb-3"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.625rem",
+              color: "var(--color-text-muted)",
+            }}
+          >
             Catálogo
           </p>
           <h1
-            className="font-display font-bold text-white uppercase leading-none"
-            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+            className="font-bold leading-none"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              color: "var(--color-text)",
+              letterSpacing: "-0.04em",
+            }}
           >
             Todos los productos
           </h1>
         </div>
 
-        <Suspense fallback={<div className="text-muted font-body py-12 text-center">Cargando...</div>}>
-          <ProductosContent />
+        <Suspense
+          fallback={
+            <div
+              className="py-12 text-center text-sm"
+              style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-mono)" }}
+            >
+              Cargando...
+            </div>
+          }
+        >
+          <CatalogoContent />
         </Suspense>
       </div>
     </div>

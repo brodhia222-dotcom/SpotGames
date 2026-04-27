@@ -1,18 +1,18 @@
 import Hero from "@/components/home/Hero";
-import Marquee from "@/components/home/Marquee";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import PlatformsSection from "@/components/home/PlatformsSection";
 import ServiciosHighlight from "@/components/home/ServiciosHighlight";
+import AboutSection from "@/components/home/AboutSection";
 import CtaSection from "@/components/home/CtaSection";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <Marquee />
       <FeaturedProducts />
       <PlatformsSection />
       <ServiciosHighlight />
+      <AboutSection />
       <CtaSection />
     </>
   );

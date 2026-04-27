@@ -14,12 +14,12 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
     <button
       onClick={() => addItem(product)}
       disabled={product.stock === 0}
-      className="flex items-center justify-center gap-2 w-full py-4 bg-grape text-white font-display font-bold text-sm uppercase tracking-widest hover:bg-grape-d transition-all duration-300 neon-border disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+      className="btn btn-primary btn-lg w-full disabled:opacity-40 disabled:cursor-not-allowed"
     >
-      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+      <svg viewBox="0 0 20 20" fill="currentColor" style={{ width: 18, height: 18 }}>
         <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
       </svg>
-      Agregar al carrito
+      {product.stock === 0 ? "Sin stock" : "Agregar al carrito"}
     </button>
   );
 }
