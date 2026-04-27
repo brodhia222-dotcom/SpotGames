@@ -35,8 +35,8 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export default function ServiciosPage() {
   return (
-    <div className="min-h-screen pb-20 px-6" style={{ paddingTop: "7rem" }}>
-      <div className="max-w-[1400px] mx-auto">
+    <div className="min-h-screen pb-20" style={{ paddingTop: "7rem" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)" }}>
         {/* Heading */}
         <div className="mb-16 pb-10" style={{ borderBottom: "1px solid var(--color-border)" }}>
           <p

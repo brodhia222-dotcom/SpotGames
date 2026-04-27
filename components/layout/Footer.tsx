@@ -25,7 +25,7 @@ export default function Footer() {
       {/* Purple top accent */}
       <div style={{ height: "1px", background: "linear-gradient(to right, transparent, rgba(168,85,247,0.3), transparent)" }} />
 
-      <div className="max-w-[1400px] mx-auto px-6 py-16">
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "4rem clamp(1.5rem, 4vw, 3rem)" }}>
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12">
           {/* Brand */}
           <div>
@@ -129,7 +129,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div style={{ borderTop: "1px solid var(--color-border)" }}>
-        <div className="max-w-[1400px] mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3" style={{ maxWidth: "1200px", margin: "0 auto", padding: "1rem clamp(1.5rem, 4vw, 3rem)" }}>
           <p className="text-[0.72rem]" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-mono)" }}>
             © 2025 SpotGames
           </p>

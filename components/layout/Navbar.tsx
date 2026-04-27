@@ -83,7 +83,7 @@ export default function Navbar() {
           borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
         }}
       >
-        <div className="max-w-[1400px] mx-auto h-full px-6 flex items-center justify-between gap-8">
+        <div className="h-full flex items-center justify-between gap-8" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)", width: "100%" }}>
           <SpotGamesLogo />
 
           <nav className="hidden md:flex items-center gap-1">
@@ -142,7 +142,7 @@ export default function Navbar() {
       >
         {/* Catálogo */}
         <div style={{ background: "rgba(10,10,11,0.97)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.07)", display: activeMegaMenu === "catalogo" ? "block" : "none" }}>
-          <div className="max-w-[1400px] mx-auto px-6 py-8 grid gap-8" style={{ gridTemplateColumns: "200px 180px 160px 1fr" }}>
+          <div className="grid gap-8" style={{ maxWidth: "1200px", margin: "0 auto", padding: "2rem clamp(1.5rem, 4vw, 3rem)", gridTemplateColumns: "200px 180px 160px 1fr" }}>
             <div>
               <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "var(--color-text-muted)" }}>Plataformas</p>
               <div className="space-y-0.5">
@@ -213,7 +213,7 @@ export default function Navbar() {
 
         {/* Servicios */}
         <div style={{ background: "rgba(10,10,11,0.97)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.07)", display: activeMegaMenu === "servicios" ? "block" : "none" }}>
-          <div className="max-w-[1400px] mx-auto px-6 py-8 grid grid-cols-[280px_1fr] gap-12">
+          <div className="grid grid-cols-[280px_1fr] gap-12" style={{ maxWidth: "1200px", margin: "0 auto", padding: "2rem clamp(1.5rem, 4vw, 3rem)" }}>
             <div>
               <p className="text-[0.6rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "var(--color-text-muted)" }}>Nuestros servicios</p>
               <div className="space-y-1">

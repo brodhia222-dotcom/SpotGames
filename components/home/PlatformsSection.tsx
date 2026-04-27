@@ -35,8 +35,8 @@ export default function PlatformsSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-28 px-6 md:px-8" style={{ borderBottom: "1px solid var(--color-border)" }}>
-      <div className="max-w-[1400px] mx-auto">
+    <section ref={sectionRef} className="py-20 md:py-28" style={{ borderBottom: "1px solid var(--color-border)" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)" }}>
         <div className="platforms-header mb-7">
           <p className="text-[0.625rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-body)" }}>
             Por plataforma

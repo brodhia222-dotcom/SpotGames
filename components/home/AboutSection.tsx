@@ -52,7 +52,7 @@ export default function AboutSection() {
       className="py-24 md:py-32"
       style={{ borderBottom: "1px solid var(--color-border)" }}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-8">
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)" }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 items-start">
           {/* Text */}
           <div className="about-text">

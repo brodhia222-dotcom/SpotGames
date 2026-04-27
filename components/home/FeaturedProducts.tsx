@@ -65,7 +65,7 @@ export default function FeaturedProducts() {
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32" style={{ borderBottom: "1px solid var(--color-border)" }}>
-      <div className="max-w-[1400px] mx-auto px-6 md:px-8">
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)" }}>
         {/* Header */}
         <div className="featured-header flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>

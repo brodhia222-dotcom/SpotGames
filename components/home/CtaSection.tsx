@@ -23,7 +23,7 @@ export default function CtaSection() {
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32">
-      <div className="max-w-[1400px] mx-auto px-6 text-center">
+      <div className="text-center" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)" }}>
         <div className="cta-inner">
           <p
             className="text-[0.625rem] font-bold uppercase tracking-[0.2em] mb-6"

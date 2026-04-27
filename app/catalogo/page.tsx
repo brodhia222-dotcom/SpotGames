@@ -47,8 +47,8 @@ function CatalogoContent() {
 
 export default function CatalogoPage() {
   return (
-    <div className="min-h-screen pb-20 px-6 lg:px-8" style={{ paddingTop: "7rem" }}>
-      <div className="max-w-[1280px] mx-auto">
+    <div className="min-h-screen pb-20" style={{ paddingTop: "7rem" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)" }}>
         <div className="mb-12 pb-10" style={{ borderBottom: "1px solid var(--color-border)" }}>
           <p
             className="font-bold uppercase tracking-[0.2em] mb-3"

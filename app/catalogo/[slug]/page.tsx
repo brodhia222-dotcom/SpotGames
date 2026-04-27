@@ -25,7 +25,7 @@ export default async function ProductDetailPage({ params }: Props) {
   return (
     <div className="min-h-screen pb-20" style={{ paddingTop: "5rem" }}>
       {/* Breadcrumb */}
-      <div className="max-w-[1400px] mx-auto px-6 mb-8">
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)", marginBottom: "2rem" }}>
         <nav
           className="flex items-center gap-2 uppercase tracking-[0.12em]"
           style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "var(--color-text-muted)" }}
@@ -43,7 +43,7 @@ export default async function ProductDetailPage({ params }: Props) {
       </div>
 
       {/* Main content */}
-      <div className="max-w-[1400px] mx-auto px-6">
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 clamp(1.5rem, 4vw, 3rem)" }}>
         <div
           className="grid grid-cols-1 lg:grid-cols-2"
           style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}
@@ -61,12 +61,11 @@ export default async function ProductDetailPage({ params }: Props) {
                 style={{ minHeight: 360 }}
               />
             ) : (
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "repeating-linear-gradient(-45deg, #17171E 0px, #17171E 12px, #121218 12px, #121218 24px)",
-                }}
+              <img
+                src={`https://placehold.co/800x560/111115/A855F7/png?text=${encodeURIComponent(product.platform)}&font=raleway`}
+                alt={product.platform}
+                className="w-full h-full object-cover"
+                style={{ minHeight: 360 }}
               />
             )}
             {product.originalPrice && (

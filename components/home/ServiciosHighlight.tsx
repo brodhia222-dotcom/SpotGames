@@ -69,7 +69,7 @@ export default function ServiciosHighlight() {
       style={{ background: "var(--color-surface)", borderTop: "1px solid var(--color-border)", borderBottom: "1px solid var(--color-border)" }}
     >
       {/* Header */}
-      <div className="servicios-header max-w-[1400px] mx-auto px-6 md:px-8 pt-16 pb-0 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="servicios-header flex flex-col md:flex-row md:items-end justify-between gap-4" style={{ maxWidth: "1200px", margin: "0 auto", padding: "4rem clamp(1.5rem, 4vw, 3rem) 0" }}>
         <div>
           <p className="text-[0.625rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "var(--color-text-muted)", fontFamily: "var(--font-body)" }}>
             Lo que hacemos
@@ -95,8 +95,8 @@ export default function ServiciosHighlight() {
 
       {/* 3-column grid */}
       <div
-        className="max-w-[1400px] mx-auto mt-8 px-6 md:px-8 grid grid-cols-1 md:grid-cols-3"
-        style={{ borderTop: "1px solid var(--color-border)" }}
+        className="grid grid-cols-1 md:grid-cols-3 mt-8"
+        style={{ maxWidth: "1200px", margin: "2rem auto 0", padding: "0 clamp(1.5rem, 4vw, 3rem)", borderTop: "1px solid var(--color-border)" }}
       >
         {SERVICES.map((svc, i) => (
           <Link
