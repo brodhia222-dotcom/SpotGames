@@ -6,7 +6,13 @@ import { gsap } from "@/lib/gsap";
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      lerp: 0.15,
+      smoothWheel: true,
+      wheelMultiplier: 1.2,
+      touchMultiplier: 2,
+      smoothTouch: false,
+    });
 
     function raf(time: number) {
       lenis.raf(time);
