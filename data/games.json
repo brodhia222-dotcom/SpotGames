@@ -1,0 +1,528 @@
+[
+  {
+    "id": "elden-ring-ps5",
+    "title": "Elden Ring",
+    "developer": "FromSoftware",
+    "publisher": "Bandai Namco",
+    "year": 2022,
+    "platform": ["PS5"],
+    "genre": ["RPG", "Acción"],
+    "condition": "new",
+    "price": 62000,
+    "originalPrice": 79900,
+    "discount": 22,
+    "stock": 3,
+    "description": "El RPG de acción de FromSoftware en un mundo abierto diseñado por Hidetaka Miyazaki y George R. R. Martin.",
+    "cover": {
+      "theme": "elden",
+      "gradient": "linear-gradient(160deg, #1a0d05 0%, #3d1f0a 60%, #6b3814 100%)",
+      "accentColor": "#f5d896",
+      "textColor": "#f5d896",
+      "symbol": "ring"
+    }
+  },
+  {
+    "id": "final-fantasy-xvi-ps5",
+    "title": "Final Fantasy XVI",
+    "developer": "Square Enix",
+    "publisher": "Square Enix",
+    "year": 2023,
+    "platform": ["PS5"],
+    "genre": ["RPG", "Acción"],
+    "condition": "new",
+    "price": 74500,
+    "originalPrice": 89900,
+    "discount": 17,
+    "stock": 2,
+    "description": "Una saga épica de oscuridad, luz y el poder de los Eikons en un mundo de fantasía medieval.",
+    "cover": {
+      "theme": "ffxvi",
+      "gradient": "linear-gradient(180deg, #312e81 0%, #1e1b4b 50%, #0c0a1f 100%)",
+      "accentColor": "#fbbf24",
+      "textColor": "#e0e7ff",
+      "symbol": "roman-numeral"
+    }
+  },
+  {
+    "id": "spiderman-2-ps5",
+    "title": "Marvel's Spider-Man 2",
+    "developer": "Insomniac Games",
+    "publisher": "Sony Interactive Entertainment",
+    "year": 2023,
+    "platform": ["PS5"],
+    "genre": ["Acción", "Aventura"],
+    "condition": "new",
+    "price": 82000,
+    "stock": 5,
+    "description": "Peter Parker y Miles Morales enfrentan a Venom y Kraven en un Nueva York más vivo que nunca.",
+    "cover": {
+      "theme": "spiderman",
+      "gradient": "linear-gradient(160deg, #7f1d1d 0%, #991b1b 40%, #b91c1c 100%)",
+      "accentColor": "#fbbf24",
+      "textColor": "#fff",
+      "symbol": "web"
+    }
+  },
+  {
+    "id": "god-of-war-ragnarok-ps5",
+    "title": "God of War Ragnarök",
+    "developer": "SIE Santa Monica Studio",
+    "publisher": "Sony Interactive Entertainment",
+    "year": 2022,
+    "platform": ["PS5", "PS4"],
+    "genre": ["Acción", "Aventura"],
+    "condition": "new",
+    "price": 69000,
+    "stock": 4,
+    "description": "Kratos y Atreus se adentran en los nueve reinos mientras el Ragnarök se avecina.",
+    "cover": {
+      "theme": "gow",
+      "gradient": "linear-gradient(180deg, #1c1917 0%, #44403c 50%, #78716c 100%)",
+      "accentColor": "#dc2626",
+      "textColor": "#fef2f2",
+      "symbol": "axe"
+    }
+  },
+  {
+    "id": "gran-turismo-7-ps5",
+    "title": "Gran Turismo 7",
+    "developer": "Polyphony Digital",
+    "publisher": "Sony Interactive Entertainment",
+    "year": 2022,
+    "platform": ["PS5", "PS4"],
+    "genre": ["Racing", "Simulación"],
+    "condition": "new",
+    "price": 58000,
+    "stock": 6,
+    "description": "La simulación de conducción definitiva. Más de 400 autos y 90 circuitos.",
+    "cover": {
+      "theme": "gt7",
+      "gradient": "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%)",
+      "accentColor": "#ef4444",
+      "textColor": "#fff",
+      "symbol": "car"
+    }
+  },
+  {
+    "id": "returnal-ps5",
+    "title": "Returnal",
+    "developer": "Housemarque",
+    "publisher": "Sony Interactive Entertainment",
+    "year": 2021,
+    "platform": ["PS5"],
+    "genre": ["Shooter", "Roguelike"],
+    "condition": "new",
+    "price": 46000,
+    "stock": 2,
+    "description": "Una astronauta atrapada en un bucle temporal en un planeta alienígena hostil.",
+    "cover": {
+      "theme": "returnal",
+      "gradient": "linear-gradient(160deg, #0c0a1f 0%, #1a0533 50%, #2d1052 100%)",
+      "accentColor": "#a78bfa",
+      "textColor": "#ede9fe",
+      "symbol": "circle"
+    }
+  },
+  {
+    "id": "alan-wake-2-ps5",
+    "title": "Alan Wake 2",
+    "developer": "Remedy Entertainment",
+    "publisher": "Epic Games Publishing",
+    "year": 2023,
+    "platform": ["PS5", "PC"],
+    "genre": ["Terror", "Acción"],
+    "condition": "new",
+    "price": 58000,
+    "stock": 3,
+    "description": "El escritor maldito regresa en un thriller psicológico oscuro y cinematográfico.",
+    "cover": {
+      "theme": "alanwake",
+      "gradient": "linear-gradient(180deg, #0a0a0a 0%, #1a1205 50%, #2d1f05 100%)",
+      "accentColor": "#fde68a",
+      "textColor": "#fde68a",
+      "symbol": "torch"
+    }
+  },
+  {
+    "id": "bloodborne-ps4",
+    "title": "Bloodborne",
+    "developer": "FromSoftware",
+    "publisher": "Sony Interactive Entertainment",
+    "year": 2015,
+    "platform": ["PS4"],
+    "genre": ["RPG", "Acción"],
+    "condition": "used",
+    "price": 28000,
+    "stock": 1,
+    "description": "El soulslike gótico de FromSoftware. Una obra maestra de horror lovecraftiano.",
+    "cover": {
+      "theme": "bloodborne",
+      "gradient": "linear-gradient(160deg, #0a0505 0%, #1a0a0a 50%, #3d0d0d 100%)",
+      "accentColor": "#fca5a5",
+      "textColor": "#fca5a5",
+      "symbol": "moon"
+    }
+  },
+  {
+    "id": "the-last-of-us-part-ii-ps4",
+    "title": "The Last of Us Part II",
+    "developer": "Naughty Dog",
+    "publisher": "Sony Interactive Entertainment",
+    "year": 2020,
+    "platform": ["PS4"],
+    "genre": ["Acción", "Aventura"],
+    "condition": "used",
+    "price": 34000,
+    "stock": 2,
+    "description": "Ellie emprende una búsqueda de venganza devastadora en un mundo post-apocalíptico.",
+    "cover": {
+      "theme": "tlou2",
+      "gradient": "linear-gradient(180deg, #1a2e1a 0%, #14532d 50%, #166534 100%)",
+      "accentColor": "#86efac",
+      "textColor": "#f0fdf4",
+      "symbol": "fern"
+    }
+  },
+  {
+    "id": "ghost-of-tsushima-ps4",
+    "title": "Ghost of Tsushima: Director's Cut",
+    "developer": "Sucker Punch Productions",
+    "publisher": "Sony Interactive Entertainment",
+    "year": 2021,
+    "platform": ["PS4", "PS5"],
+    "genre": ["Acción", "Aventura"],
+    "condition": "new",
+    "price": 42000,
+    "stock": 3,
+    "description": "Un samurái defiende la isla de Tsushima de la invasión mongol en un Japón feudal impresionante.",
+    "cover": {
+      "theme": "ghost",
+      "gradient": "linear-gradient(160deg, #1a0a05 0%, #7f1d1d 40%, #fbbf24 100%)",
+      "accentColor": "#fef08a",
+      "textColor": "#fff",
+      "symbol": "katana"
+    }
+  },
+  {
+    "id": "red-dead-redemption-2-ps4",
+    "title": "Red Dead Redemption 2",
+    "developer": "Rockstar Games",
+    "publisher": "Rockstar Games",
+    "year": 2018,
+    "platform": ["PS4", "Xbox One", "PC"],
+    "genre": ["Acción", "Aventura"],
+    "condition": "used",
+    "price": 35000,
+    "stock": 4,
+    "description": "Una historia épica del Lejano Oeste americano en sus últimos días.",
+    "cover": {
+      "theme": "rdr2",
+      "gradient": "linear-gradient(180deg, #1c1007 0%, #3b2000 50%, #6b3a1f 100%)",
+      "accentColor": "#fbbf24",
+      "textColor": "#fef3c7",
+      "symbol": "star"
+    }
+  },
+  {
+    "id": "hollow-knight-silksong-switch",
+    "title": "Hollow Knight: Silksong",
+    "developer": "Team Cherry",
+    "publisher": "Team Cherry",
+    "year": 2025,
+    "platform": ["Switch", "PC"],
+    "genre": ["Plataformas", "Metroidvania"],
+    "condition": "new",
+    "price": 32400,
+    "stock": 0,
+    "description": "Hornet protagoniza su propia aventura en un nuevo reino lleno de criaturas insectoides.",
+    "cover": {
+      "theme": "silksong",
+      "gradient": "linear-gradient(180deg, #422006 0%, #78350f 50%, #fbbf24 100%)",
+      "accentColor": "#fef3c7",
+      "textColor": "#fef3c7",
+      "symbol": "moon"
+    }
+  },
+  {
+    "id": "zelda-tears-of-the-kingdom-switch",
+    "title": "The Legend of Zelda: Tears of the Kingdom",
+    "developer": "Nintendo",
+    "publisher": "Nintendo",
+    "year": 2023,
+    "platform": ["Switch"],
+    "genre": ["Acción", "Aventura"],
+    "condition": "new",
+    "price": 64000,
+    "stock": 7,
+    "description": "Link explora los cielos de Hyrule y descubre el origen de las lágrimas del reino.",
+    "cover": {
+      "theme": "zelda-totk",
+      "gradient": "linear-gradient(160deg, #1a2e05 0%, #365314 50%, #4d7c0f 100%)",
+      "accentColor": "#fde68a",
+      "textColor": "#fefce8",
+      "symbol": "triforce"
+    }
+  },
+  {
+    "id": "mario-kart-8-deluxe-switch",
+    "title": "Mario Kart 8 Deluxe",
+    "developer": "Nintendo",
+    "publisher": "Nintendo",
+    "year": 2017,
+    "platform": ["Switch"],
+    "genre": ["Racing", "Party"],
+    "condition": "new",
+    "price": 44000,
+    "stock": 8,
+    "description": "La experiencia de karts definitiva con 96 pistas y modo local para hasta 4 jugadores.",
+    "cover": {
+      "theme": "mariokart",
+      "gradient": "linear-gradient(160deg, #dc2626 0%, #b91c1c 50%, #7f1d1d 100%)",
+      "accentColor": "#fde047",
+      "textColor": "#fff",
+      "symbol": "shell"
+    }
+  },
+  {
+    "id": "metroid-prime-4-switch",
+    "title": "Metroid Prime 4: Beyond",
+    "developer": "Retro Studios",
+    "publisher": "Nintendo",
+    "year": 2025,
+    "platform": ["Switch"],
+    "genre": ["Acción", "Aventura"],
+    "condition": "new",
+    "price": 72000,
+    "stock": 4,
+    "description": "Samus Aran regresa en una nueva aventura galáctica en primera persona.",
+    "cover": {
+      "theme": "metroid",
+      "gradient": "linear-gradient(160deg, #0c1f0c 0%, #052e16 50%, #14532d 100%)",
+      "accentColor": "#f97316",
+      "textColor": "#fff7ed",
+      "symbol": "visor"
+    }
+  },
+  {
+    "id": "halo-infinite-xbox",
+    "title": "Halo Infinite",
+    "developer": "343 Industries",
+    "publisher": "Xbox Game Studios",
+    "year": 2021,
+    "platform": ["Xbox Series X", "Xbox One", "PC"],
+    "genre": ["Shooter", "Acción"],
+    "condition": "new",
+    "price": 38000,
+    "stock": 3,
+    "description": "Master Chief regresa en una aventura épica de mundo abierto para salvar a la humanidad.",
+    "cover": {
+      "theme": "halo",
+      "gradient": "linear-gradient(180deg, #0f172a 0%, #1e3a5f 50%, #075985 100%)",
+      "accentColor": "#38bdf8",
+      "textColor": "#f0f9ff",
+      "symbol": "ring"
+    }
+  },
+  {
+    "id": "forza-horizon-5-xbox",
+    "title": "Forza Horizon 5",
+    "developer": "Playground Games",
+    "publisher": "Xbox Game Studios",
+    "year": 2021,
+    "platform": ["Xbox Series X", "Xbox One", "PC"],
+    "genre": ["Racing", "Mundo abierto"],
+    "condition": "new",
+    "price": 41000,
+    "stock": 5,
+    "description": "El festival de autos más grande en el vibrante México. Más de 500 autos.",
+    "cover": {
+      "theme": "forza",
+      "gradient": "linear-gradient(135deg, #064e3b 0%, #065f46 50%, #f97316 100%)",
+      "accentColor": "#fbbf24",
+      "textColor": "#fff",
+      "symbol": "flag"
+    }
+  },
+  {
+    "id": "starfield-xbox-pc",
+    "title": "Starfield",
+    "developer": "Bethesda Game Studios",
+    "publisher": "Bethesda Softworks",
+    "year": 2023,
+    "platform": ["Xbox Series X", "PC"],
+    "genre": ["RPG", "Sci-Fi"],
+    "condition": "new",
+    "price": 52000,
+    "stock": 2,
+    "description": "El primer juego de rol en el espacio de Bethesda en 25 años. Explora más de 1000 planetas.",
+    "cover": {
+      "theme": "starfield",
+      "gradient": "linear-gradient(180deg, #020617 0%, #0f172a 50%, #1e1b4b 100%)",
+      "accentColor": "#e2e8f0",
+      "textColor": "#f8fafc",
+      "symbol": "star"
+    }
+  },
+  {
+    "id": "hades-ii-pc-switch",
+    "title": "Hades II",
+    "developer": "Supergiant Games",
+    "publisher": "Supergiant Games",
+    "year": 2024,
+    "platform": ["PC", "Switch"],
+    "genre": ["Roguelike", "Acción"],
+    "condition": "new",
+    "price": 48500,
+    "stock": 6,
+    "description": "Melinoe desciende al inframundo en este precioso roguelike de acción.",
+    "cover": {
+      "theme": "hades",
+      "gradient": "radial-gradient(circle at 50% 30%, #7c2d12 0%, #1c0a05 75%)",
+      "accentColor": "#fcd34d",
+      "textColor": "#fcd34d",
+      "symbol": "skull"
+    }
+  },
+  {
+    "id": "baldurs-gate-3-pc",
+    "title": "Baldur's Gate 3",
+    "developer": "Larian Studios",
+    "publisher": "Larian Studios",
+    "year": 2023,
+    "platform": ["PC", "PS5"],
+    "genre": ["RPG", "Estrategia"],
+    "condition": "new",
+    "price": 55000,
+    "stock": 4,
+    "description": "El RPG de rol más ambicioso de la última década, basado en D&D 5e.",
+    "cover": {
+      "theme": "bg3",
+      "gradient": "linear-gradient(160deg, #1e0533 0%, #2d0a4e 50%, #4c1d95 100%)",
+      "accentColor": "#c4b5fd",
+      "textColor": "#ede9fe",
+      "symbol": "skull-horns"
+    }
+  },
+  {
+    "id": "cyberpunk-2077-pc",
+    "title": "Cyberpunk 2077: Ultimate Edition",
+    "developer": "CD Projekt RED",
+    "publisher": "CD Projekt",
+    "year": 2023,
+    "platform": ["PC", "PS5", "Xbox Series X"],
+    "genre": ["RPG", "Acción"],
+    "condition": "new",
+    "price": 45000,
+    "originalPrice": 58000,
+    "discount": 22,
+    "stock": 5,
+    "description": "V explora Night City en este RPG de mundo abierto. Incluye la expansión Phantom Liberty.",
+    "cover": {
+      "theme": "cyberpunk",
+      "gradient": "linear-gradient(160deg, #0a0a0a 0%, #1a0a2e 50%, #000 100%)",
+      "accentColor": "#fbbf24",
+      "textColor": "#fbbf24",
+      "symbol": "circuit"
+    }
+  },
+  {
+    "id": "disco-elysium-pc",
+    "title": "Disco Elysium: The Final Cut",
+    "developer": "ZA/UM",
+    "publisher": "ZA/UM",
+    "year": 2021,
+    "platform": ["PC", "PS4", "PS5"],
+    "genre": ["RPG", "Aventura"],
+    "condition": "used",
+    "price": 22000,
+    "stock": 1,
+    "description": "Un RPG de investigación revolucionario donde cada habilidad tiene voz propia.",
+    "cover": {
+      "theme": "disco",
+      "gradient": "linear-gradient(135deg, #1e3a5f 0%, #0f172a 50%, #6d1e47 100%)",
+      "accentColor": "#f0abfc",
+      "textColor": "#fdf4ff",
+      "symbol": "die"
+    }
+  },
+  {
+    "id": "dave-the-diver-pc",
+    "title": "Dave the Diver",
+    "developer": "MINTROCKET",
+    "publisher": "MINTROCKET",
+    "year": 2023,
+    "platform": ["PC", "Switch"],
+    "genre": ["Aventura", "RPG"],
+    "condition": "new",
+    "price": 18500,
+    "stock": 9,
+    "description": "Buceo, sushi y misterios oceánicos. Una joya indie con múltiples capas de gameplay.",
+    "cover": {
+      "theme": "dave",
+      "gradient": "linear-gradient(180deg, #0c4a6e 0%, #0369a1 50%, #38bdf8 100%)",
+      "accentColor": "#fef08a",
+      "textColor": "#fff",
+      "symbol": "fish"
+    }
+  },
+  {
+    "id": "celeste-pc-switch",
+    "title": "Celeste",
+    "developer": "Maddy Makes Games",
+    "publisher": "Maddy Makes Games",
+    "year": 2018,
+    "platform": ["PC", "Switch", "PS4"],
+    "genre": ["Plataformas", "Indie"],
+    "condition": "new",
+    "price": 14000,
+    "stock": 12,
+    "description": "Una aventura de plataformas sobre escalar una montaña y superar los propios demonios.",
+    "cover": {
+      "theme": "celeste",
+      "gradient": "linear-gradient(160deg, #4a044e 0%, #701a75 50%, #c026d3 100%)",
+      "accentColor": "#f0abfc",
+      "textColor": "#fdf4ff",
+      "symbol": "strawberry"
+    }
+  },
+  {
+    "id": "hollow-knight-pc-switch",
+    "title": "Hollow Knight",
+    "developer": "Team Cherry",
+    "publisher": "Team Cherry",
+    "year": 2017,
+    "platform": ["PC", "Switch", "PS4"],
+    "genre": ["Metroidvania", "Plataformas"],
+    "condition": "used",
+    "price": 12000,
+    "stock": 3,
+    "description": "Un caballero insecto explora un reino subterráneo decadente lleno de secretos.",
+    "cover": {
+      "theme": "hollowknight",
+      "gradient": "linear-gradient(180deg, #0a0a14 0%, #1a1a2e 50%, #0d0d1a 100%)",
+      "accentColor": "#93c5fd",
+      "textColor": "#dbeafe",
+      "symbol": "mask"
+    }
+  },
+  {
+    "id": "stardew-valley-pc-switch",
+    "title": "Stardew Valley",
+    "developer": "ConcernedApe",
+    "publisher": "ConcernedApe",
+    "year": 2016,
+    "platform": ["PC", "Switch", "PS4"],
+    "genre": ["Simulación", "RPG"],
+    "condition": "new",
+    "price": 16000,
+    "stock": 15,
+    "description": "Heredaste la granja de tu abuelo. Siembra, cría animales y construye tu vida en Pelican Town.",
+    "cover": {
+      "theme": "stardew",
+      "gradient": "linear-gradient(160deg, #14532d 0%, #166534 50%, #15803d 100%)",
+      "accentColor": "#fde68a",
+      "textColor": "#fefce8",
+      "symbol": "sun"
+    }
+  }
+]

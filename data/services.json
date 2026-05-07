@@ -1,0 +1,188 @@
+[
+  {
+    "id": "flasheo",
+    "slug": "flasheo",
+    "title": "Flasheo & Chipeo",
+    "shortDescription": "Modificamos tu consola para que cargue cualquier juego desde disco duro o memoria.",
+    "icon": "chip",
+    "badge": "Servicio 01",
+    "priceFrom": 24000,
+    "turnaround": "24 a 48 hs",
+    "warranty": "90 días",
+    "compatiblePlatforms": [
+      { "name": "PlayStation 2", "method": "OPL + HDD", "price": 24000 },
+      { "name": "PlayStation 3", "method": "CFW Rebug o Ferrox", "price": 28000 },
+      { "name": "Nintendo Wii", "method": "Homebrew Channel + USB Loader", "price": 22000 },
+      { "name": "Nintendo 3DS / 2DS", "method": "Luma3DS + CFW", "price": 26000 },
+      { "name": "Nintendo DS / DSi", "method": "Flashcard R4", "price": 18000 },
+      { "name": "Nintendo Switch V1", "method": "Atmosphere CFW (sin ban)", "price": 38000 },
+      { "name": "Xbox 360", "method": "RGH3 / Jtag", "price": 35000 },
+      { "name": "PSP", "method": "CFW 6.61 Infinity", "price": 18000 }
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Recepción",
+        "description": "Traés la consola al local. La revisamos juntos antes de tocar nada."
+      },
+      {
+        "step": 2,
+        "title": "Diagnóstico",
+        "description": "Verificamos compatibilidad y estado de la placa. Te confirmamos qué método aplica y el precio."
+      },
+      {
+        "step": 3,
+        "title": "Flasheo",
+        "description": "Instalamos el firmware modificado y configuramos el sistema de carga de backups."
+      },
+      {
+        "step": 4,
+        "title": "Entrega",
+        "description": "Te mostramos el resultado en el local. Salís con la consola funcionando y documentación."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Pierdo mis juegos originales o saves?",
+        "answer": "No. El proceso no toca la partición de juegos ni los saves. Siempre hacemos respaldo antes."
+      },
+      {
+        "question": "¿La consola puede banearse de las redes?",
+        "answer": "Depende del modelo. Para Switch V1 usamos métodos sin ban. Para PS3, si no conectás al PSN, no hay riesgo. Te explicamos caso por caso."
+      },
+      {
+        "question": "¿Qué pasa si se rompe algo durante el proceso?",
+        "answer": "Cubrimos cualquier daño causado durante el procedimiento sin costo adicional. Trabajamos con herramientas profesionales."
+      },
+      {
+        "question": "¿Puedo traer consolas que compraste en el exterior?",
+        "answer": "Sí. Trabajamos con consolas de todas las regiones (USA, EU, JAP). El proceso de flasheo suele eliminar el region lock."
+      },
+      {
+        "question": "¿Instalan los juegos también?",
+        "answer": "Sí. Podemos preinstalar tu librería de juegos desde HDD o USB. Consultá el precio según la cantidad de juegos."
+      }
+    ],
+    "note": "PS4, PS5 y Switch Mariko (lite o V2) NO son flasheables con los métodos actuales. No prometemos lo que no podemos cumplir."
+  },
+  {
+    "id": "reparacion",
+    "slug": "reparacion",
+    "title": "Reparación Electrónica",
+    "shortDescription": "Diagnosticamos el problema real y reparamos el componente dañado, no el componente entero.",
+    "icon": "tools",
+    "badge": "Servicio 02",
+    "priceFrom": 22000,
+    "turnaround": "3 a 5 días hábiles",
+    "warranty": "90 días",
+    "compatiblePlatforms": [
+      { "name": "Puerto HDMI roto", "detail": "PS4 / PS5 / Xbox / Switch", "price": 22000 },
+      { "name": "Joystick drift", "detail": "Switch Joy-Con / DualSense / DualShock 4", "price": 18000 },
+      { "name": "Lector de discos", "detail": "PS4 / PS5 / Xbox One", "price": 25000 },
+      { "name": "No enciende", "detail": "Diagnóstico + reparación de fuente", "price": 28000 },
+      { "name": "Sobrecalentamiento", "detail": "Pasta térmica + limpieza", "price": 20000 },
+      { "name": "Botones trabados", "detail": "Limpieza + reemplazo de membrana", "price": 15000 },
+      { "name": "Batería agotada", "detail": "Joy-Con / DualSense / DualShock", "price": 19000 },
+      { "name": "Pantalla rota", "detail": "Nintendo Switch (portátil)", "price": 45000 }
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Recepción",
+        "description": "Traés el equipo. Contanos el síntoma exacto: cuándo empezó, si hubo caída o líquido."
+      },
+      {
+        "step": 2,
+        "title": "Diagnóstico gratuito",
+        "description": "Abrimos, revisamos y te mandamos presupuesto. Si no aceptás, no cobramos nada."
+      },
+      {
+        "step": 3,
+        "title": "Reparación",
+        "description": "Reparamos el componente dañado con piezas de calidad. No cambiamos lo que no está roto."
+      },
+      {
+        "step": 4,
+        "title": "Entrega con garantía",
+        "description": "Te entregamos el equipo probado y funcionando. 90 días de garantía por escrito."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿El diagnóstico es realmente gratis?",
+        "answer": "Sí. Si abrimos la consola y el presupuesto no te convence, la cerramos y no cobramos nada."
+      },
+      {
+        "question": "¿Qué pasa si no pueden repararlo?",
+        "answer": "Te lo decimos antes de cobrar. No facturamos reparaciones fallidas ni cobramos por intentarlo."
+      },
+      {
+        "question": "¿Usan repuestos originales?",
+        "answer": "Según el caso: usamos repuestos OEM (fabricante original) cuando están disponibles. Si no, repuestos de calidad equivalente certificada. Te avisamos siempre."
+      },
+      {
+        "question": "¿Cuánto tarda una reparación típica?",
+        "answer": "Entre 24 hs (drift, limpieza) y 5 días hábiles (HDMI, placa madre). Si tarda más, te avisamos antes."
+      }
+    ]
+  },
+  {
+    "id": "mantenimiento",
+    "slug": "mantenimiento",
+    "title": "Mantenimiento Integral",
+    "shortDescription": "Limpieza profunda, pasta térmica nueva y revisión completa. Como el primer día.",
+    "icon": "settings",
+    "badge": "Servicio 03",
+    "priceFrom": 28000,
+    "turnaround": "24 a 48 hs",
+    "warranty": "60 días",
+    "compatiblePlatforms": [
+      { "name": "PlayStation 4 / Pro", "detail": "Limpieza + pasta + ventilador", "price": 28000 },
+      { "name": "PlayStation 5", "detail": "Limpieza + pasta líquida metal", "price": 38000 },
+      { "name": "Xbox One / Series", "detail": "Limpieza + pasta + revisión", "price": 28000 },
+      { "name": "Nintendo Switch", "detail": "Limpieza + pasta + batería", "price": 25000 },
+      { "name": "PlayStation 3", "detail": "Limpieza + repaste YLOD prevención", "price": 32000 },
+      { "name": "Laptops gaming", "detail": "Limpieza + pasta + revisión térmica", "price": 35000 }
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Recepción",
+        "description": "Traés el equipo. Le contamos qué vamos a hacer antes de abrirlo."
+      },
+      {
+        "step": 2,
+        "title": "Desmontaje completo",
+        "description": "Abrimos la consola hasta la placa base. Fotografiamos cada paso para el rearmado."
+      },
+      {
+        "step": 3,
+        "title": "Limpieza y repaste",
+        "description": "Limpieza con aire comprimido y pinceles antiestáticos. Pasta térmica de calidad (Thermal Grizzly o similar)."
+      },
+      {
+        "step": 4,
+        "title": "Entrega",
+        "description": "Probamos la temperatura durante 30 minutos antes de entregar. Te mostramos los resultados en HWMonitor."
+      }
+    ],
+    "faq": [
+      {
+        "question": "¿Cada cuánto conviene hacer el mantenimiento?",
+        "answer": "Cada 12-18 meses para consolas de uso diario. Si escuchás el ventilador más fuerte que antes, ya es hora."
+      },
+      {
+        "question": "¿Qué pasta térmica usan?",
+        "answer": "Thermal Grizzly Kryonaut para CPUs de escritorio y consolas estándar. Para PS5 usamos pasta de metal líquido (Conductonaut Extreme), igual que fábrica."
+      },
+      {
+        "question": "¿Pueden romper algo si abren la consola?",
+        "answer": "Trabajamos con herramientas profesionales y fotografiamos cada desmontaje. En más de 5 años, no tuvimos un solo equipo dañado en el proceso."
+      },
+      {
+        "question": "¿Afecta la garantía de fábrica?",
+        "answer": "Depende del tiempo que tenga la consola. En general, las consolas que llegan a necesitar mantenimiento ya perdieron la garantía. Si no es tu caso, te avisamos."
+      }
+    ]
+  }
+]

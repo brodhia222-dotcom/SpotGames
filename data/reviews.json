@@ -1,0 +1,130 @@
+[
+  {
+    "id": "r01",
+    "author": "Mariano Castro",
+    "initials": "MC",
+    "rating": 5,
+    "context": "PS2 · Reparación + Flasheo",
+    "quote": "Fui con una PS2 que no leía discos hace 6 años. Steven me la devolvió andando como si fuera nueva, y encima con OPL flasheado. Salí con 300 juegos en el disco. No lo podía creer."
+  },
+  {
+    "id": "r02",
+    "author": "Valentina Luna",
+    "initials": "VL",
+    "rating": 5,
+    "context": "Switch OLED · Compra",
+    "quote": "Compré una Switch OLED y un par de juegos. Atención impecable, precios honestos, y me explicaron las diferencias entre versiones sin apurarme. Volvería sin dudarlo."
+  },
+  {
+    "id": "r03",
+    "author": "Federico Ruiz",
+    "initials": "FR",
+    "rating": 5,
+    "context": "Switch · Reparación",
+    "quote": "Drift en los Joy-Con. Otros lugares me querían cobrar el Joy-Con entero, ellos abrieron el control y cambiaron solo el módulo del stick. La mitad del precio y con garantía."
+  },
+  {
+    "id": "r04",
+    "author": "Lucía Herrera",
+    "initials": "LH",
+    "rating": 5,
+    "context": "PS5 · Mantenimiento",
+    "quote": "La PS5 hacía un ruido infernal con el ventilador. En menos de 48 horas me la devolvieron silenciosa. Me mostraron las temperaturas antes y después. Bajó 18 grados."
+  },
+  {
+    "id": "r05",
+    "author": "Santiago Morales",
+    "initials": "SM",
+    "rating": 4,
+    "context": "PS3 · Flasheo CFW",
+    "quote": "Me instalaron el CFW en la PS3 y configuraron todo el sistema de backups. Tardó un poco más de lo que esperaba pero el resultado es perfecto. Muy buena comunicación."
+  },
+  {
+    "id": "r06",
+    "author": "Camila Vega",
+    "initials": "CV",
+    "rating": 5,
+    "context": "PS4 · Puerto HDMI",
+    "quote": "Puerto HDMI roto de la PS4. En todos lados me decían que era un trabajo complicado y caro. Acá me lo resolvieron en dos días y a un precio razonable. Funciona perfecto."
+  },
+  {
+    "id": "r07",
+    "author": "Agustín Fernández",
+    "initials": "AF",
+    "rating": 5,
+    "context": "N64 · Restauración",
+    "quote": "Compré una N64 restaurada y es una joya. Los joysticks son nuevos (módulos modernos) y funciona igual que el primer día. La recomiendo para cualquiera que quiera retro sin dolores de cabeza."
+  },
+  {
+    "id": "r08",
+    "author": "Paula Giménez",
+    "initials": "PG",
+    "rating": 5,
+    "context": "Catálogo · Compra de juegos",
+    "quote": "Encontré juegos que no conseguía en ningún lado. El catálogo es impresionante, los precios justos y los chicos saben de lo que hablan. Se nota que son gamers de verdad."
+  },
+  {
+    "id": "r09",
+    "author": "Tomás Escobar",
+    "initials": "TE",
+    "rating": 3,
+    "context": "Xbox 360 · RGH",
+    "quote": "El flasheo del Xbox tardó más de lo prometido. Igual quedó bien y me explicaron por qué demora ese modelo en particular. Buen laburo, aunque la comunicación podría mejorar."
+  },
+  {
+    "id": "r10",
+    "author": "Natalia Díaz",
+    "initials": "ND",
+    "rating": 5,
+    "context": "PS4 · Mantenimiento",
+    "quote": "La PS4 apagaba sola por el calor. Mantenimiento completo, pasta nueva y ventilador limpio. Hace meses que no tiene ningún problema. Deberían haberla creado ellos."
+  },
+  {
+    "id": "r11",
+    "author": "Rodrigo Sánchez",
+    "initials": "RS",
+    "rating": 5,
+    "context": "Steam Deck · Compra",
+    "quote": "Compré la Steam Deck con ellos. Me asesoraron sobre qué modelo valía la pena y por qué. Terminé llevando la OLED y es la mejor decisión que tomé. Precio muy competitivo."
+  },
+  {
+    "id": "r12",
+    "author": "Marina Castelli",
+    "initials": "MC",
+    "rating": 5,
+    "context": "DualSense · Reparación drift",
+    "quote": "Drift en el DualSense a los 8 meses de uso. Diagnóstico gratis como prometieron. Me cambiaron el módulo del stick y salí pagando menos de lo que esperaba. Impecable."
+  },
+  {
+    "id": "r13",
+    "author": "Ezequiel Torres",
+    "initials": "ET",
+    "rating": 4,
+    "context": "PS2 · Compra restaurada",
+    "quote": "Compré una PS2 restaurada con chip y HDD. La consola está perfecta. Le saco un punto porque tardaron un día más de lo acordado, pero avisaron con tiempo y el resultado valió la espera."
+  },
+  {
+    "id": "r14",
+    "author": "Florencia Martínez",
+    "initials": "FM",
+    "rating": 5,
+    "context": "Switch · Flasheo Atmosphere",
+    "quote": "Flashearon mi Switch V1 con Atmosphere. Me explicaron qué podía hacer y qué no, cómo evitar el ban y cómo instalar juegos yo misma. Nunca había entendido tanto de eso."
+  },
+  {
+    "id": "r15",
+    "author": "Iván Pereyra",
+    "initials": "IP",
+    "rating": 5,
+    "context": "PS5 · Compra",
+    "quote": "Conseguí la PS5 Pro acá cuando en otro lado no había. Precio de mercado, factura y garantía. Todo en regla. Además me ayudaron a elegir los primeros juegos. Muy recomendable."
+  },
+  {
+    "id": "r16",
+    "author": "Belén Acosta",
+    "initials": "BA",
+    "rating": 5,
+    "context": "PS4 · Lector de discos",
+    "quote": "La PS4 no leía ningún disco. Me hicieron el diagnóstico en el momento, lector roto. En 3 días lo reemplazaron. Funciona perfectamente. Garantía de 90 días y todo documentado."
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "ps5-slim",
+    "name": "PlayStation 5 Slim",
+    "brand": "Sony",
+    "generation": "PS5",
+    "type": "new",
+    "year": 2023,
+    "price": 749000,
+    "stock": 4,
+    "color": "Blanco",
+    "storage": "1TB SSD",
+    "includes": ["Control DualSense", "Cable HDMI 2.1", "Cable USB-C", "Base vertical"],
+    "description": "La versión compacta de PS5. Mismo rendimiento, diseño más pequeño. Compatible con todos los juegos PS5 y PS4.",
+    "specs": {
+      "cpu": "AMD Zen 2 8 núcleos 3.5GHz",
+      "gpu": "AMD RDNA 2 10.3 TFLOPS",
+      "ram": "16GB GDDR6",
+      "resolution": "4K 120fps / 8K"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #f5f4f0 0%, #eceae3 100%)",
+      "accentColor": "#0A0A0A",
+      "badgeColor": "#00E676"
+    }
+  },
+  {
+    "id": "ps5-pro",
+    "name": "PlayStation 5 Pro",
+    "brand": "Sony",
+    "generation": "PS5",
+    "type": "new",
+    "year": 2024,
+    "price": 989000,
+    "stock": 2,
+    "color": "Blanco",
+    "storage": "2TB SSD",
+    "includes": ["Control DualSense", "Cable HDMI 2.1", "Cable USB-C", "Base vertical"],
+    "description": "La versión Pro de PS5 con GPU mejorada, trazado de rayos avanzado y modo 8K nativo.",
+    "specs": {
+      "cpu": "AMD Zen 2 8 núcleos 3.85GHz",
+      "gpu": "AMD RDNA 3 33.5 TFLOPS",
+      "ram": "16GB GDDR6",
+      "resolution": "4K 120fps / 8K nativo"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #f5f4f0 0%, #d1d5db 100%)",
+      "accentColor": "#0A0A0A",
+      "badgeColor": "#6D28D9"
+    }
+  },
+  {
+    "id": "switch-oled",
+    "name": "Nintendo Switch OLED",
+    "brand": "Nintendo",
+    "generation": "Switch",
+    "type": "new",
+    "year": 2021,
+    "price": 459000,
+    "stock": 6,
+    "color": "Blanco / Neón",
+    "storage": "64GB",
+    "includes": ["2 Joy-Con", "Base Switch", "Cable HDMI", "Adaptador AC"],
+    "description": "Pantalla OLED de 7 pulgadas, audio mejorado y 64GB de almacenamiento interno.",
+    "specs": {
+      "cpu": "NVIDIA Tegra X1+",
+      "display": "7\" OLED 1280x720",
+      "battery": "4,5 a 9 horas",
+      "resolution": "1080p en modo TV / 720p portátil"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #dc2626 0%, #b91c1c 50%, #7f1d1d 100%)",
+      "accentColor": "#fde047",
+      "badgeColor": "#dc2626"
+    }
+  },
+  {
+    "id": "xbox-series-x",
+    "name": "Xbox Series X",
+    "brand": "Microsoft",
+    "generation": "Xbox",
+    "type": "new",
+    "year": 2020,
+    "price": 679000,
+    "stock": 3,
+    "color": "Negro",
+    "storage": "1TB NVMe SSD",
+    "includes": ["Control Inalámbrico Xbox", "Cable HDMI 2.1", "Adaptador AC"],
+    "description": "La consola más potente de Microsoft. 4K nativo, ray tracing, Quick Resume y retrocompatibilidad total.",
+    "specs": {
+      "cpu": "AMD Zen 2 8 núcleos 3.8GHz",
+      "gpu": "AMD RDNA 2 12 TFLOPS",
+      "ram": "16GB GDDR6",
+      "resolution": "4K 120fps / 8K"
+    },
+    "cover": {
+      "gradient": "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #107c10 100%)",
+      "accentColor": "#107c10",
+      "badgeColor": "#107c10"
+    }
+  },
+  {
+    "id": "xbox-series-s",
+    "name": "Xbox Series S",
+    "brand": "Microsoft",
+    "generation": "Xbox",
+    "type": "new",
+    "year": 2020,
+    "price": 349000,
+    "stock": 5,
+    "color": "Blanco",
+    "storage": "512GB NVMe SSD",
+    "includes": ["Control Inalámbrico Xbox", "Cable HDMI", "Adaptador AC"],
+    "description": "La consola next-gen más accesible. Diseñada para gaming en 1440p con ray tracing.",
+    "specs": {
+      "cpu": "AMD Zen 2 8 núcleos 3.6GHz",
+      "gpu": "AMD RDNA 2 4 TFLOPS",
+      "ram": "10GB GDDR6",
+      "resolution": "1440p 120fps"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #f5f4f0 0%, #e5e7eb 50%, #d1d5db 100%)",
+      "accentColor": "#107c10",
+      "badgeColor": "#107c10"
+    }
+  },
+  {
+    "id": "steam-deck-512gb",
+    "name": "Steam Deck OLED 512GB",
+    "brand": "Valve",
+    "generation": "PC",
+    "type": "new",
+    "year": 2023,
+    "price": 589000,
+    "stock": 2,
+    "color": "Negro",
+    "storage": "512GB NVMe SSD",
+    "includes": ["Funda", "Cargador 45W USB-C"],
+    "description": "La PC portátil de gaming de Valve con pantalla OLED de 7.4 pulgadas y hasta 12h de batería.",
+    "specs": {
+      "cpu": "AMD Zen 2 4 núcleos 2.4-3.5GHz",
+      "gpu": "AMD RDNA 2 1.6 TFLOPS",
+      "display": "7.4\" OLED 1280x800 90Hz HDR",
+      "battery": "3 a 12 horas"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #0a0a0a 0%, #1c1c1c 50%, #374151 100%)",
+      "accentColor": "#38bdf8",
+      "badgeColor": "#38bdf8"
+    }
+  },
+  {
+    "id": "ps2-chip-restaurada",
+    "name": "PlayStation 2 + Chip + OPL",
+    "brand": "Sony",
+    "generation": "Retro",
+    "type": "restored",
+    "year": 2004,
+    "price": 145000,
+    "stock": 1,
+    "color": "Negro",
+    "storage": "HDD interno 250GB",
+    "includes": ["2 controles DualShock 2", "Cable AV componente", "Memory card 8MB", "300+ juegos preinstalados"],
+    "description": "PS2 fat restaurada, limpiada y chippeada con freedvdboot + OPL. Carga desde HDD interno sin discos. Pasta térmica nueva, lector limpio.",
+    "specs": {
+      "cpu": "MIPS R5900 300MHz",
+      "gpu": "Graphics Synthesizer",
+      "ram": "32MB RDRAM",
+      "resolution": "480i / 480p (algunos juegos 1080i)"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #1a1a1a 0%, #2d2d2d 50%, #404040 100%)",
+      "accentColor": "#00E676",
+      "badgeColor": "#6D28D9"
+    }
+  },
+  {
+    "id": "n64-restaurada",
+    "name": "Nintendo 64 Restaurada",
+    "brand": "Nintendo",
+    "generation": "Retro",
+    "type": "restored",
+    "year": 1996,
+    "price": 89000,
+    "stock": 1,
+    "color": "Gris / Negro",
+    "storage": null,
+    "includes": ["2 controles N64 restaurados", "Cable de video", "Adaptador AC 220V", "2 juegos a elección"],
+    "description": "N64 completamente restaurada: limpieza ultrasónica, capacitores nuevos en la placa, joysticks reemplazados por módulos modernos Hall-effect.",
+    "specs": {
+      "cpu": "NEC VR4300 93.75MHz",
+      "gpu": "SGI RCP 62.5MHz",
+      "ram": "4MB RDRAM",
+      "resolution": "240p / 480i"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #292524 0%, #44403c 50%, #57534e 100%)",
+      "accentColor": "#dc2626",
+      "badgeColor": "#6D28D9"
+    }
+  },
+  {
+    "id": "sega-genesis-restaurada",
+    "name": "Sega Genesis Model 2 Restaurada",
+    "brand": "Sega",
+    "generation": "Retro",
+    "type": "restored",
+    "year": 1993,
+    "price": 64000,
+    "stock": 1,
+    "color": "Negro",
+    "storage": null,
+    "includes": ["2 controles 6 botones restaurados", "Cable AV composite", "Adaptador AC 220V"],
+    "description": "Sega Genesis Model 2 restaurada con Mega Everdrive Pro. Carga ROMs desde SD. Revisión completa de la placa.",
+    "specs": {
+      "cpu": "Motorola 68000 7.67MHz",
+      "gpu": "Yamaha VDP 7.67MHz",
+      "ram": "64KB RAM",
+      "resolution": "320x224 / 256x224"
+    },
+    "cover": {
+      "gradient": "linear-gradient(160deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%)",
+      "accentColor": "#3b82f6",
+      "badgeColor": "#6D28D9"
+    }
+  }
+]
