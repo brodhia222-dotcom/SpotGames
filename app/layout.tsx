@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { LenisProvider } from "@/components/effects/LenisProvider";
+import { CursorTrail } from "@/components/effects/CursorTrail";
+import { PageWipe } from "@/components/effects/PageWipe";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -25,8 +30,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: {
     template: "%s · Spot Games",
-    default:
-      "Spot Games — Videojuegos, Consolas & Servicio Técnico en Belgrano",
+    default: "Spot Games — Videojuegos, Consolas & Servicio Técnico en Belgrano",
   },
   description:
     "Tienda de videojuegos y consolas nuevas y retro restauradas. Flasheo, reparación electrónica y mantenimiento integral. Local en Av. Cabildo 2230, Belgrano, CABA.",
@@ -43,16 +47,23 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="es-AR"
       className={`${spaceGrotesk.variable} ${geist.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-paper text-ink antialiased">
-        {children}
+        <LenisProvider>
+          <Header />
+          <main className="overflow-x-hidden w-full">
+            {children}
+          </main>
+          <Footer />
+          {/* Effects rendered outside main — portal to body internally */}
+          <CursorTrail />
+          <PageWipe />
+        </LenisProvider>
       </body>
     </html>
   );
