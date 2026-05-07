@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductCard } from "@/components/product/ProductCard";
+import { WipeReveal } from "@/components/effects/WipeReveal";
 import { cn } from "@/lib/utils";
 import gamesData from "@/data/games.json";
 
@@ -42,10 +43,10 @@ export function CatalogoDestacado() {
     >
       <div className="container-ds">
 
-        {/* ── Section header ── */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-grey-2 mb-3">
+        {/* ── Section header — centered, violet eyebrow ── */}
+        <WipeReveal className="mb-10">
+          <div className="flex flex-col items-center text-center">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3">
               Catálogo
             </p>
             <h2
@@ -55,22 +56,9 @@ export function CatalogoDestacado() {
               Títulos disponibles
             </h2>
           </div>
-          <Link
-            href="/catalogo"
-            className={cn(
-              "inline-flex items-center gap-2 h-9 px-5 rounded-[4px] shrink-0",
-              "border border-[rgba(10,10,10,0.22)] font-display font-medium text-[14px] text-ink",
-              "hover:bg-paper-2 hover:border-[rgba(10,10,10,0.36)] transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
-            )}
-            style={{ transitionDuration: "var(--dur-fast)" }}
-          >
-            Ver todo el catálogo
-            <span aria-hidden>→</span>
-          </Link>
-        </div>
+        </WipeReveal>
 
-        {/* ── Platform tabs ── */}
+        {/* ── Platform tabs — centered ── */}
         <div
           className="flex gap-1.5 flex-wrap justify-center mb-10"
           role="tablist"
@@ -146,6 +134,23 @@ export function CatalogoDestacado() {
             </motion.p>
           )}
         </AnimatePresence>
+
+        {/* ── CTA — centered below grid ── */}
+        <div className="flex justify-center mt-14">
+          <Link
+            href="/catalogo"
+            className={cn(
+              "inline-flex items-center gap-2 h-11 px-7 rounded-[4px]",
+              "border border-[rgba(10,10,10,0.22)] font-display font-medium text-[14px] text-ink",
+              "hover:bg-paper-2 hover:border-[rgba(10,10,10,0.36)] transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+            )}
+            style={{ transitionDuration: "var(--dur-fast)" }}
+          >
+            Ver todo el catálogo
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
 
       </div>
     </section>

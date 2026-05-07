@@ -2,13 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { cn, formatPrice } from "@/lib/utils";
-import gamesData from "@/data/games.json";
-
-// 3 featured discounted games for the mini gallery
-const FEATURED = (gamesData as Array<typeof gamesData[0] & { discount?: number }>)
-  .filter((g) => g.discount && g.discount > 0)
-  .slice(0, 3);
+import { cn } from "@/lib/utils";
 
 type MegaMenuType = "catalogo" | "servicios";
 
@@ -22,55 +16,10 @@ interface MegaMenuProps {
   onMouseLeave: () => void;
 }
 
-const platforms = [
-  { label: "Todos",  href: "/catalogo" },
-  { label: "PS5",    href: "/catalogo?plataforma=ps5" },
-  { label: "PS4",    href: "/catalogo?plataforma=ps4" },
-  { label: "Switch", href: "/catalogo?plataforma=switch" },
-  { label: "Xbox",   href: "/catalogo?plataforma=xbox" },
-  { label: "PC",     href: "/catalogo?plataforma=pc" },
-  { label: "Retro",  href: "/catalogo?plataforma=retro" },
-];
-
-const services = [
-  {
-    slug: "flasheo",
-    title: "Flasheo & Chipeo",
-    description: "Modificación de consolas para compatibilidad con juegos de cualquier región.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-        <path d="M11 3L5 11h6l-2 6 8-10h-6l2-6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    slug: "reparacion",
-    title: "Reparación Electrónica",
-    description: "Diagnóstico gratuito y reparación del componente dañado. Garantía incluida.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-        <path d="M14.7 6.3a1 1 0 0 0 0-1.4l-1.6-1.6a1 1 0 0 0-1.4 0L4 11l-.8 3.8L7 14l7.7-7.7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M12 5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    slug: "mantenimiento",
-    title: "Mantenimiento Integral",
-    description: "Limpieza profunda y pasta térmica nueva. Como el primer día.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-        <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-];
-
 const panelVariants = {
-  hidden:  { opacity: 0, y: -6 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: EASE_OUT } },
-  exit:    { opacity: 0, y: -4, transition: { duration: 0.14, ease: EASE_IN } },
+  hidden:  { opacity: 0, y: -8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.22, ease: EASE_OUT } },
+  exit:    { opacity: 0, y: -6, transition: { duration: 0.14, ease: EASE_IN } },
 };
 
 export function MegaMenu({ open, scrolled, onMouseEnter, onMouseLeave }: MegaMenuProps) {
@@ -85,18 +34,24 @@ export function MegaMenu({ open, scrolled, onMouseEnter, onMouseLeave }: MegaMen
           exit="exit"
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          // Fixed below the header — top tracks header height (h-20 = 5rem, h-16 = 4rem)
+          // Outer: full-width fixed, transparent — just for positioning + events
           className={cn(
-            "fixed left-0 right-0 z-30",
-            scrolled ? "top-16" : "top-20",
-            "bg-paper/98 backdrop-blur-sm",
-            "border-b border-[rgba(10,10,10,0.08)]",
-            "shadow-[0_12px_40px_rgba(10,10,10,0.09)]"
+            "fixed left-0 right-0 z-30 flex justify-center px-6",
+            scrolled ? "top-16" : "top-20"
           )}
-          role="dialog"
-          aria-label={open === "catalogo" ? "Menú catálogo" : "Menú servicios"}
         >
-          <div className="container-ds py-10">
+          {/* Inner: visible 960px container */}
+          <div
+            className={cn(
+              "w-full bg-paper/98 backdrop-blur-sm",
+              "border border-[rgba(10,10,10,0.08)] rounded-b-[8px]",
+              "shadow-[0_16px_48px_rgba(10,10,10,0.10)]",
+              "py-8 px-10"
+            )}
+            style={{ maxWidth: 960 }}
+            role="dialog"
+            aria-label={open === "catalogo" ? "Menú catálogo" : "Menú servicios"}
+          >
             {open === "catalogo" ? <CatalogoPanel /> : <ServiciosPanel />}
           </div>
         </motion.div>
@@ -105,98 +60,221 @@ export function MegaMenu({ open, scrolled, onMouseEnter, onMouseLeave }: MegaMen
   );
 }
 
+// ── Catálogo panel — 3 visual category cards ──────────────────────────────
+
 function CatalogoPanel() {
   return (
-    <div className="grid grid-cols-[1fr_200px] gap-16">
-      <div>
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-grey-2 mb-5">
-          Por plataforma
-        </p>
-        <ul className="flex flex-wrap gap-2">
-          {platforms.map((p) => (
-            <li key={p.label}>
-              <Link
-                href={p.href}
-                className={cn(
-                  "inline-flex items-center h-8 px-4 rounded-[3px]",
-                  "border border-[rgba(10,10,10,0.16)]",
-                  "font-mono text-[11px] uppercase tracking-[0.12em] text-ink",
-                  "transition-colors hover:bg-ink hover:text-paper hover:border-ink",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
-                )}
-                style={{ transitionDuration: "var(--dur-fast)" }}
-              >
-                {p.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div className="grid grid-cols-3 gap-4">
 
-      <div className="flex flex-col gap-2 min-w-[200px]">
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-grey-2 mb-2">
-          En oferta
-        </p>
-        {FEATURED.map((game) => (
-          <Link
-            key={game.id}
-            href="/catalogo"
-            className={cn(
-              "group flex items-center gap-3 p-2 rounded-[3px]",
-              "hover:bg-paper-2 transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
-            )}
-            style={{ transitionDuration: "var(--dur-fast)" }}
-          >
-            <span
-              aria-hidden
-              className="w-7 h-7 rounded-[2px] shrink-0 border border-[rgba(10,10,10,0.08)]"
-              style={{ background: game.cover.gradient }}
-            />
-            <span className="flex-1 min-w-0">
-              <span className="block font-display font-medium text-[13px] text-ink truncate">
-                {game.title}
+      {/* Card 1: Por plataforma */}
+      <Link
+        href="/catalogo"
+        className={cn(
+          "group flex flex-col rounded-[6px] overflow-hidden",
+          "border border-[rgba(10,10,10,0.08)] bg-paper",
+          "hover:border-violet/30 hover:shadow-[0_0_0_3px_rgba(109,40,217,0.06)]",
+          "transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+        )}
+        style={{ transitionDuration: "var(--dur-fast)" }}
+      >
+        {/* Visual art */}
+        <div
+          className="relative h-[96px] overflow-hidden flex items-center justify-center"
+          style={{ background: "linear-gradient(135deg, #ede3ff 0%, #ddd6fe 100%)" }}
+        >
+          {/* Platform abbreviations grid */}
+          <div className="grid grid-cols-3 gap-x-3 gap-y-1.5 px-4">
+            {["PS5", "PS4", "SWITCH", "XBOX", "PC", "RETRO"].map((p) => (
+              <span
+                key={p}
+                className="font-mono text-[9px] font-semibold uppercase tracking-[0.12em] text-violet text-center"
+              >
+                {p}
               </span>
-              <span className="block font-mono text-[10px] text-grey-2 mt-0.5">
-                {formatPrice(game.price)}
-                {(game as { discount?: number }).discount && (
-                  <span className="ml-1.5 text-neon-deep font-semibold">
-                    -{(game as { discount?: number }).discount}%
-                  </span>
-                )}
-              </span>
+            ))}
+          </div>
+          {/* Subtle violet glow on hover */}
+          <div className="absolute inset-0 bg-violet/0 group-hover:bg-violet/5 transition-colors pointer-events-none"
+            style={{ transitionDuration: "var(--dur-fast)" }} />
+        </div>
+        {/* Text */}
+        <div className="p-4">
+          <p className="font-display font-semibold text-[14px] text-ink mb-1">
+            Por plataforma
+          </p>
+          <p className="font-mono text-[11px] text-grey-2">
+            PS5 · PS4 · Switch · Xbox · PC · Retro
+          </p>
+        </div>
+      </Link>
+
+      {/* Card 2: Por género */}
+      <Link
+        href="/catalogo"
+        className={cn(
+          "group flex flex-col rounded-[6px] overflow-hidden",
+          "border border-[rgba(10,10,10,0.08)] bg-paper",
+          "hover:border-violet/30 hover:shadow-[0_0_0_3px_rgba(109,40,217,0.06)]",
+          "transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+        )}
+        style={{ transitionDuration: "var(--dur-fast)" }}
+      >
+        {/* Visual art — typographic genre composition */}
+        <div
+          className="relative h-[96px] overflow-hidden px-4 py-3"
+          style={{ background: "#F5F4F0" }}
+        >
+          <div className="absolute inset-0 flex flex-col justify-center pl-4 pr-2 gap-0.5">
+            <span className="font-display font-black text-[22px] text-ink/80 leading-none tracking-tight">
+              RPG
             </span>
-          </Link>
-        ))}
-      </div>
+            <span className="flex gap-2 items-baseline">
+              <span className="font-display font-semibold text-[13px] text-grey-1">Acción</span>
+              <span className="font-mono text-[9px] text-grey-3 uppercase tracking-[0.1em]">·</span>
+              <span className="font-display font-light text-[13px] text-grey-1">Indie</span>
+            </span>
+            <span className="font-display font-bold text-[16px] text-ink/40 tracking-tight">
+              Retro
+            </span>
+          </div>
+          <div className="absolute inset-0 bg-violet/0 group-hover:bg-violet/5 transition-colors pointer-events-none"
+            style={{ transitionDuration: "var(--dur-fast)" }} />
+        </div>
+        {/* Text */}
+        <div className="p-4">
+          <p className="font-display font-semibold text-[14px] text-ink mb-1">
+            Por género
+          </p>
+          <p className="font-mono text-[11px] text-grey-2">
+            Explorá por estilo de juego
+          </p>
+        </div>
+      </Link>
+
+      {/* Card 3: Novedades */}
+      <Link
+        href="/catalogo"
+        className={cn(
+          "group flex flex-col rounded-[6px] overflow-hidden",
+          "border border-[rgba(10,10,10,0.08)] bg-paper",
+          "hover:border-violet/30 hover:shadow-[0_0_0_3px_rgba(109,40,217,0.06)]",
+          "transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+        )}
+        style={{ transitionDuration: "var(--dur-fast)" }}
+      >
+        {/* Visual art — NEW badge + mini game box */}
+        <div
+          className="relative h-[96px] overflow-hidden flex items-center gap-4 px-5"
+          style={{ background: "linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%)" }}
+        >
+          {/* NEW badge */}
+          <span
+            className="font-display font-black text-[32px] leading-none tracking-tighter shrink-0"
+            style={{ color: "#00E676" }}
+          >
+            NEW
+          </span>
+          {/* Mini game box swatch */}
+          <div
+            className="shrink-0 w-10 rounded-[3px] border border-white/10"
+            style={{
+              height: 56,
+              background: "linear-gradient(135deg, #6D28D9 0%, #4C1D95 100%)",
+            }}
+          />
+          <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none"
+            style={{ transitionDuration: "var(--dur-fast)" }} />
+        </div>
+        {/* Text */}
+        <div className="p-4">
+          <p className="font-display font-semibold text-[14px] text-ink mb-1">
+            Novedades
+          </p>
+          <p className="font-mono text-[11px] text-grey-2">
+            Lo último que llegó al local
+          </p>
+        </div>
+      </Link>
+
     </div>
   );
 }
 
+// ── Servicios panel — 3 compact service cards ─────────────────────────────
+
+const SERVICIOS = [
+  {
+    slug: "flasheo",
+    title: "Flasheo & Chipeo",
+    description: "Modificación para compatibilidad con juegos de cualquier región.",
+    bg: "linear-gradient(135deg, #1a0a2e 0%, #4C1D95 100%)",
+    accent: "#a78bfa",
+    badge: "Consolas & portátiles",
+  },
+  {
+    slug: "reparacion",
+    title: "Reparación Electrónica",
+    description: "Diagnóstico gratuito. Garantía en todos los trabajos.",
+    bg: "linear-gradient(135deg, #1c0800 0%, #78350f 100%)",
+    accent: "#fbbf24",
+    badge: "Hardware & HDMI",
+  },
+  {
+    slug: "mantenimiento",
+    title: "Mantenimiento Integral",
+    description: "Limpieza profunda y pasta térmica nueva.",
+    bg: "linear-gradient(135deg, #040e1a 0%, #1e3a5f 100%)",
+    accent: "#38bdf8",
+    badge: "Térmica & limpieza",
+  },
+];
+
 function ServiciosPanel() {
   return (
     <div className="grid grid-cols-3 gap-4">
-      {services.map((s) => (
+      {SERVICIOS.map((s) => (
         <Link
           key={s.slug}
           href={`/servicios/${s.slug}`}
           className={cn(
-            "group flex gap-4 p-5 rounded-[4px] border border-transparent",
-            "hover:border-[rgba(10,10,10,0.10)] hover:bg-paper-2",
-            "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+            "group flex flex-col rounded-[6px] overflow-hidden",
+            "border border-[rgba(10,10,10,0.08)] bg-paper",
+            "hover:border-violet/30 hover:shadow-[0_0_0_3px_rgba(109,40,217,0.06)]",
+            "transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
           )}
           style={{ transitionDuration: "var(--dur-fast)" }}
         >
-          <span
-            className="flex items-start pt-0.5 text-grey-1 group-hover:text-violet transition-colors shrink-0"
-            style={{ transitionDuration: "var(--dur-fast)" }}
+          {/* Visual art strip */}
+          <div
+            className="relative h-[96px] overflow-hidden flex items-end px-4 pb-3"
+            style={{ background: s.bg }}
           >
-            {s.icon}
-          </span>
-          <span className="flex flex-col gap-1.5">
-            <span className="font-display font-semibold text-sm text-ink">{s.title}</span>
-            <span className="font-body text-[13px] text-grey-1 leading-relaxed">{s.description}</span>
-          </span>
+            {/* Accent lines */}
+            <div className="absolute top-3 left-4 right-4 flex flex-col gap-1.5">
+              <div className="h-px rounded-full" style={{ background: s.accent, opacity: 0.4 }} />
+              <div className="h-px rounded-full w-2/3" style={{ background: s.accent, opacity: 0.22 }} />
+            </div>
+            <span
+              className="font-mono text-[9px] uppercase tracking-[0.18em] relative z-10"
+              style={{ color: s.accent, opacity: 0.75 }}
+            >
+              {s.badge}
+            </span>
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none"
+              style={{ transitionDuration: "var(--dur-fast)" }} />
+          </div>
+          {/* Text */}
+          <div className="p-4">
+            <p
+              className="font-display font-semibold text-[14px] text-ink mb-1 group-hover:text-violet transition-colors"
+              style={{ transitionDuration: "var(--dur-fast)" }}
+            >
+              {s.title}
+            </p>
+            <p className="font-mono text-[11px] text-grey-2">
+              {s.description}
+            </p>
+          </div>
         </Link>
       ))}
     </div>

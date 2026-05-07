@@ -29,7 +29,7 @@ export function SeccionUbicacion() {
           <div className="flex flex-col gap-8">
 
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-grey-2 mb-3">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3">
                 Visitanos
               </p>
               <h2
@@ -49,7 +49,7 @@ export function SeccionUbicacion() {
 
             {/* Horarios */}
             <div className="flex flex-col gap-2">
-              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-grey-2 mb-2">
+              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-violet mb-2">
                 Horarios
               </p>
               {HORARIOS.map(({ dia, horario }) => (

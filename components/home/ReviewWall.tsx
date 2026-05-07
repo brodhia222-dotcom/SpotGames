@@ -4,26 +4,30 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "framer-motion";
+import { WipeReveal } from "@/components/effects/WipeReveal";
 import { cn } from "@/lib/utils";
 import reviewsData from "@/data/reviews.json";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Distribute 16 reviews across 3 columns
 const COL1 = reviewsData.slice(0, 6);
 const COL2 = reviewsData.slice(6, 11);
 const COL3 = reviewsData.slice(11, 16);
 
+// Per-column stagger offsets so wipe reveals cascade diagonally
+const COL1_OFFSET = 0;
+const COL2_OFFSET = 0.10;
+const COL3_OFFSET = 0.20;
+
 export function ReviewWall() {
   const reducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
-  const col1Ref   = useRef<HTMLDivElement>(null);
-  const col2Ref   = useRef<HTMLDivElement>(null);
-  const col3Ref   = useRef<HTMLDivElement>(null);
+  const col1Ref    = useRef<HTMLDivElement>(null);
+  const col2Ref    = useRef<HTMLDivElement>(null);
+  const col3Ref    = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (reducedMotion) return;
-
     const ctx = gsap.context(() => {
       const trigger = {
         trigger: sectionRef.current,
@@ -31,12 +35,10 @@ export function ReviewWall() {
         end: "bottom top",
         scrub: 1.2,
       };
-
-      gsap.to(col1Ref.current, { yPercent: -5,  ease: "none", scrollTrigger: trigger });
-      gsap.to(col2Ref.current, { yPercent:  5,  ease: "none", scrollTrigger: trigger });
-      gsap.to(col3Ref.current, { yPercent: -8,  ease: "none", scrollTrigger: trigger });
+      gsap.to(col1Ref.current, { yPercent: -5, ease: "none", scrollTrigger: trigger });
+      gsap.to(col2Ref.current, { yPercent:  5, ease: "none", scrollTrigger: trigger });
+      gsap.to(col3Ref.current, { yPercent: -8, ease: "none", scrollTrigger: trigger });
     });
-
     return () => ctx.revert();
   }, [reducedMotion]);
 
@@ -48,38 +50,55 @@ export function ReviewWall() {
     >
       <div className="container-ds">
 
-        {/* ── Header ── */}
-        <div className="flex flex-col items-center text-center gap-4 mb-14">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-grey-2">
-            Opiniones
-          </p>
-          <h2
-            className="font-display font-bold text-ink tracking-tight"
-            style={{ fontSize: "clamp(28px, 3.5vw, 42px)" }}
-          >
-            Lo que dice la gente.
-          </h2>
-          <div className="flex items-center gap-2">
-            <StarRow rating={5} />
-            <span className="font-mono text-[11px] text-grey-1 uppercase tracking-[0.12em]">
-              {reviewsData.length} reseñas verificadas
-            </span>
+        {/* ── Header — centered, violet eyebrow ── */}
+        <WipeReveal className="mb-14">
+          <div className="flex flex-col items-center text-center gap-4">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet">
+              Opiniones
+            </p>
+            <h2
+              className="font-display font-bold text-ink tracking-tight"
+              style={{ fontSize: "clamp(28px, 3.5vw, 42px)" }}
+            >
+              Lo que dice la gente.
+            </h2>
+            <div className="flex items-center gap-2">
+              <StarRow rating={5} />
+              <span className="font-mono text-[11px] text-grey-1 uppercase tracking-[0.12em]">
+                {reviewsData.length} reseñas verificadas
+              </span>
+            </div>
           </div>
-        </div>
+        </WipeReveal>
 
-        {/* ── 3-column grid ── */}
+        {/* ── 3-column masonry with GSAP parallax ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
-          <div ref={col1Ref} className="flex flex-col gap-5">
-            {COL1.map((r) => <ReviewCard key={r.id} review={r} />)}
-          </div>
-          <div ref={col2Ref} className="flex flex-col gap-5 md:mt-10">
-            {COL2.map((r) => <ReviewCard key={r.id} review={r} />)}
-          </div>
-          <div ref={col3Ref} className="flex flex-col gap-5">
-            {COL3.map((r) => <ReviewCard key={r.id} review={r} />)}
-          </div>
-        </div>
 
+          <div ref={col1Ref} className="flex flex-col gap-5">
+            {COL1.map((r, i) => (
+              <WipeReveal key={r.id} delay={COL1_OFFSET + i * 0.04}>
+                <ReviewCard review={r} />
+              </WipeReveal>
+            ))}
+          </div>
+
+          <div ref={col2Ref} className="flex flex-col gap-5 md:mt-10">
+            {COL2.map((r, i) => (
+              <WipeReveal key={r.id} delay={COL2_OFFSET + i * 0.04}>
+                <ReviewCard review={r} />
+              </WipeReveal>
+            ))}
+          </div>
+
+          <div ref={col3Ref} className="flex flex-col gap-5">
+            {COL3.map((r, i) => (
+              <WipeReveal key={r.id} delay={COL3_OFFSET + i * 0.04}>
+                <ReviewCard review={r} />
+              </WipeReveal>
+            ))}
+          </div>
+
+        </div>
       </div>
     </section>
   );
@@ -102,15 +121,10 @@ function ReviewCard({ review }: { review: Review }) {
         "bg-paper-2 border border-[rgba(10,10,10,0.07)]"
       )}
     >
-      {/* Stars */}
       <StarRow rating={review.rating} />
-
-      {/* Quote */}
       <p className="font-body text-[14px] text-ink leading-relaxed">
         &ldquo;{review.quote}&rdquo;
       </p>
-
-      {/* Author */}
       <div className="flex items-center gap-3 pt-2 border-t border-[rgba(10,10,10,0.07)]">
         <span
           aria-hidden
@@ -141,12 +155,9 @@ function StarRow({ rating }: { rating: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           key={i}
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
+          width="12" height="12" viewBox="0 0 12 12"
           fill={i < rating ? "currentColor" : "none"}
-          stroke="currentColor"
-          strokeWidth="1"
+          stroke="currentColor" strokeWidth="1"
           className={i < rating ? "text-neon-deep" : "text-grey-3"}
           aria-hidden
         >
