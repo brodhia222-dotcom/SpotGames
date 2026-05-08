@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { BelgranoMap } from "./BelgranoMap";
 
 const EASE_OUT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
 
@@ -104,7 +103,7 @@ export function SeccionUbicacion() {
             </div>
           </div>
 
-          {/* ── Right: illustrated Belgrano map ── */}
+          {/* ── Right: Google Maps embed ── */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, scale: 0.97 }}
@@ -112,8 +111,20 @@ export function SeccionUbicacion() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.65, ease: EASE_OUT }}
           >
+            {/* TODO: Para Google Maps con dark mode custom, usar la JS API
+                con una API key. Por ahora, iframe simple cumple para demo. */}
             <div className="relative rounded-[8px] overflow-hidden aspect-[4/3]">
-              <BelgranoMap />
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.706515673433!2d-58.458226599999996!3d-34.5609855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb590a0b166c9%3A0x43d2b3b9b4bdef6!2sSpot%20Games!5e0!3m2!1ses-419!2sar!4v1778246136492!5m2!1ses-419!2sar"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: "block" }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                title="Mapa de Spot Games — Av. Cabildo 2230, Belgrano"
+                className="absolute inset-0 w-full h-full"
+              />
             </div>
 
             {/* Floating detail card */}

@@ -28,7 +28,7 @@ export function Footer() {
 
   return (
     <footer className="bg-ink text-paper" aria-label="Pie de página">
-      <div className="container-ds pt-16 pb-8">
+      <div className="container-ds pt-28 pb-8">
         {/* Main grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-12 pb-12 border-b border-white/10">
           {/* Brand column */}

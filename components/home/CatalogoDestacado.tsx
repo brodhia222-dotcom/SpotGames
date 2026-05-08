@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductCard } from "@/components/product/ProductCard";
-import { OutlineReveal } from "@/components/effects/OutlineReveal";
 import { cn } from "@/lib/utils";
 import gamesData from "@/data/games.json";
 
@@ -60,7 +59,7 @@ export function CatalogoDestacado() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
         >
-          <div className="flex flex-col items-center text-center">
+          <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
             <motion.p
               variants={HEADER_ITEM}
               className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3"
@@ -127,7 +126,12 @@ export function CatalogoDestacado() {
               role="tabpanel"
             >
               {filtered.map((game, i) => (
-                <OutlineReveal key={game.id} delay={i * 0.06} rx={6}>
+                <motion.div
+                  key={game.id}
+                  initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.56, ease: EASE_OUT, delay: i * 0.08 }}
+                >
                   <ProductCard
                     id={game.id}
                     title={game.title}
@@ -140,7 +144,7 @@ export function CatalogoDestacado() {
                     cover={game.cover}
                     index={i}
                   />
-                </OutlineReveal>
+                </motion.div>
               ))}
             </motion.div>
           ) : (
