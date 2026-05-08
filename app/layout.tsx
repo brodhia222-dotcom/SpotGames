@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { LenisProvider } from "@/components/effects/LenisProvider";
 import { CursorTrail } from "@/components/effects/CursorTrail";
 import { PageWipe } from "@/components/effects/PageWipe";
+import { WhatsAppBubble } from "@/components/ui/WhatsAppBubble";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -63,6 +64,7 @@ export default function RootLayout({
           {/* Effects rendered outside main — portal to body internally */}
           <CursorTrail />
           <PageWipe />
+          <WhatsAppBubble />
         </LenisProvider>
       </body>
     </html>
