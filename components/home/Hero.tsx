@@ -86,7 +86,7 @@ export function Hero() {
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "rgba(245,244,240,0.88)" }}
+        style={{ background: "rgba(245,244,240,0.70)" }}
       />
 
       {/* ── Layer 2b: Ambient violet glow — editorial depth on top of overlay ── */}
