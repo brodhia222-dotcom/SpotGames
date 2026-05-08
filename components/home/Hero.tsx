@@ -22,10 +22,39 @@ const arrowVariants = {
   hover: { x: 4 },
 };
 
+// ── Video background — src assigned via ref after first paint to protect LCP ──
+function HeroVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // Defer load until after first paint so LCP text renders unblocked
+    video.src = "/videos/spotgameshero.mp4";
+    video.load();
+    video.play().catch(() => {});
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-hidden
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+  );
+}
+
+// ── Main section ───────────────────────────────────────────────────────────
+
 export function Hero() {
   const reducedMotion = useReducedMotion();
-  const sectionRef   = useRef<HTMLElement>(null);
-  const headlineRef  = useRef<HTMLHeadingElement>(null);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -50,7 +79,17 @@ export function Hero() {
       className="relative min-h-screen bg-paper flex items-center justify-center overflow-hidden"
       aria-label="Presentación principal"
     >
-      {/* Ambient depth — very subtle violet radial glow, warm and editorial */}
+      {/* ── Layer 1: Video — skipped when prefers-reduced-motion is active ── */}
+      {!reducedMotion && <HeroVideo />}
+
+      {/* ── Layer 2: Paper overlay — keeps typography as the star ── */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "rgba(245,244,240,0.88)" }}
+      />
+
+      {/* ── Layer 2b: Ambient violet glow — editorial depth on top of overlay ── */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -60,9 +99,7 @@ export function Hero() {
         }}
       />
 
-      {/* Noise grain from globals.css handles texture — no additional layer needed */}
-
-      {/* ── Content — single centered column. pb-20 offsets the fixed header visually ── */}
+      {/* ── Layer 3: Content ── */}
       <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto px-6 pb-20">
 
         {/* 1. Eyebrow */}
