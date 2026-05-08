@@ -156,7 +156,7 @@ export function Header() {
               className="rounded-[3px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
               aria-label="Spot Games — ir al inicio"
             >
-              <Logo size="md" inverted={scrolled} className="text-[1.3rem]" />
+              <Logo size="md" inverted className="text-[1.3rem]" />
             </Link>
 
             {/* Desktop nav */}
@@ -190,9 +190,7 @@ export function Header() {
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-1",
                         isActive
                           ? "text-violet"
-                          : scrolled
-                          ? "text-paper/70 hover:text-paper"
-                          : "text-grey-1 hover:text-ink"
+                          : "text-paper/70 hover:text-paper"
                       )}
                       style={{ transitionDuration: "var(--dur-fast)" }}
                     >
@@ -225,7 +223,7 @@ export function Header() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
                   scrolled
                     ? "text-paper/60 hover:text-paper hover:bg-paper/10"
-                    : "text-grey-1 hover:text-ink hover:bg-paper-2"
+                    : "text-paper/60 hover:text-paper hover:bg-paper/10"
                 )}
                 style={{ transitionDuration: "var(--dur-fast)" }}
               >
@@ -241,7 +239,7 @@ export function Header() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
                   scrolled
                     ? "text-paper/60 hover:text-paper hover:bg-paper/10"
-                    : "text-grey-1 hover:text-ink hover:bg-paper-2"
+                    : "text-paper/60 hover:text-paper hover:bg-paper/10"
                 )}
                 style={{ transitionDuration: "var(--dur-fast)" }}
               >
@@ -279,7 +277,7 @@ export function Header() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
                   scrolled
                     ? "text-paper/60 hover:text-paper hover:bg-paper/10"
-                    : "text-grey-1 hover:text-ink hover:bg-paper-2"
+                    : "text-paper/60 hover:text-paper hover:bg-paper/10"
                 )}
                 style={{ transitionDuration: "var(--dur-fast)" }}
               >
