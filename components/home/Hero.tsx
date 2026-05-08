@@ -22,14 +22,15 @@ const arrowVariants = {
   hover: { x: 4 },
 };
 
-// ── Video background — src assigned via ref after first paint to protect LCP ──
+// ── Video background ───────────────────────────────────────────────────────
+// src asignado via ref en useEffect — el LCP (headline) pinta antes del video
+
 function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    // Defer load until after first paint so LCP text renders unblocked
     video.src = "/videos/spotgameshero.mp4";
     video.load();
     video.play().catch(() => {});
@@ -76,30 +77,30 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen bg-paper flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen bg-ink flex items-center justify-center overflow-hidden"
       aria-label="Presentación principal"
     >
-      {/* ── Layer 1: Video — skipped when prefers-reduced-motion is active ── */}
+      {/* Layer 1: Video — off when reduced motion */}
       {!reducedMotion && <HeroVideo />}
 
-      {/* ── Layer 2: Paper overlay — keeps typography as the star ── */}
+      {/* Layer 2: Dark overlay — deja respirar el video, texto legible sobre oscuro */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "rgba(245,244,240,0.70)" }}
+        style={{ background: "rgba(10,10,10,0.52)" }}
       />
 
-      {/* ── Layer 2b: Ambient violet glow — editorial depth on top of overlay ── */}
+      {/* Layer 2b: Violet ambient glow — sutil, editorial */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 48%, rgba(109,40,217,0.06) 0%, transparent 72%)",
+            "radial-gradient(ellipse 70% 55% at 50% 48%, rgba(109,40,217,0.12) 0%, transparent 72%)",
         }}
       />
 
-      {/* ── Layer 3: Content ── */}
+      {/* Layer 3: Content */}
       <div className="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto px-6 pb-20">
 
         {/* 1. Eyebrow */}
@@ -108,7 +109,10 @@ export function Hero() {
           className="flex items-center gap-2.5 mb-10"
         >
           <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-violet shrink-0" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-grey-1">
+          <span
+            className="font-mono text-[11px] uppercase tracking-[0.22em]"
+            style={{ color: "rgba(245,244,240,0.55)" }}
+          >
             Videojuegos · Consolas · Servicio técnico
           </span>
         </motion.div>
@@ -120,27 +124,39 @@ export function Hero() {
           className="tracking-tight leading-[0.93] mb-8"
           style={{ fontSize: "clamp(64px, 9vw, 124px)" }}
         >
-          <span className="block font-display font-bold text-ink">
+          {/* Línea 1 — cream sólido */}
+          <span className="block font-display font-bold" style={{ color: "#F5F4F0" }}>
             El catálogo
           </span>
-          <span
+
+          {/* Línea 2 — Space Grotesk bold italic + shimmer violet permanente */}
+          <motion.span
+            className="block font-display font-bold"
             style={{
-              display: "block",
-              fontFamily: "Times New Roman, Times, serif",
               fontStyle: "italic",
-              fontWeight: 400,
-              color: "var(--violet-deep)",
+              backgroundImage:
+                "linear-gradient(90deg, #6D28D9 0%, #A78BFA 35%, #C4B5FD 52%, #A78BFA 65%, #6D28D9 100%)",
+              backgroundSize: "250% auto",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
             }}
+            animate={
+              reducedMotion
+                ? {}
+                : { backgroundPosition: ["0% center", "250% center"] }
+            }
+            transition={{ duration: 5, ease: "linear", repeat: Infinity }}
           >
             que buscabas.
-          </span>
+          </motion.span>
         </motion.h1>
 
         {/* 3. Subtext */}
         <motion.p
           {...(reducedMotion ? {} : item(2))}
-          className="font-body text-[19px] text-grey-1 leading-relaxed mb-12"
-          style={{ maxWidth: "48ch" }}
+          className="font-body text-[19px] leading-relaxed mb-12"
+          style={{ maxWidth: "48ch", color: "rgba(245,244,240,0.65)" }}
         >
           Videojuegos, consolas y servicio técnico en Belgrano.
         </motion.p>
@@ -159,7 +175,7 @@ export function Hero() {
   );
 }
 
-// ── CTA sub-components ─────────────────────────────────────────────────────
+// ── CTAs ───────────────────────────────────────────────────────────────────
 
 function PrimaryCTA({ href, children }: { href: string; children: React.ReactNode }) {
   return (
@@ -170,8 +186,7 @@ function PrimaryCTA({ href, children }: { href: string; children: React.ReactNod
           "inline-flex items-center gap-2 h-12 px-7 rounded-[4px]",
           "bg-neon text-ink font-display font-semibold text-[15px]",
           "hover:bg-neon-deep transition-colors",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
-          "focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2"
         )}
         style={{ transitionDuration: "var(--dur-fast)" }}
       >
@@ -194,12 +209,22 @@ function OutlineCTA({ href, children }: { href: string; children: React.ReactNod
       href={href}
       className={cn(
         "inline-flex items-center h-12 px-7 rounded-[4px]",
-        "border border-[rgba(10,10,10,0.22)] text-ink font-display font-semibold text-[15px]",
-        "hover:bg-paper-2 hover:border-[rgba(10,10,10,0.38)] transition-colors",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
-        "focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+        "font-display font-semibold text-[15px]",
+        "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
       )}
-      style={{ transitionDuration: "var(--dur-fast)" }}
+      style={{
+        border: "1px solid rgba(245,244,240,0.28)",
+        color: "#F5F4F0",
+        transitionDuration: "var(--dur-fast)",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLAnchorElement).style.background = "rgba(245,244,240,0.08)";
+        (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(245,244,240,0.48)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+        (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(245,244,240,0.28)";
+      }}
     >
       {children}
     </Link>
