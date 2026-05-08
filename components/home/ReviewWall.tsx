@@ -3,18 +3,28 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "framer-motion";
-import { WipeReveal } from "@/components/effects/WipeReveal";
+import { motion, useReducedMotion } from "framer-motion";
+import { OutlineReveal } from "@/components/effects/OutlineReveal";
 import { cn } from "@/lib/utils";
 import reviewsData from "@/data/reviews.json";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const EASE_OUT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
+
+const HEADER_CONTAINER = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const HEADER_ITEM = {
+  hidden:  { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_OUT } },
+};
+
 const COL1 = reviewsData.slice(0, 6);
 const COL2 = reviewsData.slice(6, 11);
 const COL3 = reviewsData.slice(11, 16);
 
-// Per-column stagger offsets so wipe reveals cascade diagonally
 const COL1_OFFSET = 0;
 const COL2_OFFSET = 0.10;
 const COL3_OFFSET = 0.20;
@@ -50,51 +60,61 @@ export function ReviewWall() {
     >
       <div className="container-ds">
 
-        {/* ── Header — centered, violet eyebrow ── */}
-        <WipeReveal className="mb-14">
+        {/* ── Header — stagger fade+slide ── */}
+        <motion.div
+          className="mb-14"
+          variants={HEADER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+        >
           <div className="flex flex-col items-center text-center gap-4">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet">
+            <motion.p
+              variants={HEADER_ITEM}
+              className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet"
+            >
               Opiniones
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
+              variants={HEADER_ITEM}
               className="font-display font-bold text-ink tracking-tight"
               style={{ fontSize: "clamp(28px, 3.5vw, 42px)" }}
             >
               Lo que dice la gente.
-            </h2>
-            <div className="flex items-center gap-2">
+            </motion.h2>
+            <motion.div variants={HEADER_ITEM} className="flex items-center gap-2">
               <StarRow rating={5} />
               <span className="font-mono text-[11px] text-grey-1 uppercase tracking-[0.12em]">
                 {reviewsData.length} reseñas verificadas
               </span>
-            </div>
+            </motion.div>
           </div>
-        </WipeReveal>
+        </motion.div>
 
         {/* ── 3-column masonry with GSAP parallax ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
 
           <div ref={col1Ref} className="flex flex-col gap-5">
             {COL1.map((r, i) => (
-              <WipeReveal key={r.id} delay={COL1_OFFSET + i * 0.04}>
+              <OutlineReveal key={r.id} delay={COL1_OFFSET + i * 0.04} rx={4}>
                 <ReviewCard review={r} />
-              </WipeReveal>
+              </OutlineReveal>
             ))}
           </div>
 
           <div ref={col2Ref} className="flex flex-col gap-5 md:mt-10">
             {COL2.map((r, i) => (
-              <WipeReveal key={r.id} delay={COL2_OFFSET + i * 0.04}>
+              <OutlineReveal key={r.id} delay={COL2_OFFSET + i * 0.04} rx={4}>
                 <ReviewCard review={r} />
-              </WipeReveal>
+              </OutlineReveal>
             ))}
           </div>
 
           <div ref={col3Ref} className="flex flex-col gap-5">
             {COL3.map((r, i) => (
-              <WipeReveal key={r.id} delay={COL3_OFFSET + i * 0.04}>
+              <OutlineReveal key={r.id} delay={COL3_OFFSET + i * 0.04} rx={4}>
                 <ReviewCard review={r} />
-              </WipeReveal>
+              </OutlineReveal>
             ))}
           </div>
 

@@ -4,11 +4,20 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductCard } from "@/components/product/ProductCard";
-import { WipeReveal } from "@/components/effects/WipeReveal";
+import { OutlineReveal } from "@/components/effects/OutlineReveal";
 import { cn } from "@/lib/utils";
 import gamesData from "@/data/games.json";
 
 const EASE_OUT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
+
+const HEADER_CONTAINER = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const HEADER_ITEM = {
+  hidden:  { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_OUT } },
+};
 
 const TABS = [
   { label: "Todos",  key: "todos" },
@@ -39,24 +48,34 @@ export function CatalogoDestacado() {
   return (
     <section
       className="py-24 lg:py-32 bg-paper border-t border-[rgba(10,10,10,0.07)]"
-      aria-label="Catálogo destacado"
+      aria-label="Juegos destacados"
     >
       <div className="container-ds">
 
-        {/* ── Section header — centered, violet eyebrow ── */}
-        <WipeReveal className="mb-10">
+        {/* ── Section header — stagger fade+slide ── */}
+        <motion.div
+          className="mb-10"
+          variants={HEADER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+        >
           <div className="flex flex-col items-center text-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3">
-              Catálogo
-            </p>
-            <h2
+            <motion.p
+              variants={HEADER_ITEM}
+              className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3"
+            >
+              Juegos
+            </motion.p>
+            <motion.h2
+              variants={HEADER_ITEM}
               className="font-display font-bold text-ink tracking-tight"
               style={{ fontSize: "clamp(28px, 3.5vw, 42px)" }}
             >
               Títulos disponibles
-            </h2>
+            </motion.h2>
           </div>
-        </WipeReveal>
+        </motion.div>
 
         {/* ── Platform tabs — centered ── */}
         <div
@@ -108,19 +127,20 @@ export function CatalogoDestacado() {
               role="tabpanel"
             >
               {filtered.map((game, i) => (
-                <ProductCard
-                  key={game.id}
-                  id={game.id}
-                  title={game.title}
-                  developer={game.developer}
-                  platform={game.platform}
-                  price={game.price}
-                  originalPrice={"originalPrice" in game ? (game as { originalPrice: number }).originalPrice : undefined}
-                  discount={"discount" in game ? (game as { discount: number }).discount : undefined}
-                  stock={game.stock}
-                  cover={game.cover}
-                  index={i}
-                />
+                <OutlineReveal key={game.id} delay={i * 0.06} rx={6}>
+                  <ProductCard
+                    id={game.id}
+                    title={game.title}
+                    developer={game.developer}
+                    platform={game.platform}
+                    price={game.price}
+                    originalPrice={"originalPrice" in game ? (game as { originalPrice: number }).originalPrice : undefined}
+                    discount={"discount" in game ? (game as { discount: number }).discount : undefined}
+                    stock={game.stock}
+                    cover={game.cover}
+                    index={i}
+                  />
+                </OutlineReveal>
               ))}
             </motion.div>
           ) : (
@@ -138,7 +158,7 @@ export function CatalogoDestacado() {
         {/* ── CTA — centered below grid ── */}
         <div className="flex justify-center mt-14">
           <Link
-            href="/catalogo"
+            href="/juegos"
             className={cn(
               "inline-flex items-center gap-2 h-11 px-7 rounded-[4px]",
               "border border-[rgba(10,10,10,0.22)] font-display font-medium text-[14px] text-ink",

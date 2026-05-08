@@ -113,7 +113,7 @@ export function Hero() {
           {...(reducedMotion ? {} : item(3))}
           className="flex items-center gap-4 flex-wrap justify-center"
         >
-          <PrimaryCTA href="/catalogo">Ver catálogo</PrimaryCTA>
+          <PrimaryCTA href="/juegos">Ver juegos</PrimaryCTA>
           <OutlineCTA href="/servicios/flasheo">Ver servicios</OutlineCTA>
         </motion.div>
 

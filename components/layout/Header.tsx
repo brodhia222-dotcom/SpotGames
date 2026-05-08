@@ -12,10 +12,11 @@ import { getCartCount } from "@/lib/cart";
 import { cn, formatPrice } from "@/lib/utils";
 import gamesData from "@/data/games.json";
 
-const EASE_OUT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
 import consolesData from "@/data/consoles.json";
 
-type MegaMenuType = "catalogo" | "servicios";
+const EASE_OUT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
+
+type MegaMenuType = "juegos" | "consolas" | "servicios";
 
 // Module-level Fuse instances (stable across re-renders, rebuilt only on hot-reload)
 const gamesFuse = new Fuse(gamesData, {
@@ -31,8 +32,8 @@ const consolesFuse = new Fuse(consolesData, {
 });
 
 const navLinks: Array<{ label: string; href: string; menu: MegaMenuType | null }> = [
-  { label: "Catálogo", href: "/catalogo", menu: "catalogo" },
-  { label: "Consolas", href: "/consolas", menu: null },
+  { label: "Juegos",   href: "/juegos",            menu: "juegos" },
+  { label: "Consolas", href: "/consolas",           menu: "consolas" },
   { label: "Servicios", href: "/servicios/flasheo", menu: "servicios" },
 ];
 
@@ -130,7 +131,7 @@ export function Header() {
         className={cn(
           "fixed top-0 left-0 right-0 z-40 transition-all",
           scrolled
-            ? "bg-paper/96 backdrop-blur-md border-b border-[rgba(10,10,10,0.10)] shadow-[0_2px_16px_rgba(10,10,10,0.05)]"
+            ? "bg-ink/96 backdrop-blur-[8px] border-b border-[rgba(26,26,26,0.9)]"
             : "bg-transparent"
         )}
         style={{
@@ -149,13 +150,13 @@ export function Header() {
               transitionTimingFunction: "var(--ease-out)",
             }}
           >
-            {/* Logo */}
+            {/* Logo — inverted (paper/violet-soft) when header is dark */}
             <Link
               href="/"
               className="rounded-[3px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
               aria-label="Spot Games — ir al inicio"
             >
-              <Logo size="md" className="text-[1.3rem]" />
+              <Logo size="md" inverted={scrolled} className="text-[1.3rem]" />
             </Link>
 
             {/* Desktop nav */}
@@ -167,7 +168,8 @@ export function Header() {
                 const isActive =
                   pathname === link.href ||
                   (link.href !== "/" && pathname.startsWith(link.href + "/")) ||
-                  (link.menu === "servicios" && pathname.startsWith("/servicios"));
+                  (link.menu === "servicios" && pathname.startsWith("/servicios")) ||
+                  (link.menu === "juegos" && pathname.startsWith("/juegos"));
                 return (
                   <div
                     key={link.label}
@@ -183,20 +185,27 @@ export function Header() {
                       aria-haspopup={link.menu ? "dialog" : undefined}
                       aria-expanded={link.menu ? megaMenuOpen === link.menu : undefined}
                       className={cn(
-                        "inline-flex items-center gap-2 h-9 px-4 rounded-[3px]",
-                        "font-body text-[15px] transition-colors",
+                        "relative group inline-flex items-center h-9 px-4 rounded-[3px]",
+                        "font-body text-[15px] font-medium transition-colors",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-1",
                         isActive
-                          ? "text-ink font-semibold"
-                          : "text-grey-1 font-medium hover:text-ink"
+                          ? "text-violet"
+                          : scrolled
+                          ? "text-paper/70 hover:text-paper"
+                          : "text-grey-1 hover:text-ink"
                       )}
                       style={{ transitionDuration: "var(--dur-fast)" }}
                     >
                       {link.label}
-                      {isActive && (
+                      {/* Underline grows left→right on hover; hidden when active */}
+                      {!isActive && (
                         <span
                           aria-hidden
-                          className="w-1 h-1 rounded-full bg-neon shrink-0"
+                          className="absolute bottom-1 left-4 right-4 h-px bg-violet scale-x-0 group-hover:scale-x-100 origin-left transition-transform"
+                          style={{
+                            transitionDuration: "280ms",
+                            transitionTimingFunction: "cubic-bezier(0.2,0.8,0.2,1)",
+                          }}
                         />
                       )}
                     </Link>
@@ -212,9 +221,11 @@ export function Header() {
                 onClick={() => setSearchOpen(true)}
                 aria-label="Abrir buscador (⌘K)"
                 className={cn(
-                  "flex items-center justify-center w-9 h-9 rounded-[3px]",
-                  "text-grey-1 hover:text-ink hover:bg-paper-2 transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+                  "flex items-center justify-center w-9 h-9 rounded-[3px] transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
+                  scrolled
+                    ? "text-paper/60 hover:text-paper hover:bg-paper/10"
+                    : "text-grey-1 hover:text-ink hover:bg-paper-2"
                 )}
                 style={{ transitionDuration: "var(--dur-fast)" }}
               >
@@ -226,9 +237,11 @@ export function Header() {
                 href="/carrito"
                 aria-label={`Carrito — ${cartCount} ${cartCount === 1 ? "producto" : "productos"}`}
                 className={cn(
-                  "relative flex items-center justify-center w-9 h-9 rounded-[3px]",
-                  "text-grey-1 hover:text-ink hover:bg-paper-2 transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+                  "relative flex items-center justify-center w-9 h-9 rounded-[3px] transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
+                  scrolled
+                    ? "text-paper/60 hover:text-paper hover:bg-paper/10"
+                    : "text-grey-1 hover:text-ink hover:bg-paper-2"
                 )}
                 style={{ transitionDuration: "var(--dur-fast)" }}
               >
@@ -262,9 +275,11 @@ export function Header() {
                 aria-expanded={mobileNavOpen}
                 aria-controls="mobile-nav"
                 className={cn(
-                  "flex lg:hidden items-center justify-center w-9 h-9 rounded-[3px]",
-                  "text-grey-1 hover:text-ink hover:bg-paper-2 transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+                  "flex lg:hidden items-center justify-center w-9 h-9 rounded-[3px] transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet",
+                  scrolled
+                    ? "text-paper/60 hover:text-paper hover:bg-paper/10"
+                    : "text-grey-1 hover:text-ink hover:bg-paper-2"
                 )}
                 style={{ transitionDuration: "var(--dur-fast)" }}
               >
@@ -302,7 +317,7 @@ export function Header() {
           >
             <ul className="flex flex-col mt-6 list-none">
               {[
-                { label: "Catálogo", href: "/catalogo" },
+                { label: "Juegos",   href: "/juegos" },
                 { label: "Consolas", href: "/consolas" },
                 { label: "Flasheo", href: "/servicios/flasheo" },
                 { label: "Reparación", href: "/servicios/reparacion" },
@@ -396,7 +411,7 @@ export function Header() {
                             {gameResults.map((game) => (
                               <SearchResultRow
                                 key={game.id}
-                                href="/catalogo"
+                                href="/juegos"
                                 title={game.title}
                                 meta={game.platform.join(" · ")}
                                 price={game.price}

@@ -4,10 +4,19 @@ import { type ReactElement, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn, formatPrice } from "@/lib/utils";
-import { WipeReveal } from "@/components/effects/WipeReveal";
+import { OutlineReveal } from "@/components/effects/OutlineReveal";
 import consolesData from "@/data/consoles.json";
 
 const EASE_OUT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
+
+const HEADER_CONTAINER = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const HEADER_ITEM = {
+  hidden:  { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_OUT } },
+};
 
 interface CoverData {
   gradient: string;
@@ -311,20 +320,30 @@ export function ConsolasDestacadas() {
     >
       <div className="container-ds">
 
-        {/* ── Section header — centered, violet eyebrow ── */}
-        <WipeReveal className="mb-12">
+        {/* ── Section header — stagger fade+slide ── */}
+        <motion.div
+          className="mb-12"
+          variants={HEADER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+        >
           <div className="flex flex-col items-center text-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3">
+            <motion.p
+              variants={HEADER_ITEM}
+              className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-3"
+            >
               Hardware
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
+              variants={HEADER_ITEM}
               className="font-display font-bold text-ink tracking-tight"
               style={{ fontSize: "clamp(28px, 3.5vw, 42px)" }}
             >
               Nuevas y restauradas.
-            </h2>
+            </motion.h2>
           </div>
-        </WipeReveal>
+        </motion.div>
 
         {/* ── Grid 4 columns × N rows ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -333,66 +352,72 @@ export function ConsolasDestacadas() {
             const isDimmed  = hoveredIdx !== null && !isHovered;
 
             return (
-              <WipeReveal key={item.id} delay={i * 0.06}>
-                <motion.article
-                  className="relative rounded-[6px] overflow-hidden bg-paper border border-[rgba(10,10,10,0.10)]"
-                  style={{ position: "relative", zIndex: isHovered ? 10 : 1 }}
-                  animate={
-                    reducedMotion
-                      ? {}
-                      : {
-                          rotate:    isHovered ? 0 : TILT(i),
-                          scale:     isHovered ? 1.04 : 1,
-                          opacity:   isDimmed  ? 0.7  : 1,
-                          boxShadow: isHovered
-                            ? "0 24px 60px rgba(109,40,217,0.22), 0 8px 24px rgba(10,10,10,0.14)"
-                            : "0 4px 16px rgba(10,10,10,0.07)",
-                        }
-                  }
-                  transition={{ duration: 0.28, ease: EASE_OUT }}
-                  onHoverStart={() => setHoveredIdx(i)}
-                  onHoverEnd={() => setHoveredIdx(null)}
-                >
-                  {/* Art panel */}
-                  <div className="relative w-full aspect-[3/4] overflow-hidden">
-                    <ConsoleArt id={item.id} cover={item.cover} />
-                  </div>
-
-                  {/* Info panel */}
-                  <div className="p-4 flex flex-col gap-2 bg-paper">
-                    <div className="flex items-center justify-between gap-2">
-                      <span
-                        className="font-mono text-[8.5px] uppercase tracking-[0.14em] px-2 py-0.5 rounded-[2px]"
-                        style={{
-                          background: item.type === "restored"
-                            ? "rgba(109,40,217,0.08)"
-                            : "rgba(0,230,118,0.12)",
-                          color: item.type === "restored" ? "#6D28D9" : "#00C853",
-                        }}
-                      >
-                        {item.type === "restored" ? "Restaurada" : "Nueva"}
-                      </span>
-                      <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-grey-2 shrink-0">
-                        {item.generation}
-                      </span>
+              // Outer wrapper holds the tilt — OutlineReveal SVG is INSIDE the rotated
+              // container so the trace visually follows the already-tilted card outline.
+              <motion.div
+                key={item.id}
+                initial={reducedMotion ? {} : { opacity: 0, rotate: TILT(i) }}
+                animate={
+                  reducedMotion
+                    ? {}
+                    : {
+                        opacity:   isDimmed ? 0.7 : 1,
+                        rotate:    isHovered ? 0 : TILT(i),
+                        scale:     isHovered ? 1.04 : 1,
+                        boxShadow: isHovered
+                          ? "0 24px 60px rgba(109,40,217,0.22), 0 8px 24px rgba(10,10,10,0.14)"
+                          : "0 4px 16px rgba(10,10,10,0.07)",
+                      }
+                }
+                transition={{ duration: 0.28, ease: EASE_OUT, delay: i * 0.04 }}
+                style={{ position: "relative", zIndex: isHovered ? 10 : 1 }}
+                onHoverStart={() => setHoveredIdx(i)}
+                onHoverEnd={() => setHoveredIdx(null)}
+              >
+                {/* Trace delay gives the 280ms fade-in time to complete first */}
+                <OutlineReveal rx={6} delay={i * 0.06 + 0.32}>
+                  <article className="relative rounded-[6px] overflow-hidden bg-paper border border-[rgba(10,10,10,0.10)]">
+                    {/* Art panel */}
+                    <div className="relative w-full aspect-[3/4] overflow-hidden">
+                      <ConsoleArt id={item.id} cover={item.cover} />
                     </div>
 
-                    <h3 className="font-display font-semibold text-[14px] text-ink leading-tight">
-                      {item.name}
-                    </h3>
+                    {/* Info panel */}
+                    <div className="p-4 flex flex-col gap-2 bg-paper">
+                      <div className="flex items-center justify-between gap-2">
+                        <span
+                          className="font-mono text-[8.5px] uppercase tracking-[0.14em] px-2 py-0.5 rounded-[2px]"
+                          style={{
+                            background: item.type === "restored"
+                              ? "rgba(109,40,217,0.08)"
+                              : "rgba(0,230,118,0.12)",
+                            color: item.type === "restored" ? "#6D28D9" : "#00C853",
+                          }}
+                        >
+                          {item.type === "restored" ? "Restaurada" : "Nueva"}
+                        </span>
+                        <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-grey-2 shrink-0">
+                          {item.generation}
+                        </span>
+                      </div>
 
-                    <p className="font-mono text-[13px] text-ink font-medium">
-                      {formatPrice(item.price)}
-                    </p>
+                      <h3 className="font-display font-semibold text-[14px] text-ink leading-tight">
+                        {item.name}
+                      </h3>
 
-                    {item.stock <= 2 && (
-                      <p className="font-mono text-[8.5px] uppercase tracking-[0.10em] text-grey-2">
-                        Últ. {item.stock} {item.stock === 1 ? "unidad" : "uds."}
+                      <p className="font-mono text-[13px] text-ink font-medium">
+                        {formatPrice(item.price)}
                       </p>
-                    )}
-                  </div>
-                </motion.article>
-              </WipeReveal>
+
+                      {item.stock <= 2 && (
+                        <p className="font-mono text-[8.5px] uppercase tracking-[0.10em] text-grey-2">
+                          Últ. {item.stock} {item.stock === 1 ? "unidad" : "uds."}
+                        </p>
+                      )}
+                    </div>
+                  </article>
+                </OutlineReveal>
+              </motion.div>
             );
           })}
         </div>

@@ -42,14 +42,13 @@ export function ProductCard({
 
   return (
     <motion.article
-      layout
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.26, delay: index * 0.04 }}
     >
       <Link
-        href={`/catalogo/${id}`}
+        href={`/juegos/${id}`}
         className={cn(
           "group block focus-visible:outline-none focus-visible:ring-2",
           "focus-visible:ring-violet focus-visible:ring-offset-2 focus-visible:ring-offset-paper",

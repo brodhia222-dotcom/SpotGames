@@ -3,12 +3,21 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { formatPrice, cn } from "@/lib/utils";
-import { WipeReveal } from "@/components/effects/WipeReveal";
+import { OutlineReveal } from "@/components/effects/OutlineReveal";
 import servicesData from "@/data/services.json";
 
 const EASE_OUT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
 
-// ── Editorial CSS art for each service ────────────────────────────────────
+const HEADER_CONTAINER = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const HEADER_ITEM = {
+  hidden:  { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_OUT } },
+};
+
+// ── Editorial CSS art (unchanged) ──────────────────────────────────────────
 
 function FlasheoArt() {
   return (
@@ -199,6 +208,18 @@ const SERVICE_ART: Record<string, React.ReactNode> = {
   mantenimiento: <MantenimientoArt />,
 };
 
+// ── Types ───────────────────────────────────────────────────────────────────
+
+interface Service {
+  id: string;
+  slug: string;
+  title: string;
+  shortDescription: string;
+  badge: string;
+  priceFrom: number;
+  turnaround: string;
+}
+
 // ── Main component ──────────────────────────────────────────────────────────
 
 export function SeccionServicios() {
@@ -211,29 +232,47 @@ export function SeccionServicios() {
     >
       <div className="container-ds">
 
-        {/* ── Section header — centered, violet eyebrow ── */}
-        <WipeReveal className="mb-16">
-          <div className="text-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-4">
+        {/* ── Section header — stagger fade+slide ── */}
+        <motion.div
+          className="mb-20 lg:mb-24"
+          variants={HEADER_CONTAINER}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+        >
+          <div className="flex flex-col items-center text-center">
+            <motion.p
+              variants={HEADER_ITEM}
+              className="font-mono text-[11px] uppercase tracking-[0.2em] text-violet mb-4"
+            >
               Servicio técnico
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
+              variants={HEADER_ITEM}
               className="font-display font-bold text-ink tracking-tight"
               style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}
             >
               Lo que no funciona,
               <br />
               lo reparamos.
-            </h2>
+            </motion.h2>
           </div>
-        </WipeReveal>
+        </motion.div>
 
-        {/* ── Service cards — wipe reveal with stagger ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {servicesData.map((service, i) => (
-            <WipeReveal key={service.id} delay={i * 0.12}>
-              <ServiceCard service={service} reducedMotion={!!reducedMotion} />
-            </WipeReveal>
+        {/* ── Horizontal service rows — alternating layout ── */}
+        <div className="flex flex-col gap-20 lg:gap-24">
+          {(servicesData as Service[]).map((service, i) => (
+            // Trace starts after the 480ms entrance + 150ms buffer + per-row stagger
+            <OutlineReveal key={service.id} delay={0.64 + i * 0.12} rx={4} className="rounded-[4px]">
+              <motion.div
+                initial={reducedMotion ? {} : { opacity: 0, y: 32 }}
+                whileInView={reducedMotion ? {} : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.48, ease: EASE_OUT, delay: i * 0.12 }}
+              >
+                <ServiceRow service={service} index={i} reducedMotion={!!reducedMotion} />
+              </motion.div>
+            </OutlineReveal>
           ))}
         </div>
 
@@ -242,78 +281,78 @@ export function SeccionServicios() {
   );
 }
 
-// ── Service card ────────────────────────────────────────────────────────────
+// ── Service row ─────────────────────────────────────────────────────────────
 
-interface Service {
-  id: string;
-  slug: string;
-  title: string;
-  shortDescription: string;
-  badge: string;
-  priceFrom: number;
-  turnaround: string;
-}
+function ServiceRow({
+  service,
+  index,
+  reducedMotion,
+}: {
+  service: Service;
+  index: number;
+  reducedMotion: boolean;
+}) {
+  const isEven  = index % 2 === 0;
+  const numStr  = String(index + 1).padStart(2, "0");
 
-function ServiceCard({ service, reducedMotion }: { service: Service; reducedMotion: boolean }) {
   return (
-    <div style={{ perspective: "900px" }}>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+
+      {/* Visual — aspect 4/3, alternates sides. Scale in with the row entrance */}
       <motion.div
-        whileHover={
-          reducedMotion
-            ? {}
-            : {
-                rotateY: -4,
-                rotateX: 2,
-                scale: 1.02,
-                boxShadow: "0 24px 64px rgba(109,40,217,0.20)",
-              }
-        }
-        transition={{ type: "spring", stiffness: 280, damping: 28 }}
-        style={{ transformStyle: "preserve-3d" }}
+        className={cn(
+          "relative aspect-[4/3] overflow-hidden rounded-[8px]",
+          !isEven && "lg:order-2"
+        )}
+        initial={reducedMotion ? {} : { scale: 0.96 }}
+        whileInView={reducedMotion ? {} : { scale: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.48, ease: EASE_OUT, delay: index * 0.12 }}
       >
-        <Link
-          href={`/servicios/${service.slug}`}
-          className={cn(
-            "group block rounded-[6px] overflow-hidden",
-            "border border-[rgba(10,10,10,0.10)] bg-paper",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
-          )}
-        >
-          <div className="relative aspect-[4/5] overflow-hidden">
-            {SERVICE_ART[service.id] ?? <div className="absolute inset-0 bg-paper-3" />}
-          </div>
-          <div className="p-6 flex flex-col gap-3">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-grey-2">
-              {service.badge}
-            </span>
-            <h3
-              className={cn(
-                "font-display font-bold text-ink text-[20px] leading-tight",
-                "group-hover:text-violet transition-colors"
-              )}
-              style={{ transitionDuration: "var(--dur-fast)" }}
-            >
-              {service.title}
-            </h3>
-            <p className="font-body text-[14px] text-grey-1 leading-relaxed line-clamp-2">
-              {service.shortDescription}
-            </p>
-            <div className="flex items-center justify-between pt-3 border-t border-[rgba(10,10,10,0.07)] mt-1">
-              <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-grey-2 block mb-0.5">
-                  Desde
-                </span>
-                <span className="font-mono text-[16px] font-medium text-ink">
-                  {formatPrice(service.priceFrom)}
-                </span>
-              </div>
-              <span className="font-mono text-[10px] text-grey-2 uppercase tracking-[0.1em]">
-                {service.turnaround}
-              </span>
-            </div>
-          </div>
-        </Link>
+        {SERVICE_ART[service.id] ?? <div className="absolute inset-0 bg-paper-3" />}
       </motion.div>
+
+      {/* Text content */}
+      <div className={cn("flex flex-col gap-5 py-4", !isEven && "lg:order-1")}>
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-violet">
+          // Servicio {numStr}
+        </p>
+        <h3
+          className="font-display font-bold text-ink tracking-tight"
+          style={{ fontSize: "clamp(22px, 2.5vw, 34px)" }}
+        >
+          {service.title}
+        </h3>
+        <p className="font-body text-[16px] text-grey-1 leading-relaxed max-w-[420px]">
+          {service.shortDescription}
+        </p>
+        <div>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-grey-2 block mb-1">
+            Desde
+          </span>
+          <span className="font-mono text-[20px] font-medium text-ink">
+            {formatPrice(service.priceFrom)}
+          </span>
+        </div>
+        <div className="flex items-center gap-4 pt-1">
+          <Link
+            href={`/servicios/${service.slug}`}
+            className={cn(
+              "inline-flex items-center gap-2 h-10 px-6 rounded-[4px]",
+              "bg-violet text-paper font-display font-medium text-[14px]",
+              "hover:bg-violet-deep transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+            )}
+            style={{ transitionDuration: "var(--dur-fast)" }}
+          >
+            Ver más →
+          </Link>
+          <span className="font-mono text-[11px] text-grey-2 uppercase tracking-[0.1em]">
+            {service.turnaround}
+          </span>
+        </div>
+      </div>
+
     </div>
   );
 }

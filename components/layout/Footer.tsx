@@ -5,10 +5,10 @@ import { FxToggle } from "@/components/effects/FxToggle";
 import { cn } from "@/lib/utils";
 
 const productLinks = [
-  { label: "Catálogo completo", href: "/catalogo" },
+  { label: "Todos los juegos", href: "/juegos" },
   { label: "Consolas", href: "/consolas" },
-  { label: "Ofertas", href: "/catalogo?filter=ofertas" },
-  { label: "Novedades", href: "/catalogo?filter=nuevos" },
+  { label: "Ofertas", href: "/juegos?filter=ofertas" },
+  { label: "Novedades", href: "/juegos?filter=nuevos" },
 ];
 
 const serviceLinks = [
