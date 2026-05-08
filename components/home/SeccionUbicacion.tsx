@@ -136,9 +136,9 @@ export function SeccionUbicacion() {
               )}
             >
               <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-grey-2 mb-1">
-                Desde 2018
+                Desde 2022
               </p>
-              <p className="font-display font-bold text-ink text-[18px]">8 años</p>
+              <p className="font-display font-bold text-ink text-[18px]">4 años</p>
               <p className="font-mono text-[10px] text-grey-1 uppercase tracking-[0.1em]">
                 en Belgrano, CABA
               </p>
